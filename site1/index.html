@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>selendemirmakeup — Gelin & Makyaj Sanatçısı</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --white: #ffffff;
+      --soft: #fdf8f8;
+      --pink-light: #fce8e8;
+      --pink: #f0a0a8;
+      --pink-deep: #e06878;
+      --pink-dark: #b84a5a;
+      --text: #1a1a1a;
+      --muted: #888;
+      --border: #f0e0e0;
+      --card: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 3px solid var(--pink);
+      transition: padding 0.3s;
+      box-shadow: 0 2px 20px rgba(240,160,168,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--pink-dark);
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      font-weight: 400;
+    }
+
+    .nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 2px; background: var(--pink);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--pink-deep); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      background: var(--pink-deep);
+      color: white !important;
+      padding: 10px 24px;
+      border-radius: 50px;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--pink-dark) !important; transform: translateY(-1px); }
+
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px; left: 0; right: 0;
+        background: white;
+        padding: 16px 24px 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        flex-direction: column;
+        gap: 4px;
+        border-top: 1px solid var(--border);
+        z-index: 99;
+      }
+      .nav-links.mobile-open { display: flex; }
+      .nav-links li { list-style: none; }
+      .nav-links a {
+        display: block;
+        padding: 12px 0;
+        font-size: 15px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text) !important;
+        background: none !important;
+      }
+      .nav-links li:last-child a { border-bottom: none; }
+      .nav-cta { margin-top: 8px; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 64px 80px 80px;
+      position: relative;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--pink-deep);
+      background: var(--pink-light);
+      padding: 8px 16px; border-radius: 50px;
+      margin-bottom: 28px;
+      width: fit-content;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-tag::before { content: '✦'; font-size: 10px; }
+
+    .hero-h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 5vw, 72px);
+      line-height: 1.1;
+      font-weight: 500;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero-h1 em {
+      font-style: italic;
+      color: var(--pink-deep);
+      display: block;
+    }
+
+    .hero-p {
+      font-size: 16px; color: var(--muted); line-height: 1.8; font-weight: 300;
+      max-width: 400px; margin-bottom: 40px;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
+      color: white; border: none; border-radius: 50px;
+      padding: 16px 36px; font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+      cursor: pointer; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 24px rgba(224,104,120,0.35);
+      display: inline-block;
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(224,104,120,0.45); }
+
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      border: 1.5px solid var(--border); border-radius: 50px;
+      padding: 16px 36px; font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 500; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--pink-deep); color: var(--pink-deep); }
+
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 56px;
+      padding-top: 40px; border-top: 1px solid var(--border);
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 700; color: var(--pink-deep);
+      line-height: 1;
+    }
+
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; font-weight: 400; }
+
+    .hero-right {
+      position: relative;
+      background: linear-gradient(135deg, var(--pink-light) 0%, #fce0e4 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      animation: fadeIn 1s ease 0.2s both;
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: 
+        radial-gradient(circle at 30% 70%, rgba(240,160,168,0.4) 0%, transparent 50%),
+        radial-gradient(circle at 70% 20%, rgba(255,255,255,0.6) 0%, transparent 40%);
+    }
+
+    .hero-img-placeholder {
+      position: relative; z-index: 1;
+      text-align: center;
+    }
+
+    .hero-monogram {
+      font-family: 'Playfair Display', serif;
+      font-size: 120px; font-style: italic; font-weight: 700;
+      color: rgba(224,104,120,0.15);
+      line-height: 1;
+      user-select: none;
+    }
+
+    .hero-brand-logo {
+      text-align: center;
+      position: relative; z-index: 1;
+    }
+
+    .hero-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 400;
+      letter-spacing: 6px;
+      color: var(--pink-dark);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .hero-brand-sub {
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: lowercase;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .hero-float-card3 {
+      position: absolute; top: 40px; left: 20px;
+      background: white; border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      display: flex; align-items: center; gap: 12px;
+      animation: float 3s ease-in-out 0.8s infinite;
+    }
+
+    .hero-float-card {
+      position: absolute; bottom: 60px; left: -30px;
+      background: white; border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      display: flex; align-items: center; gap: 12px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero-float-card2 {
+      position: absolute; top: 60px; right: -20px;
+      background: white; border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      animation: float 3s ease-in-out 1.5s infinite;
+    }
+
+    .float-icon { font-size: 28px; }
+    .float-text { font-size: 13px; font-weight: 500; color: var(--text); }
+    .float-sub { font-size: 11px; color: var(--muted); }
+
+
+    /* ── HERO PARTİKEL ANİMASYONU ── */
+    .hero-canvas {
+      position: absolute; inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .hero-canvas::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, 
+        #fce8e8 0%, 
+        #fad0d8 25%, 
+        #f8c0cc 50%, 
+        #fad0d8 75%, 
+        #fce8e8 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: particleFloat linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(100%) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(-120%) rotate(360deg); opacity: 0; }
+    }
+
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      animation: sparkleAnim ease-in-out infinite;
+      font-size: 16px;
+    }
+
+    @keyframes sparkleAnim {
+      0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+      50% { transform: scale(1) rotate(180deg); opacity: 0.8; }
+    }
+
+    .hero-right { overflow: hidden; }
+    .hero-brand-logo { position: relative; z-index: 2; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 60px 24px; }
+      .hero-right { min-height: 320px; }
+      .hero-float-card, .hero-float-card2, .hero-float-card3 { display: none; }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 80px; }
+
+    @media (max-width: 768px) { section { padding: 60px 24px; } }
+
+    .section-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--pink-deep); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .section-label::before { content: '—'; }
+
+    .section-h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 500; line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-h2 em { font-style: italic; color: var(--pink-deep); }
+
+    .section-p {
+      font-size: 16px; color: var(--muted); line-height: 1.8; font-weight: 300;
+      max-width: 520px;
+    }
+
+    /* ── HIZMETLER ── */
+    #hizmetler { background: var(--soft); }
+
+    .hizmet-header { margin-bottom: 60px; }
+
+    .hizmet-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) { .hizmet-grid { grid-template-columns: 1fr; } }
+
+    .hizmet-card {
+      background: white;
+      border-radius: 24px;
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hizmet-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .hizmet-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(224,104,120,0.12); }
+    .hizmet-card:hover::before { transform: scaleX(1); }
+
+    .hizmet-card.featured {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
+      color: white; border: none;
+    }
+
+    .hizmet-card.featured::before { display: none; }
+    .hizmet-card.featured .hizmet-desc, 
+    .hizmet-card.featured .hizmet-feature { color: rgba(255,255,255,0.75); }
+    .hizmet-card.featured .hizmet-badge { background: rgba(255,255,255,0.2); color: white; }
+
+    .hizmet-icon { font-size: 36px; margin-bottom: 20px; }
+
+    .hizmet-badge {
+      display: inline-block; font-size: 10px; font-weight: 500;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      background: var(--pink-light); color: var(--pink-dark);
+      padding: 4px 12px; border-radius: 50px; margin-bottom: 16px;
+    }
+
+    .hizmet-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 500; margin-bottom: 12px;
+    }
+
+    .hizmet-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+
+    .hizmet-features { list-style: none; margin-bottom: 28px; }
+
+    .hizmet-feature {
+      font-size: 13px; color: var(--muted); padding: 6px 0;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hizmet-card.featured .hizmet-feature { border-color: rgba(255,255,255,0.15); }
+
+    .hizmet-feature::before { content: '✓'; color: var(--pink-deep); font-weight: 700; font-size: 12px; }
+    .hizmet-card.featured .hizmet-feature::before { color: rgba(255,255,255,0.8); }
+
+    .hizmet-cta {
+      display: inline-block; font-size: 13px; font-weight: 500;
+      color: var(--pink-deep); text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: gap 0.2s;
+    }
+
+    .hizmet-card.featured .hizmet-cta { color: white; }
+    .hizmet-cta::after { content: ' →'; transition: margin 0.2s; }
+    .hizmet-cta:hover::after { margin-left: 4px; }
+
+    /* ── HAKKIMDA ── */
+    #hakkimda {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) { #hakkimda { grid-template-columns: 1fr; gap: 40px; } }
+
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+      border-radius: 32px;
+      background: linear-gradient(135deg, var(--pink-light), #fce0e4);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .about-monogram {
+      font-family: 'Playfair Display', serif;
+      font-size: 160px; font-style: italic; font-weight: 700;
+      color: rgba(224,104,120,0.12);
+      user-select: none;
+    }
+
+    .about-badge {
+      position: absolute; bottom: 32px; right: -16px;
+      background: white; border-radius: 16px;
+      padding: 20px 24px; text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+
+    .about-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 700; color: var(--pink-deep); line-height: 1;
+    }
+
+    .about-badge-text { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .about-content .section-h2 { margin-bottom: 24px; }
+
+    .about-text { font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300; margin-bottom: 16px; }
+
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+
+    .about-tag {
+      font-size: 12px; font-weight: 500;
+      background: var(--pink-light); color: var(--pink-dark);
+      padding: 6px 16px; border-radius: 50px;
+    }
+
+    /* ── GALERİ ── */
+    #galeri { background: var(--soft); }
+
+    .galeri-header { margin-bottom: 48px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+    .galeri-link {
+      font-size: 13px; font-weight: 500; color: var(--pink-deep);
+      text-decoration: none; letter-spacing: 0.5px;
+    }
+
+    .galeri-link:hover { text-decoration: underline; }
+
+    .galeri-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) { .galeri-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .galeri-item {
+      border-radius: 16px; overflow: hidden;
+      background: linear-gradient(135deg, var(--pink-light), #fce0e4);
+      aspect-ratio: 1;
+      position: relative; cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .galeri-item:nth-child(1) { grid-row: span 2; aspect-ratio: auto; }
+    .galeri-item:nth-child(5) { grid-column: span 2; aspect-ratio: 2/1; }
+
+    .galeri-item:hover { transform: scale(1.02); }
+
+    .galeri-inner {
+      width: 100%; height: 100%; min-height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; font-style: italic; color: rgba(224,104,120,0.25);
+    }
+
+    .galeri-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(184,74,90,0.6) 0%, transparent 50%);
+      opacity: 0; transition: opacity 0.3s;
+      display: flex; align-items: flex-end; padding: 20px;
+    }
+
+    .galeri-item:hover .galeri-overlay { opacity: 1; }
+
+    .galeri-overlay-text { color: white; font-size: 13px; font-weight: 500; }
+
+    /* ── FİYATLAR ── */
+    #fiyatlar {}
+
+    .fiyat-header { text-align: center; margin-bottom: 64px; }
+    .fiyat-header .section-label { justify-content: center; }
+    .fiyat-header .section-p { margin: 0 auto; }
+
+    .fiyat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    @media (max-width: 900px) { .fiyat-grid { grid-template-columns: 1fr; max-width: 400px; } }
+
+    .fiyat-card {
+      border-radius: 24px; padding: 40px 32px;
+      border: 1.5px solid var(--border);
+      text-align: center; position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .fiyat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(224,104,120,0.1); }
+
+    .fiyat-card.popular {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
+      color: white; border: none;
+      transform: scale(1.04);
+    }
+
+    .fiyat-card.popular:hover { transform: scale(1.04) translateY(-4px); }
+
+    .popular-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--text); color: white;
+      font-size: 10px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 50px;
+    }
+
+    .fiyat-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 500; margin-bottom: 8px;
+    }
+
+    .fiyat-desc { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+    .fiyat-card.popular .fiyat-desc { color: rgba(255,255,255,0.7); }
+
+    .fiyat-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; font-weight: 700; line-height: 1;
+      color: var(--pink-deep); margin-bottom: 4px;
+    }
+
+    .fiyat-card.popular .fiyat-price { color: white; }
+
+    .fiyat-currency { font-size: 24px; vertical-align: top; margin-top: 8px; display: inline-block; }
+
+    .fiyat-note { font-size: 12px; color: var(--muted); margin-bottom: 32px; }
+    .fiyat-card.popular .fiyat-note { color: rgba(255,255,255,0.6); }
+
+    .fiyat-list { list-style: none; text-align: left; margin-bottom: 32px; }
+
+    .fiyat-item {
+      font-size: 13px; color: var(--muted); padding: 8px 0;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fiyat-card.popular .fiyat-item { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.15); }
+    .fiyat-item::before { content: '✦'; font-size: 8px; color: var(--pink); flex-shrink: 0; }
+    .fiyat-card.popular .fiyat-item::before { color: rgba(255,255,255,0.5); }
+
+    .fiyat-cta {
+      display: block; padding: 14px 28px; border-radius: 50px;
+      font-size: 13px; font-weight: 500; text-decoration: none;
+      background: var(--pink-light); color: var(--pink-dark);
+      transition: all 0.2s;
+    }
+
+    .fiyat-card.popular .fiyat-cta { background: white; color: var(--pink-dark); }
+    .fiyat-cta:hover { background: var(--pink-deep); color: white; }
+
+    .fiyat-note-bottom {
+      text-align: center; margin-top: 40px;
+      font-size: 13px; color: var(--muted);
+    }
+
+    .fiyat-note-bottom strong { color: var(--pink-deep); }
+
+    /* ── RANDEVU ── */
+    #randevu {
+      background: linear-gradient(135deg, var(--pink-light) 0%, #fdf0f2 100%);
+    }
+
+    .randevu-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+
+    @media (max-width: 900px) { .randevu-inner { grid-template-columns: 1fr; gap: 40px; } }
+
+    .randevu-info .section-h2 { margin-bottom: 20px; }
+
+    .randevu-features { margin-top: 40px; display: flex; flex-direction: column; gap: 20px; }
+
+    .randevu-feature {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+
+    .rf-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: white; display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(224,104,120,0.1);
+    }
+
+    .rf-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+    .rf-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* Form embed area */
+    .form-embed-area {
+      background: white; border-radius: 24px;
+      padding: 40px 32px;
+      box-shadow: 0 20px 60px rgba(224,104,120,0.1);
+    }
+
+    .form-embed-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .form-embed-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    /* Inline mini form */
+    .mini-form .field { margin-bottom: 16px; }
+
+    .mini-form label {
+      display: block; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .mini-form input,
+    .mini-form select,
+    .mini-form textarea {
+      width: 100%; border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--text); background: var(--soft);
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+
+    .mini-form input:focus,
+    .mini-form select:focus,
+    .mini-form textarea:focus {
+      border-color: var(--pink-deep);
+      box-shadow: 0 0 0 3px rgba(224,104,120,0.1);
+      background: white;
+    }
+
+    .mini-form textarea { min-height: 90px; resize: vertical; }
+
+    .mini-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .form-submit {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
+      color: white; border: none; border-radius: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+      cursor: pointer; margin-top: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 24px rgba(224,104,120,0.3);
+    }
+
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(224,104,120,0.4); }
+
+    .form-privacy { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--white);
+      color: var(--text);
+      padding: 60px 80px 32px;
+      border-top: 3px solid var(--pink);
+    }
+
+    @media (max-width: 768px) { footer { padding: 48px 24px 24px; } }
+
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 60px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 768px) { .footer-top { grid-template-columns: 1fr; gap: 32px; } }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-style: italic;
+      color: var(--pink-dark);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .footer-tagline {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); font-weight: 300; margin-bottom: 16px;
+    }
+
+    .footer-desc { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    .footer-social { display: flex; gap: 12px; margin-top: 24px; }
+
+    .social-btn {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(255,255,255,0.6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .social-btn:hover { background: rgba(255,255,255,0.9); }
+
+    .footer-col h4 {
+      font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--pink-dark);
+      margin-bottom: 20px;
+    }
+
+    .footer-links { list-style: none; }
+
+    .footer-links li { margin-bottom: 6px; }
+
+    .footer-links a {
+      font-size: 14px; color: var(--muted);
+      text-decoration: none; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+      padding: 4px 0;
+    }
+
+    .footer-links a::before { content: "✦"; font-size: 8px; color: var(--pink); }
+
+    .footer-links a:hover { color: var(--pink-deep); padding-left: 4px; }
+
+    .footer-contact-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .footer-contact-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+    .footer-contact-text { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(180,74,90,0.15);
+      padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+
+    .footer-copy { font-size: 12px; color: var(--muted); }
+
+    .footer-heart { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+
+    /* SSS */
+    .sss-item {
+      background: white; border-radius: 14px; margin-bottom: 12px;
+      border: 1px solid var(--border); overflow: hidden; cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .sss-item:hover { box-shadow: 0 4px 20px rgba(224,104,120,0.1); }
+    .sss-q {
+      padding: 20px 24px; font-size: 15px; font-weight: 500;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--text);
+    }
+    .sss-icon { font-size: 20px; color: var(--pink-deep); transition: transform 0.3s; flex-shrink:0; }
+    .sss-a {
+      padding: 0 24px; max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s;
+      font-size: 14px; color: var(--muted); line-height: 1.8;
+    }
+    .sss-item.open .sss-a { max-height: 200px; padding: 0 24px 20px; }
+    .sss-item.open .sss-icon { transform: rotate(45deg); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── SUCCESS ── */
+    .success-state {
+      display: none; text-align: center; padding: 40px 20px;
+    }
+
+    .success-state .s-icon { font-size: 48px; margin-bottom: 16px; }
+
+    .success-state h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 500; margin-bottom: 8px;
+    }
+
+    .success-state p { font-size: 14px; color: var(--muted); }
+  
+    /* ── SABİT WHATSAPP BUTONU ── */
+    #fixedWP {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      z-index: 9990;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: wpPulse 2.5s ease infinite;
+    }
+    #fixedWP:hover { transform: scale(1.1); }
+    @keyframes wpPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 32px rgba(37,211,102,0.7), 0 0 0 10px rgba(37,211,102,0.1); }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<!-- PAGE LOADER -->
+<div id="pageLoader">
+  <div class="loader-logo">selendemirmakeup</div>
+  <div class="loader-sub">makeup artist</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<nav>
+  <a href="#hero" class="nav-logo">selendemirmakeup</a>
+  <ul class="nav-links">
+    <li><a href="#hizmetler">Hizmetler</a></li>
+    <li><a href="#hakkimda">Hakkımda</a></li>
+    <li><a href="yorumlar.html">Yorumlar</a></li>
+    <li><a href="#fiyatlar">Fiyatlar</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="reels.html">Reels</a></li>
+    <li><a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="nav-cta">Randevu Al</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">İstanbul & Çevresi</div>
+    <h1 class="hero-h1">
+      Özel Gününüzde<br/>
+      <em>Kusursuz Görünün</em>
+    </h1>
+    <p class="hero-p">
+      Gelin makyajı ve türban tasarımında uzman. Her kadının güzelliğini keşfedip özel gününde en iyi versiyonunu ortaya çıkarıyorum.
+    </p>
+    <div class="hero-btns">
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="btn-primary">Randevu Al</a>
+      <a href="galeri.html" class="btn-secondary">Çalışmalarımı Gör</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">11+</div>
+        <div class="stat-label">Mutlu Gelin</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Hizmet Paketi</div>
+      </div>
+      <div>
+        <div class="stat-num">%100</div>
+        <div class="stat-label">Müşteri Memnuniyeti</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-canvas" id="heroCanvas"></div>
+    <div class="hero-img-placeholder">
+      <div class="hero-brand-logo">
+        <div class="hero-brand-name">SELEN DEMİR</div>
+        <div class="hero-brand-sub">makeup artist</div>
+      </div>
+    </div>
+    <div class="hero-float-card">
+      <div class="float-icon">💄</div>
+      <div>
+        <div class="float-text">Profesyonel Makyaj</div>
+        <div class="float-sub">Kalıcı & Işıltılı</div>
+      </div>
+    </div>
+    <div class="hero-float-card2">
+      <div class="float-icon">🌸</div>
+      <div>
+        <div class="float-text">Türban Tasarımı</div>
+        <div class="float-sub">Şık & Özgün</div>
+      </div>
+    </div>
+    <div class="hero-float-card3">
+      <div class="float-icon">✨</div>
+      <div>
+        <div class="float-text">Gelin Hazırlığı</div>
+        <div class="float-sub">Özel & Şık</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HİZMETLER -->
+<section id="hizmetler">
+  <div class="hizmet-header reveal">
+    <div class="section-label">Neler Yapıyorum</div>
+    <h2 class="section-h2">Sizin İçin <em>Özel</em> Hizmetler</h2>
+    <p class="section-p">Her organizasyon için ayrı ayrı düşünülmüş, kişiye özel dokunuşlarla hazırlanan hizmet paketlerim.</p>
+  </div>
+  <div class="hizmet-grid">
+    <div class="hizmet-card reveal">
+      <div class="hizmet-icon">💄</div>
+      <div class="hizmet-badge">Temel Paket</div>
+      <div class="hizmet-name">Sadece Makyaj</div>
+      <p class="hizmet-desc">Cilt tipinize ve tercihlerinize göre özelleştirilmiş, uzun süre kalıcı profesyonel makyaj uygulaması.</p>
+      <ul class="hizmet-features">
+        <li class="hizmet-feature">Cilt analizi ve hazırlık</li>
+        <li class="hizmet-feature">Kalıcı fondöten uygulama</li>
+        <li class="hizmet-feature">Göz & dudak tasarımı</li>
+        <li class="hizmet-feature">Setting & fixing</li>
+      </ul>
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="hizmet-cta">Randevu Al</a>
+    </div>
+    <div class="hizmet-card featured reveal">
+      <div class="hizmet-icon">✨</div>
+      <div class="hizmet-badge">En Popüler</div>
+      <div class="hizmet-name">Makyaj + Türban</div>
+      <p class="hizmet-desc">Komple gelin hazırlığı paketi. Makyaj ve türban tasarımının mükemmel uyumuyla unutulmaz bir görünüm.</p>
+      <ul class="hizmet-features">
+        <li class="hizmet-feature">Tüm makyaj hizmetleri</li>
+        <li class="hizmet-feature">Kişiye özel türban tasarımı</li>
+        <li class="hizmet-feature">Aksesuvar uyumu</li>
+        <li class="hizmet-feature">Fotoğraf çekimi hazırlığı</li>
+      </ul>
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="hizmet-cta">Randevu Al</a>
+    </div>
+    <div class="hizmet-card reveal">
+      <div class="hizmet-icon">🧣</div>
+      <div class="hizmet-badge">Türban Paketi</div>
+      <div class="hizmet-name">Sadece Türban</div>
+      <p class="hizmet-desc">Organizasyonunuza özel, yüz şeklinize ve kıyafetinize uygun yaratıcı türban tasarımı.</p>
+      <ul class="hizmet-features">
+        <li class="hizmet-feature">Yüz analizi</li>
+        <li class="hizmet-feature">Kıyafet renk uyumu</li>
+        <li class="hizmet-feature">Özgün tasarım</li>
+        <li class="hizmet-feature">Aksesuvar önerisi</li>
+      </ul>
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="hizmet-cta">Randevu Al</a>
+    </div>
+  </div>
+</section>
+
+<!-- HAKKIMDA -->
+<section id="hakkimda">
+  <div class="about-visual reveal">
+    <div class="about-monogram">S</div>
+    <div class="about-badge">
+      <div class="about-badge-num">11+</div>
+      <div class="about-badge-text">Mutlu Gelin</div>
+    </div>
+  </div>
+  <div class="about-content reveal">
+    <div class="section-label">Benim Hikayem</div>
+    <h2 class="section-h2">Güzelliği <em>Sanat</em> Olarak Görüyorum</h2>
+    <p class="about-text">
+      Makyaj ve türban tasarımı benim için yalnızca bir meslek değil, her kadının iç güzelliğini yüzeye taşıma sanatı.
+    </p>
+    <p class="about-text">
+      Özel günlerinizde kendinizi en iyi hissetmeniz için kişiye özel bir yaklaşım benimsiyorum. Her yüz farklı, her hikaye benzersiz.
+    </p>
+    <p class="about-text">
+      Düğün, kına, nişan, söz veya davet — hangi organizasyon olursa olsun, o özel anı unutulmaz kılmak için buradayım.
+    </p>
+    <div class="about-tags">
+      <span class="about-tag">Gelin Makyajı</span>
+      <span class="about-tag">Türban Tasarımı</span>
+      <span class="about-tag">Kına & Nişan</span>
+      <span class="about-tag">Düğün</span>
+      <span class="about-tag">Söz & Davet</span>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- FİYATLAR -->
+<section id="fiyatlar" style="padding: 100px 80px;">
+  <div class="fiyat-header reveal">
+    <div class="section-label">Fiyatlandırma</div>
+    <h2 class="section-h2">Şeffaf <em>Fiyatlar</em></h2>
+    <p class="section-p">Sürpriz ücret yok. İhtiyacınıza en uygun paketi seçin.</p>
+  </div>
+  <div class="fiyat-grid reveal">
+    <div class="fiyat-card">
+      <div class="fiyat-name">Sadece Makyaj</div>
+      <p class="fiyat-desc">Profesyonel makyaj uygulaması</p>
+      <div class="fiyat-price">
+        <span class="fiyat-currency">₺</span>
+        <span id="price1">—</span>
+      </div>
+      <p class="fiyat-note">Fiyat bilgisi için iletişime geçin</p>
+      <ul class="fiyat-list">
+        <li class="fiyat-item">Cilt hazırlığı dahil</li>
+        <li class="fiyat-item">Kalıcı ürünler</li>
+        <li class="fiyat-item">Tüm organizasyonlar</li>
+      </ul>
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="fiyat-cta">Randevu Al</a>
+    </div>
+    <div class="fiyat-card popular">
+      <div class="popular-badge">En Popüler</div>
+      <div class="fiyat-name">Makyaj + Türban</div>
+      <p class="fiyat-desc">Komple gelin hazırlığı</p>
+      <div class="fiyat-price">
+        <span class="fiyat-currency">₺</span>
+        <span>—</span>
+      </div>
+      <p class="fiyat-note">Fiyat bilgisi için iletişime geçin</p>
+      <ul class="fiyat-list">
+        <li class="fiyat-item">Tüm makyaj hizmetleri</li>
+        <li class="fiyat-item">Kişiye özel türban</li>
+        <li class="fiyat-item">Aksesuvar uyumu</li>
+        <li class="fiyat-item">Fotoğraf hazırlığı</li>
+      </ul>
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="fiyat-cta">Randevu Al</a>
+    </div>
+    <div class="fiyat-card">
+      <div class="fiyat-name">Sadece Türban</div>
+      <p class="fiyat-desc">Özgün türban tasarımı</p>
+      <div class="fiyat-price">
+        <span class="fiyat-currency">₺</span>
+        <span>—</span>
+      </div>
+      <p class="fiyat-note">Fiyat bilgisi için iletişime geçin</p>
+      <ul class="fiyat-list">
+        <li class="fiyat-item">Yüz & kıyafet analizi</li>
+        <li class="fiyat-item">Özgün tasarım</li>
+        <li class="fiyat-item">Aksesuvar önerisi</li>
+      </ul>
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="fiyat-cta">Randevu Al</a>
+    </div>
+  </div>
+  <p class="fiyat-note-bottom">
+    Fiyatlar organizasyon türüne ve lokasyona göre değişiklik gösterebilir.<br/>
+    <strong>Kesin fiyat için randevu formunu doldurun veya Instagram'dan ulaşın.</strong>
+  </p>
+</section>
+
+<!-- RANDEVU -->
+
+
+
+
+
+
+
+
+<!-- SSS -->
+<section id="sss" style="background:var(--soft);">
+  <div class="reveal" style="text-align:center; margin-bottom:56px;">
+    <div class="section-label" style="justify-content:center;">Merak Edilenler</div>
+    <h2 class="section-h2">Sık Sorulan <em>Sorular</em></h2>
+  </div>
+  <div style="max-width:720px; margin:0 auto;" class="reveal">
+    <div class="sss-item" onclick="toggleSSS(this)">
+      <div class="sss-q">Randevu ne kadar önceden alınmalı? <span class="sss-icon">+</span></div>
+      <div class="sss-a">Düğün ve özel organizasyonlar için en az 2-3 hafta öncesinden randevu almanızı öneririm. Popüler tarihlerde (özellikle yaz ayları) daha erken rezervasyon yapılması gerekebilir.</div>
+    </div>
+    <div class="sss-item" onclick="toggleSSS(this)">
+      <div class="sss-q">Eve geliyor musunuz? <span class="sss-icon">+</span></div>
+      <div class="sss-a">Evet! İstanbul ve çevresinde eve gelerek hizmet veriyorum. Lokasyona göre ulaşım ücreti eklenebilir. Detaylar için WhatsApp'tan iletişime geçebilirsiniz.</div>
+    </div>
+    <div class="sss-item" onclick="toggleSSS(this)">
+      <div class="sss-q">Hangi ürünleri kullanıyorsunuz? <span class="sss-icon">+</span></div>
+      <div class="sss-a">Profesyonel ve kalıcı markalar kullanıyorum. Cilt tipinize ve tercihlerinize göre ürün seçimi yapılmaktadır. Hassas cildiniz varsa önceden belirtmenizi öneririm.</div>
+    </div>
+    <div class="sss-item" onclick="toggleSSS(this)">
+      <div class="sss-q">Kapora alıyor musunuz? <span class="sss-icon">+</span></div>
+      <div class="sss-a">Evet, randevu kesinleştirmek için kapora alınmaktadır. Kapora miktarı ve ödeme detayları WhatsApp üzerinden iletilmektedir.</div>
+    </div>
+    <div class="sss-item" onclick="toggleSSS(this)">
+      <div class="sss-q">Makyaj ne kadar sürer? <span class="sss-icon">+</span></div>
+      <div class="sss-a">Sadece makyaj yaklaşık 60-90 dakika, türban tasarımı 45-60 dakika, ikisi birlikte ise 2-2.5 saat sürmektedir. Organizasyon öncesi yeterli zaman bırakmanızı öneririm.</div>
+    </div>
+    <div class="sss-item" onclick="toggleSSS(this)">
+      <div class="sss-q">İptal veya değişiklik yapabilir miyim? <span class="sss-icon">+</span></div>
+      <div class="sss-a">Randevu değişiklikleri en az 48 saat önceden bildirilmelidir. İptal durumunda kapora iade politikası WhatsApp üzerinden iletilmektedir.</div>
+    </div>
+  </div>
+</section>
+
+<section id="randevu">
+  <div class="randevu-inner" style="grid-template-columns:1fr; max-width:600px; margin:0 auto; text-align:center;">
+    <div class="randevu-info reveal">
+      <div class="section-label" style="justify-content:center;">Randevu</div>
+      <h2 class="section-h2">Özel Gününüzü<br/><em>Birlikte Planlayalım</em></h2>
+      <p class="section-p" style="margin:0 auto 40px;">WhatsApp'tan yazın, en kısa sürede size döneyim. Randevunuz kesinleşene kadar yanınızdayım. 🌸</p>
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;font-size:16px;padding:18px 48px;text-decoration:none;">
+        💬 WhatsApp'tan Randevu Al
+      </a>
+      <div class="randevu-features" style="margin-top:48px;text-align:left;">
+        <div class="randevu-feature">
+          <div class="rf-icon">📅</div>
+          <div>
+            <div class="rf-title">Hızlı Randevu</div>
+            <div class="rf-desc">WhatsApp'tan yazın, hemen döneyim.</div>
+          </div>
+        </div>
+        <div class="randevu-feature">
+          <div class="rf-icon">💬</div>
+          <div>
+            <div class="rf-title">Kişisel İletişim</div>
+            <div class="rf-desc">Randevu öncesi tercihlerinizi detaylı konuşuyoruz.</div>
+          </div>
+        </div>
+        <div class="randevu-feature">
+          <div class="rf-icon">📍</div>
+          <div>
+            <div class="rf-title">Adresinize Geliyorum</div>
+            <div class="rf-desc">İstanbul ve çevresi için evde hizmet.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">selendemirmakeup</div>
+      <p class="footer-desc">Gelin makyajı ve türban tasarımında profesyonel hizmet. Özel gününüzde en güzel halinizle parlayın.</p>
+
+    </div>
+    <div>
+      <h4>Hizmetler</h4>
+      <ul class="footer-links">
+        <li><a href="#hizmetler">Gelin Makyajı</a></li>
+        <li><a href="#hizmetler">Türban Tasarımı</a></li>
+        <li><a href="#hizmetler">Makyaj + Türban</a></li>
+        <li><a href="#fiyatlar">Fiyatlar</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="reels.html">Reels</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>İletişim</h4>
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon">📍</div>
+        <div class="footer-contact-text">İstanbul, Türkiye</div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--pink-deep)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        <div class="footer-contact-text"><a href="https://instagram.com/selendmiiirr" target="_blank" style="color:var(--pink);text-decoration:none;">@selendmiiirr</a></div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon">📅</div>
+        <div class="footer-contact-text">WhatsApp'tan randevu alın</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 selendemirmakeup. Tüm hakları saklıdır.</p>
+    <p class="footer-copy">Tasarlandı <span class="footer-heart">♥</span> ile</p>
+  </div>
+</footer>
+
+<script>
+
+  
+
+
+
+  // ── HEROPARTİKEL SİSTEMİ ─────────────────────────────
+  (function() {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+
+    const emojis = ['🌸', '✨', '💄', '🌺', '💫', '🌷', '✦', '❀'];
+    const colors = [
+      'rgba(240,160,168,0.4)',
+      'rgba(224,104,120,0.3)',
+      'rgba(255,200,210,0.5)',
+      'rgba(248,180,190,0.35)',
+    ];
+
+    // Create particles
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 12 + 4;
+      p.style.cssText = [
+        'width:' + size + 'px',
+        'height:' + size + 'px',
+        'left:' + (Math.random() * 100) + '%',
+        'background:' + colors[Math.floor(Math.random() * colors.length)],
+        'animation-duration:' + (Math.random() * 8 + 5) + 's',
+        'animation-delay:' + (Math.random() * 6) + 's',
+      ].join(';');
+      canvas.appendChild(p);
+    }
+
+    // Create sparkles
+    for (let i = 0; i < 10; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      s.style.cssText = [
+        'left:' + (Math.random() * 85 + 5) + '%',
+        'top:' + (Math.random() * 85 + 5) + '%',
+        'font-size:' + (Math.random() * 14 + 10) + 'px',
+        'animation-duration:' + (Math.random() * 4 + 3) + 's',
+        'animation-delay:' + (Math.random() * 5) + 's',
+      ].join(';');
+      canvas.appendChild(s);
+    }
+  })();
+  // ─────────────────────────────────────────────────────
+
+  // ── PAGE LOADER ──────────────────────────────────────
+  document.body.classList.add('loading');
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      const loader = document.getElementById('pageLoader');
+      loader.classList.add('hidden');
+      document.body.classList.remove('loading');
+    }, 1400);
+  });
+  // ─────────────────────────────────────────────────────
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Hamburger menu
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const isOpen = links.classList.contains('mobile-open');
+    if (isOpen) {
+      links.classList.remove('mobile-open');
+    } else {
+      links.classList.add('mobile-open');
+    }
+  }
+
+  // Close menu when link clicked
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.remove('mobile-open');
+    });
+  });
+
+  // File name display
+  function showFName(input) {
+    document.getElementById('fName').textContent = input.files[0] ? '📎 ' + input.files[0].name : '';
+  }
+
+  // Full form validation & submit
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuVIYzaWMhdUQdMXfhPrqfMwXkxt6DOQXT1bMR51JT0FeMUKm-6GNENdESzJJg_pNbEg/exec";
+
+  if(document.getElementById('randevuForm')) document.getElementById('randevuForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    const reqFields = [
+      {id:'ff-ad', name:'ad'}, {id:'ff-soyad', name:'soyad'},
+      {id:'ff-tel', name:'telefon'}, {id:'ff-adres', name:'adres1'},
+      {id:'ff-tarih', name:'tarih'}, {id:'ff-saat', name:'saat'},
+    ];
+    reqFields.forEach(({id, name}) => {
+      const wrap = document.getElementById(id);
+      const inp = document.querySelector(`[name="${name}"]`);
+      wrap.classList.remove('ferr');
+      if (!inp || !inp.value.trim()) { wrap.classList.add('ferr'); valid = false; }
+    });
+
+    // Email
+    const emailWrap = document.getElementById('ff-email');
+    const emailInp = document.querySelector('[name="email"]');
+    emailWrap.classList.remove('ferr');
+    if (!emailInp.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInp.value)) {
+      emailWrap.classList.add('ferr'); valid = false;
+    }
+
+    // Hizmet
+    const hizmetWrap = document.getElementById('ff-hizmet');
+    hizmetWrap.classList.remove('ferr');
+    if (!document.querySelector('[name="hizmet"]:checked')) { hizmetWrap.classList.add('ferr'); valid = false; }
+
+    // Org
+    const orgWrap = document.getElementById('ff-org');
+    orgWrap.classList.remove('ferr');
+    if (!document.querySelector('[name="org"]:checked')) { orgWrap.classList.add('ferr'); valid = false; }
+
+    if (!valid) return;
+
+    const btn = document.getElementById('fSubmitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Gönderiliyor...';
+
+    const data = {
+      ad: document.querySelector('[name="ad"]').value.trim(),
+      soyad: document.querySelector('[name="soyad"]').value.trim(),
+      telefon: document.querySelector('[name="telefon"]').value.trim(),
+      ekstraTel: document.querySelector('[name="ekstraTel"]').value.trim(),
+      email: emailInp.value.trim(),
+      instagram: document.querySelector('[name="instagram"]').value.trim(),
+      adres: [document.querySelector('[name="adres1"]').value.trim(), document.querySelector('[name="adres2"]').value.trim()].filter(Boolean).join(', '),
+      paylasim: document.querySelector('[name="paylasim"]:checked')?.value || 'Belirtilmedi',
+      tarih: document.querySelector('[name="tarih"]').value,
+      saat: document.querySelector('[name="saat"]').value,
+      hizmet: document.querySelector('[name="hizmet"]:checked')?.value || '',
+      organizasyon: [...document.querySelectorAll('[name="org"]:checked')].map(c => c.value).join(', '),
+      notlar: document.querySelector('[name="notlar"]').value.trim(),
+      gonderimZamani: new Date().toLocaleString('tr-TR'),
+    };
+
+    try {
+      await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
+    } catch {
+      btn.disabled = false;
+      btn.innerHTML = 'Randevu Talebi Gönder 🌸';
+      alert('Bir hata oluştu, lütfen tekrar deneyin.');
+    }
+  });
+
+
+
+  // ─── YORUM SİSTEMİ ───────────────────────────────────────
+  const YORUM_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuVIYzaWMhdUQdMXfhPrqfMwXkxt6DOQXT1bMR51JT0FeMUKm-6GNENdESzJJg_pNbEg/exec";
+
+  // Yıldız seçimi
+  let seciliPuan = 0;
+  document.querySelectorAll('.yildiz').forEach(y => { if(!y) return;
+    y.addEventListener('click', function() {
+      seciliPuan = parseInt(this.dataset.val);
+      document.getElementById('yorumPuan').value = seciliPuan;
+      document.querySelectorAll('.yildiz').forEach((s, i) => {
+        s.style.opacity = i < seciliPuan ? '1' : '0.3';
+      });
+    });
+    y.addEventListener('mouseover', function() {
+      const val = parseInt(this.dataset.val);
+      document.querySelectorAll('.yildiz').forEach((s, i) => {
+        s.style.opacity = i < val ? '0.7' : '0.3';
+      });
+    });
+    y.addEventListener('mouseout', function() {
+      document.querySelectorAll('.yildiz').forEach((s, i) => {
+        s.style.opacity = i < seciliPuan ? '1' : '0.3';
+      });
+    });
+  });
+
+  // Yorum gönder
+  async function yorumGonder() {
+    const adEl = document.getElementById('yorumAd'); if(!adEl) return; const ad = adEl.value.trim();
+    const metin = document.getElementById('yorumMetin').value.trim();
+    const puan = document.getElementById('yorumPuan').value;
+    const org = document.getElementById('yorumOrg').value;
+
+    if (!ad) { alert('Lütfen adınızı girin.'); return; }
+    if (!metin) { alert('Lütfen yorumunuzu yazın.'); return; }
+    if (puan === '0') { alert('Lütfen puan verin.'); return; }
+
+    const tarih = new Date().toLocaleDateString('tr-TR', {month:'long', year:'numeric'});
+    const yeniYorum = { ad, metin, puan: parseInt(puan), org, tarih, zaman: new Date().toISOString() };
+
+    try {
+      await fetch(YORUM_SCRIPT_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({tip: 'yorum', ...yeniYorum})
+      });
+    } catch(e) {}
+
+    // Anında göster
+    yorumKartiEkle(yeniYorum);
+    document.getElementById('yorumFormContent').style.display = 'none';
+    document.getElementById('yorumBasari').style.display = 'block';
+  }
+
+  function yorumKartiEkle(y) {
+    const grid = document.getElementById('musteri-yorumlari');
+    const yildizStr = '⭐'.repeat(y.puan);
+    const kart = document.createElement('div');
+    kart.style.cssText = 'background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative; animation: fadeUp 0.5s ease both;';
+    kart.innerHTML = '<div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>' + '<p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"' + y.metin + '"</p>' + '<div style="display:flex; align-items:center; gap:12px;"><div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div><div><div style="font-size:13px; font-weight:500;">' + y.ad + '</div><div style="font-size:11px; color:var(--muted);">' + (y.org ? y.org + ' — ' : '') + y.tarih + '</div></div></div>' + '<div style="position:absolute; top:20px; right:20px; font-size:12px; color:var(--pink);">' + yildizStr + '</div>';
+    grid.prepend(kart);
+  }
+
+  // Yorumları yükle
+  async function yorumlariYukle() {
+    if (YORUM_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyuVIYzaWMhdUQdMXfhPrqfMwXkxt6DOQXT1bMR51JT0FeMUKm-6GNENdESzJJg_pNbEg/exec") return;
+    try {
+      const res = await fetch(YORUM_SCRIPT_URL + '?tip=yorumlar');
+      const data = await res.json();
+      if (data.yorumlar) {
+        data.yorumlar.forEach(y => yorumKartiEkle(y));
+      }
+    } catch(e) {}
+  }
+  yorumlariYukle();
+  // ─────────────────────────────────────────────────────────
+
+  function toggleSSS(el) {
+    el.classList.toggle('open');
+  }
+
+  // Smooth scroll for all anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+
+
+<!-- SABİT WHATSAPP BUTONU -->
+<a id="fixedWP" href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.121.553 4.112 1.522 5.842L.057 23.25a.75.75 0 0 0 .916.916l5.408-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.678-.513-5.2-1.408l-.374-.214-3.878 1.051 1.051-3.878-.214-.374A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+  </svg>
+</a>
+
+<!-- SAYFA GEÇİŞ OVERLAY -->
+<div id="pageTransition"></div>
+
+<script>
+  // ── SAYFA GEÇİŞ ANİMASYONU ─────────────────────────
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || a.target === '_blank') return;
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      const overlay = document.getElementById('pageTransition');
+      overlay.classList.add('active');
+      setTimeout(() => { window.location.href = href; }, 280);
+    });
+  });
+  // ─────────────────────────────────────────────────────
+
+  // ── Google Sheets veri yükle ──────────────────────────
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbyuVIYzaWMhdUQdMXfhPrqfMwXkxt6DOQXT1bMR51JT0FeMUKm-6GNENdESzJJg_pNbEg/exec';
+
+  async function sayfaVerileriniYukle() {
+    try {
+      const fiyatRes = await fetch(GAS_URL + '?key=fiyatlar');
+      const fiyatData = await fiyatRes.json();
+      if (fiyatData.value && Array.isArray(fiyatData.value)) {
+        const fiyatlar = fiyatData.value;
+        const fiyatCards = document.querySelectorAll('.fiyat-card');
+        fiyatCards.forEach((card, i) => {
+          if (!fiyatlar[i]) return;
+          const nameEl = card.querySelector('.fiyat-name');
+          const descEl = card.querySelector('.fiyat-desc');
+          const priceEl = card.querySelector('.fiyat-price span:last-child');
+          const noteEl = card.querySelector('.fiyat-note');
+          if (nameEl && fiyatlar[i].ad) nameEl.textContent = fiyatlar[i].ad;
+          if (descEl && fiyatlar[i].aciklama) descEl.textContent = fiyatlar[i].aciklama;
+          if (priceEl && fiyatlar[i].fiyat) priceEl.textContent = fiyatlar[i].fiyat;
+          if (noteEl && fiyatlar[i].not) noteEl.textContent = fiyatlar[i].not;
+        });
+      }
+      const sssRes = await fetch(GAS_URL + '?key=sss');
+      const sssData = await sssRes.json();
+      if (sssData.value && Array.isArray(sssData.value)) {
+        const items = document.querySelectorAll('.sss-item');
+        sssData.value.forEach((s, i) => {
+          if (!items[i]) return;
+          const q = items[i].querySelector('.sss-q');
+          const a = items[i].querySelector('.sss-a');
+          if (q && s.soru) { q.innerHTML = s.soru + ' <span class="sss-icon">+</span>'; }
+          if (a && s.cevap) a.textContent = s.cevap;
+        });
+      }
+    } catch(e) { console.log('Veri yuklenemedi:', e); }
+  }
+
+  sayfaVerileriniYukle();
+  // ─────────────────────────────────────────────────────
+</script>
+</body>
+</html>

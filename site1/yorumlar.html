@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>selendemirmakeup — Yorumlar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --white: #ffffff;
+      --soft: #fdf8f8;
+      --pink-light: #fce8e8;
+      --pink: #f0a0a8;
+      --pink-deep: #e06878;
+      --pink-dark: #b84a5a;
+      --text: #1a1a1a;
+      --muted: #888;
+      --border: #f0e0e0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--soft); color: var(--text); min-height: 100vh; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: var(--pink-dark); text-decoration: none; }
+    .nav-back { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: white; text-decoration: none; transition: all 0.25s; background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark)); padding: 11px 22px; border-radius: 50px; box-shadow: 0 4px 16px rgba(224,104,120,0.35); letter-spacing: 0.3px; }
+    .nav-back:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,104,120,0.5); }
+    @media (max-width: 600px) { nav { padding: 16px 20px; } }
+
+    section { padding: 100px 80px; }
+    @media (max-width: 768px) { section { padding: 100px 24px 60px; } }
+
+    .section-label { font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--pink-deep); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-label::before { content: "—"; }
+    .section-h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 500; line-height: 1.15; margin-bottom: 16px; }
+    .section-h2 em { font-style: italic; color: var(--pink-deep); }
+    .section-p { font-size: 16px; color: var(--muted); line-height: 1.8; font-weight: 300; max-width: 520px; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Yorum kartları */
+    .sss-item { background: white; border-radius: 14px; margin-bottom: 12px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+    .sss-item:hover { box-shadow: 0 4px 20px rgba(224,104,120,0.1); }
+    .sss-q { padding: 20px 24px; font-size: 15px; font-weight: 500; display: flex; justify-content: space-between; align-items: center; color: var(--text); }
+    .sss-icon { font-size: 20px; color: var(--pink-deep); transition: transform 0.3s; flex-shrink:0; }
+    .sss-a { padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; font-size: 14px; color: var(--muted); line-height: 1.8; }
+    .sss-item.open .sss-a { max-height: 200px; padding: 0 24px 20px; }
+    .sss-item.open .sss-icon { transform: rotate(45deg); }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+    /* Yorum form */
+    .full-form .f-section-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 400; color: var(--pink-deep); margin: 24px 0 14px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+    .full-form .f-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .full-form .field { margin-bottom: 14px; }
+    .full-form label { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .full-form .req { color: var(--pink-deep); margin-left: 2px; }
+    .full-form input, .full-form select, .full-form textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: var(--soft); outline: none; transition: border-color 0.2s; appearance: none; }
+    .full-form input:focus, .full-form textarea:focus, .full-form select:focus { border-color: var(--pink-deep); background: white; }
+    .full-form textarea { min-height: 80px; resize: vertical; }
+    .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+    .opt-item { position: relative; }
+    .opt-item input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .opt-item label { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1.5px solid var(--border); border-radius: 50px; cursor: pointer; font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--text); background: var(--soft); transition: all 0.15s; }
+    .opt-item input:checked + label { border-color: var(--pink-deep); background: rgba(224,104,120,0.07); color: var(--pink-dark); }
+    .f-error { font-size: 11px; color: #c04040; margin-top: 4px; display: none; }
+    .field.ferr input, .field.ferr textarea { border-color: #c04040; }
+    .field.ferr .f-error { display: block; }
+    .form-submit { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark)); color: white; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 12px; transition: transform 0.2s; box-shadow: 0 8px 24px rgba(224,104,120,0.3); }
+    .form-submit:hover { transform: translateY(-2px); }
+    .form-privacy { font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 6px; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">selendemirmakeup</a>
+  <a href="index.html" class="nav-back">← Ana Sayfaya Dön</a>
+</nav>
+
+<section id="yorumlar" style="background:var(--soft); padding-top:120px;">
+  <div class="reveal" style="text-align:center; margin-bottom:56px;">
+    <div class="section-label" style="justify-content:center;">Mutlu Gelinler</div>
+    <h2 class="section-h2">Müşteri <em>Yorumları</em></h2>
+    <p class="section-p" style="margin:0 auto;">Onların gözünden özel günleri 🌸</p>
+  </div>
+
+  <!-- Sabit örnek yorumlar -->
+  <div id="sabit-yorumlar" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:40px;" class="reveal">
+    <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative;">
+      <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
+      <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"Düğün günümde hayallerimden de güzel göründüm. Selen hanımın ellerinin değdiği her şey mükemmel oluyor. Teşekkürler!"</p>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
+        <div>
+          <div style="font-size:13px; font-weight:500;">Zeynep K.</div>
+          <div style="font-size:11px; color:var(--muted);">Düğün — Mayıs 2026</div>
+        </div>
+      </div>
+      <div style="position:absolute; top:20px; right:20px; font-size:12px; color:var(--pink);">⭐⭐⭐⭐⭐</div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--pink-deep),var(--pink-dark)); border-radius:20px; padding:32px; color:white; position:relative;">
+      <div style="font-size:32px; color:rgba(255,255,255,0.5); margin-bottom:16px;">❝</div>
+      <p style="font-size:14px; color:rgba(255,255,255,0.85); line-height:1.8; margin-bottom:20px; font-style:italic;">"Nişan günü türban tasarımım inanılmaz şıktı. Herkes nereden yaptırdım diye sordu. Kesinlikle tavsiye ederim!"</p>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
+        <div>
+          <div style="font-size:13px; font-weight:500; color:white;">Fatma S.</div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.6);">Nişan — Nisan 2026</div>
+        </div>
+      </div>
+      <div style="position:absolute; top:20px; right:20px; font-size:12px; color:rgba(255,255,255,0.8);">⭐⭐⭐⭐⭐</div>
+    </div>
+    <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative;">
+      <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
+      <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"Kına gecesi makyajım sabah 7'den gece 12'ye kadar hiç bozulmadı. Profesyonelliği ve güler yüzü için çok teşekkürler."</p>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
+        <div>
+          <div style="font-size:13px; font-weight:500;">Elif T.</div>
+          <div style="font-size:11px; color:var(--muted);">Kına — Mart 2026</div>
+        </div>
+      </div>
+      <div style="position:absolute; top:20px; right:20px; font-size:12px; color:var(--pink);">⭐⭐⭐⭐⭐</div>
+    </div>
+  </div>
+
+  <!-- Müşteri yorumları (Google Sheets'ten çekilir) -->
+  <div id="musteri-yorumlari" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:48px;"></div>
+
+  <!-- Yorum yaz formu -->
+  <div style="max-width:600px; margin:0 auto;" class="reveal">
+    <div style="background:white; border-radius:24px; padding:40px; border:1px solid var(--border); box-shadow:0 8px 32px rgba(224,104,120,0.08);">
+      <h3 style="font-family:'Playfair Display',serif; font-size:22px; font-weight:500; margin-bottom:8px; color:var(--text);">Siz de Yorum Yapın <span style="font-size:18px;">🌸</span></h3>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:28px;">Deneyiminizi paylaşarak diğer gelinlere yardımcı olun.</p>
+
+      <div id="yorumFormContent">
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Adınız <span style="color:var(--pink-deep)">*</span></label>
+          <input type="text" id="yorumAd" placeholder="Ad Soyad" style="width:100%; border:1.5px solid var(--border); border-radius:10px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); background:var(--soft); outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--pink-deep)'" onblur="this.style.borderColor='var(--border)'"/>
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Organizasyon Türü</label>
+          <select id="yorumOrg" style="width:100%; border:1.5px solid var(--border); border-radius:10px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); background:var(--soft); outline:none; appearance:none;" onfocus="this.style.borderColor='var(--pink-deep)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="">Seçiniz...</option>
+            <option>Düğün</option>
+            <option>Kına</option>
+            <option>Nişan</option>
+            <option>Söz</option>
+            <option>Davet</option>
+            <option>Diğer</option>
+          </select>
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">Puanınız <span style="color:var(--pink-deep)">*</span></label>
+          <div id="yildizlar" style="display:flex; gap:6px;">
+            <span class="yildiz" data-val="1" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
+            <span class="yildiz" data-val="2" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
+            <span class="yildiz" data-val="3" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
+            <span class="yildiz" data-val="4" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
+            <span class="yildiz" data-val="5" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
+          </div>
+          <input type="hidden" id="yorumPuan" value="0"/>
+        </div>
+        <div style="margin-bottom:24px;">
+          <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Yorumunuz <span style="color:var(--pink-deep)">*</span></label>
+          <textarea id="yorumMetin" placeholder="Deneyiminizi paylaşın..." style="width:100%; border:1.5px solid var(--border); border-radius:10px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); background:var(--soft); outline:none; min-height:100px; resize:vertical; line-height:1.6;" onfocus="this.style.borderColor='var(--pink-deep)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+        </div>
+        <button onclick="yorumGonder()" style="width:100%; padding:15px; background:linear-gradient(135deg,var(--pink-deep),var(--pink-dark)); color:white; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; box-shadow:0 8px 24px rgba(224,104,120,0.3); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+          Yorum Gönder 🌸
+        </button>
+      </div>
+      <div id="yorumBasari" style="display:none; text-align:center; padding:32px 0;">
+        <div style="font-size:48px; margin-bottom:12px;">🌸</div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:22px; font-weight:500; margin-bottom:8px;">Teşekkürler!</h3>
+        <p style="font-size:14px; color:var(--muted);">Yorumunuz alındı ve sayfaya eklendi 🤍</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const YORUM_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuVIYzaWMhdUQdMXfhPrqfMwXkxt6DOQXT1bMR51JT0FeMUKm-6GNENdESzJJg_pNbEg/exec";
+  let seciliPuan = 0;
+
+  document.querySelectorAll('.yildiz').forEach(y => {
+    y.addEventListener('click', function() {
+      seciliPuan = parseInt(this.dataset.val);
+      document.getElementById('yorumPuan').value = seciliPuan;
+      document.querySelectorAll('.yildiz').forEach((s, i) => {
+        s.style.opacity = i < seciliPuan ? '1' : '0.3';
+      });
+    });
+    y.addEventListener('mouseover', function() {
+      const val = parseInt(this.dataset.val);
+      document.querySelectorAll('.yildiz').forEach((s, i) => {
+        s.style.opacity = i < val ? '0.7' : '0.3';
+      });
+    });
+    y.addEventListener('mouseout', function() {
+      document.querySelectorAll('.yildiz').forEach((s, i) => {
+        s.style.opacity = i < seciliPuan ? '1' : '0.3';
+      });
+    });
+  });
+
+  async function yorumGonder() {
+    const ad = document.getElementById('yorumAd').value.trim();
+    const metin = document.getElementById('yorumMetin').value.trim();
+    const puan = parseInt(document.getElementById('yorumPuan').value);
+    const org = document.getElementById('yorumOrg').value;
+    if (!ad) { alert('Lütfen adınızı girin.'); return; }
+    if (!metin) { alert('Lütfen yorumunuzu yazın.'); return; }
+    if (!puan) { alert('Lütfen puan verin.'); return; }
+
+    const yeniYorum = {
+      id: Date.now(),
+      ad, metin, puan, org,
+      tarih: new Date().toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })
+    };
+
+    // localStorage'a kaydet
+    const mevcutlar = JSON.parse(localStorage.getItem('selenYorumlar') || '[]');
+    mevcutlar.push(yeniYorum);
+    localStorage.setItem('selenYorumlar', JSON.stringify(mevcutlar));
+
+    // Apps Script'e de gönder (varsa)
+    if (YORUM_SCRIPT_URL && !YORUM_SCRIPT_URL.includes('BURAYA')) {
+      try {
+        await fetch(YORUM_SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'kaydet', key: 'yorumlar', value: mevcutlar })
+        });
+      } catch(e) {}
+    }
+
+    document.getElementById('yorumFormContent').style.display = 'none';
+    document.getElementById('yorumBasari').style.display = 'block';
+    yorumlariYukle();
+  }
+
+  function yorumlariYukle() {
+    const liste = JSON.parse(localStorage.getItem('selenYorumlar') || '[]');
+    const grid = document.getElementById('musteri-yorumlari');
+    grid.innerHTML = '';
+    liste.reverse().forEach(y => {
+      const yildiz = '⭐'.repeat(y.puan);
+      grid.innerHTML += `
+        <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative; animation:fadeUp 0.5s ease both;">
+          <div style="position:absolute; top:20px; right:20px; font-size:12px;">${yildiz}</div>
+          <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"${y.metin}"</p>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
+            <div>
+              <div style="font-size:13px; font-weight:500;">${y.ad}</div>
+              <div style="font-size:11px; color:var(--muted);">${y.org ? y.org + ' — ' : ''}${y.tarih}</div>
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+  yorumlariYukle();
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

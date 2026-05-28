@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>selendemirmakeup — Reels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --white: #ffffff;
+      --soft: #fdf8f8;
+      --pink-light: #fce8e8;
+      --pink: #f0a0a8;
+      --pink-deep: #e06878;
+      --pink-dark: #b84a5a;
+      --text: #1a1a1a;
+      --muted: #888;
+      --border: #f0e0e0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--soft);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-style: italic;
+      color: var(--pink-dark); text-decoration: none;
+    }
+
+    .nav-back {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 500; color: white;
+      text-decoration: none; transition: all 0.25s;
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
+      padding: 11px 22px; border-radius: 50px;
+      box-shadow: 0 4px 16px rgba(224,104,120,0.35);
+      letter-spacing: 0.3px;
+    }
+
+    .nav-back:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,104,120,0.5); }
+
+    @media (max-width: 600px) { nav { padding: 16px 20px; } }
+
+    /* HEADER */
+    .page-header {
+      padding: 120px 40px 48px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--pink-light) 0%, #fce0e4 100%);
+    }
+
+    .page-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--pink-deep);
+      margin-bottom: 12px; display: block;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 500; line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .page-title em { font-style: italic; color: var(--pink-deep); }
+
+    .page-sub {
+      font-size: 15px; color: var(--muted); font-weight: 300;
+    }
+
+    /* REELS GRID */
+    .reels-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .reels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .reels-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .reels-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    }
+
+    .reel-card {
+      border-radius: 20px; overflow: hidden;
+      background: white; border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(224,104,120,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .reel-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(224,104,120,0.15);
+    }
+
+    .reel-video-wrap {
+      position: relative;
+      aspect-ratio: 9/16;
+      background: linear-gradient(135deg, var(--pink-light), #fce0e4);
+      overflow: hidden;
+    }
+
+    .reel-video-wrap iframe {
+      width: 100%; height: 100%;
+      border: none; display: block;
+    }
+
+    .reel-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px;
+    }
+
+    .reel-placeholder-icon { font-size: 48px; }
+    .reel-placeholder-text { font-size: 13px; color: var(--pink-dark); font-weight: 500; }
+
+    .reel-play-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .reel-card:hover .reel-play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: white;
+    }
+
+    .reel-info {
+      padding: 16px;
+    }
+
+    .reel-title {
+      font-size: 14px; font-weight: 500; color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .reel-meta {
+      font-size: 12px; color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* Instagram CTA */
+    .instagram-cta {
+      text-align: center;
+      padding: 48px 24px;
+      border-top: 1px solid var(--border);
+      margin-top: 16px;
+    }
+
+    .instagram-cta p {
+      font-size: 15px; color: var(--muted); margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
+      color: white; border: none; border-radius: 50px;
+      padding: 16px 36px; font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 24px rgba(224,104,120,0.35);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reel-card { animation: fadeUp 0.5s ease both; }
+    .reel-card:nth-child(2) { animation-delay: 0.1s; }
+    .reel-card:nth-child(3) { animation-delay: 0.2s; }
+    .reel-card:nth-child(4) { animation-delay: 0.3s; }
+    .reel-card:nth-child(5) { animation-delay: 0.4s; }
+    .reel-card:nth-child(6) { animation-delay: 0.5s; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">selendemirmakeup</a>
+  <a href="index.html" class="nav-back">← Ana Sayfaya Dön</a>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <span class="page-label">Instagram</span>
+  <h1 class="page-title">Son <em>Reelslerim</em></h1>
+  <p class="page-sub">Çalışmalarımı buradan izleyebilirsiniz 🌸</p>
+</div>
+
+<!-- REELS -->
+<div class="reels-container">
+  <div class="reels-grid" id="reelsGrid">
+
+    <!-- Reel 1 -->
+    <div class="reel-card">
+      <div class="reel-video-wrap">
+        <iframe src="https://www.instagram.com/reel/DRr-BuKjMJ7/embed/" allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+      <div class="reel-info">
+        <div class="reel-title">Makyaj Çalışması</div>
+        <div class="reel-meta">📸 @selendmiiir</div>
+      </div>
+    </div>
+
+    <!-- Reel 2 -->
+    <div class="reel-card">
+      <div class="reel-video-wrap">
+        <iframe src="https://www.instagram.com/reel/DP4OnXCDMV1/embed/" allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+      <div class="reel-info">
+        <div class="reel-title">Makyaj Çalışması</div>
+        <div class="reel-meta">📸 @selendmiiir</div>
+      </div>
+    </div>
+
+    <!-- Reel 3 -->
+    <div class="reel-card">
+      <div class="reel-video-wrap">
+        <iframe src="https://www.instagram.com/reel/DYfOm_fs-56/embed/" allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+      <div class="reel-info">
+        <div class="reel-title">Makyaj Çalışması</div>
+        <div class="reel-meta">📸 @selendmiiir</div>
+      </div>
+    </div>
+
+    </div>
+
+  <!-- Instagram CTA -->
+  <div class="instagram-cta">
+    <p>Daha fazla çalışma için Instagram'ı takip edin 🌸</p>
+    <a href="https://instagram.com/selendmiiir" target="_blank" class="btn-primary">
+      📸 @selendmiiir Takip Et
+    </a>
+  </div>
+</div>
+
+</body>
+</html>
