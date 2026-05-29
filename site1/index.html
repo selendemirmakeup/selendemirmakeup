@@ -1562,37 +1562,43 @@
   });
   // ─────────────────────────────────────────────────────
 
-  // ── Google Sheets veri yükle ──────────────────────────
-  const GAS_URL = 'https://script.google.com/macros/s/AKfycbyuVIYzaWMhdUQdMXfhPrqfMwXkxt6DOQXT1bMR51JT0FeMUKm-6GNENdESzJJg_pNbEg/exec';
+  // ── Supabase veri yükle ───────────────────────────────
+  const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
+  const SB_KEY = 'sb_publishable_F3kZ2IZjIhkJ1-rPSTRKnA_1NuIG7xI';
 
   async function sayfaVerileriniYukle() {
     try {
-      const fiyatRes = await fetch(GAS_URL + '?key=fiyatlar');
-      const fiyatData = await fiyatRes.json();
-      if (fiyatData.value && Array.isArray(fiyatData.value)) {
-        const fiyatlar = fiyatData.value;
+      // Fiyatları yükle
+      const fRes = await fetch(SB_URL + '/rest/v1/fiyatlar?order=id.asc', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+      const fiyatlar = await fRes.json();
+      if (Array.isArray(fiyatlar) && fiyatlar.length > 0) {
         const fiyatCards = document.querySelectorAll('.fiyat-card');
-        fiyatCards.forEach((card, i) => {
-          if (!fiyatlar[i]) return;
-          const nameEl = card.querySelector('.fiyat-name');
-          const descEl = card.querySelector('.fiyat-desc');
+        const fMap = {'f1': 0, 'f2': 1, 'f3': 2};
+        fiyatlar.forEach(f => {
+          const i = fMap[f.not];
+          if (i === undefined || !fiyatCards[i]) return;
+          const card = fiyatCards[i];
           const priceEl = card.querySelector('.fiyat-price span:last-child');
-          const noteEl = card.querySelector('.fiyat-note');
-          if (nameEl && fiyatlar[i].ad) nameEl.textContent = fiyatlar[i].ad;
-          if (descEl && fiyatlar[i].aciklama) descEl.textContent = fiyatlar[i].aciklama;
-          if (priceEl && fiyatlar[i].fiyat) priceEl.textContent = fiyatlar[i].fiyat;
-          if (noteEl && fiyatlar[i].not) noteEl.textContent = fiyatlar[i].not;
+          const descEl = card.querySelector('.fiyat-desc');
+          if (priceEl && f.fiyat) priceEl.textContent = f.fiyat;
+          if (descEl && f.aciklama) descEl.textContent = f.aciklama;
         });
       }
-      const sssRes = await fetch(GAS_URL + '?key=sss');
-      const sssData = await sssRes.json();
-      if (sssData.value && Array.isArray(sssData.value)) {
+
+      // SSS yükle
+      const sRes = await fetch(SB_URL + '/rest/v1/sss?order=id.asc', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+      const sssList = await sRes.json();
+      if (Array.isArray(sssList) && sssList.length > 0) {
         const items = document.querySelectorAll('.sss-item');
-        sssData.value.forEach((s, i) => {
+        sssList.forEach((s, i) => {
           if (!items[i]) return;
           const q = items[i].querySelector('.sss-q');
           const a = items[i].querySelector('.sss-a');
-          if (q && s.soru) { q.innerHTML = s.soru + ' <span class="sss-icon">+</span>'; }
+          if (q && s.soru) q.childNodes[0].textContent = s.soru + ' ';
           if (a && s.cevap) a.textContent = s.cevap;
         });
       }

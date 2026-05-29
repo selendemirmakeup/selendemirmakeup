@@ -188,7 +188,8 @@
 </section>
 
 <script>
-  const YORUM_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuVIYzaWMhdUQdMXfhPrqfMwXkxt6DOQXT1bMR51JT0FeMUKm-6GNENdESzJJg_pNbEg/exec";
+  const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
+  const SB_KEY = 'sb_publishable_F3kZ2IZjIhkJ1-rPSTRKnA_1NuIG7xI';
   let seciliPuan = 0;
 
   document.querySelectorAll('.yildiz').forEach(y => {
@@ -227,46 +228,61 @@
       tarih: new Date().toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })
     };
 
-    // localStorage'a kaydet
-    const mevcutlar = JSON.parse(localStorage.getItem('selenYorumlar') || '[]');
-    mevcutlar.push(yeniYorum);
-    localStorage.setItem('selenYorumlar', JSON.stringify(mevcutlar));
-
-    // Apps Script'e de gönder (varsa)
-    if (YORUM_SCRIPT_URL && !YORUM_SCRIPT_URL.includes('BURAYA')) {
-      try {
-        await fetch(YORUM_SCRIPT_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'kaydet', key: 'yorumlar', value: mevcutlar })
-        });
-      } catch(e) {}
-    }
+    // Supabase'e kaydet
+    try {
+      await fetch(SB_URL + '/rest/v1/yorumlar', {
+        method: 'POST',
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify({
+          ad: yeniYorum.ad,
+          metin: yeniYorum.metin,
+          puan: yeniYorum.puan,
+          org: yeniYorum.org,
+          onaylandi: false
+        })
+      });
+    } catch(e) { console.log('Supabase hata:', e); }
 
     document.getElementById('yorumFormContent').style.display = 'none';
     document.getElementById('yorumBasari').style.display = 'block';
     yorumlariYukle();
   }
 
-  function yorumlariYukle() {
-    const liste = JSON.parse(localStorage.getItem('selenYorumlar') || '[]');
-    const grid = document.getElementById('musteri-yorumlari');
-    grid.innerHTML = '';
-    liste.reverse().forEach(y => {
-      const yildiz = '⭐'.repeat(y.puan);
-      grid.innerHTML += `
-        <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative; animation:fadeUp 0.5s ease both;">
-          <div style="position:absolute; top:20px; right:20px; font-size:12px;">${yildiz}</div>
-          <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
-          <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"${y.metin}"</p>
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
-            <div>
-              <div style="font-size:13px; font-weight:500;">${y.ad}</div>
-              <div style="font-size:11px; color:var(--muted);">${y.org ? y.org + ' — ' : ''}${y.tarih}</div>
+  async function yorumlariYukle() {
+    try {
+      const res = await fetch(SB_URL + '/rest/v1/yorumlar?onaylandi=eq.true&order=created_at.desc', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+      const liste = await res.json();
+      const grid = document.getElementById('musteri-yorumlari');
+      grid.innerHTML = '';
+      if (!Array.isArray(liste) || liste.length === 0) {
+        grid.innerHTML = '<p style="text-align:center; color:var(--muted); padding:40px;">Henüz yorum yok 🌸</p>';
+        return;
+      }
+      liste.forEach(y => {
+        const yildiz = '⭐'.repeat(y.puan);
+        const tarih = new Date(y.created_at).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
+        grid.innerHTML += `
+          <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative; animation:fadeUp 0.5s ease both;">
+            <div style="position:absolute; top:20px; right:20px; font-size:12px;">${yildiz}</div>
+            <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
+            <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"${y.metin}"</p>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
+              <div>
+                <div style="font-size:13px; font-weight:500;">${y.ad}</div>
+                <div style="font-size:11px; color:var(--muted);">${y.org ? y.org + ' — ' : ''}${tarih}</div>
+              </div>
             </div>
-          </div>
-        </div>`;
-    });
+          </div>`;
+      });
+    } catch(e) { console.log('Yorumlar yuklenemedi:', e); }
   }
 
   yorumlariYukle();

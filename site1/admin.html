@@ -859,25 +859,55 @@
     setTimeout(() => n.classList.remove('show'), 3000);
   }
 
-  // ── VERİLER (localStorage + Google Sheets) ───────────
+  // ── SUPABASE ──────────────────────────────────────────
+  const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
+  const SB_KEY = 'sb_publishable_F3kZ2IZjIhkJ1-rPSTRKnA_1NuIG7xI';
+
+  async function sbFetch(path, method = 'GET', body = null) {
+    const opts = {
+      method,
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': method === 'POST' ? 'return=representation' : ''
+      }
+    };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(SB_URL + '/rest/v1/' + path, opts);
+    return res.json();
+  }
+
   function veriAl(key) {
     try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; }
   }
 
   async function veriKaydet(key, val) {
     localStorage.setItem(key, JSON.stringify(val));
+    // Supabase'e kaydet
     try {
-      const url = APPS_URL + '?action=kaydet&key=' + encodeURIComponent(key);
-      const formData = new FormData();
-      formData.append('payload', JSON.stringify({ action: 'kaydet', key: key, value: val }));
-      await fetch(APPS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({ action: 'kaydet', key: key, value: val })
-      });
-      console.log('Sheets gonderildi:', key);
-    } catch(e) { console.log('Sheets hata:', e); }
+      if (key === 'fiyatlar') {
+        const f = Array.isArray(val) ? val[0] : val;
+        // Önce sil, sonra ekle
+        await sbFetch('fiyatlar?id=gt.0', 'DELETE');
+        await sbFetch('fiyatlar', 'POST', {
+          ad: 'Sadece Makyaj', fiyat: f.f1 || '', aciklama: f.f1not || '', not: 'f1'
+        });
+        await sbFetch('fiyatlar', 'POST', {
+          ad: 'Makyaj + Türban', fiyat: f.f2 || '', aciklama: f.f2not || '', not: 'f2'
+        });
+        await sbFetch('fiyatlar', 'POST', {
+          ad: 'Sadece Türban', fiyat: f.f3 || '', aciklama: f.f3not || '', not: 'f3'
+        });
+        console.log('Fiyatlar Supabase kaydedildi');
+      } else if (key === 'sss_sorular') {
+        await sbFetch('sss?id=gt.0', 'DELETE');
+        for (const s of val) {
+          await sbFetch('sss', 'POST', { soru: s.soru, cevap: s.cevap });
+        }
+        console.log('SSS Supabase kaydedildi');
+      }
+    } catch(e) { console.log('Supabase hata:', e); }
   }
 
   // ── PANEL BAŞLAT ─────────────────────────────────────
@@ -895,8 +925,11 @@
   let randevular = [];
 
   async function randevulariYukle() {
-    randevular = veriAl('randevular');
-    // Örnek veriler (gerçekte Apps Script'ten gelecek)
+    try {
+      const data = await sbFetch('randevular?order=created_at.desc');
+      if (Array.isArray(data)) randevular = data;
+      else randevular = veriAl('randevular');
+    } catch(e) { randevular = veriAl('randevular'); }
     if (randevular.length === 0) {
       randevular = [
         { id:1, ad:'Ayşe Yılmaz', tel:'0532 111 22 33', hizmet:'Makyaj + Türban', org:'Düğün', tarih:'2026-06-15', saat:'09:00', durum:'bekliyor', not:'Doğal makyaj istiyor' },
