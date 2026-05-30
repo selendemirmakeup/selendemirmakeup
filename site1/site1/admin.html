@@ -682,7 +682,7 @@
         <div class="topbar">
           <h1 class="page-title"><em>SSS</em> Yönetimi</h1>
           <div class="topbar-right">
-            <button class="p-btn" onclick="sssSoruEkle()">➕ Soru Ekle</button>
+            <button class="p-btn" onclick="toggleSssForm()">➕ Soru Ekle</button>
           </div>
         </div>
         <div class="section-card" id="sssList">
@@ -1269,18 +1269,40 @@
     `).join('') || '<p style="padding:24px; color:var(--muted); font-size:14px;">Henüz soru yok</p>';
   }
 
+  function toggleSssForm() {
+    const f = document.getElementById('sssForm');
+    if (f) f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  }
+
   async function sssSoruEkle() {
-    const soru = prompt('Soru:');
-    if (!soru) return;
-    const cevap = prompt('Cevap:');
-    if (!cevap) return;
-    const yeni = { soru, cevap };
+    const soruEl = document.getElementById('yeniSoru');
+    const cevapEl = document.getElementById('yeniCevap');
+    if (!soruEl || !cevapEl) {
+      // Fallback to prompt
+      const soru = prompt('Soru:');
+      if (!soru) return;
+      const cevap = prompt('Cevap:');
+      if (!cevap) return;
+      const yeni = { soru, cevap };
+      try {
+        const res = await sbFetch('sss', 'POST', yeni);
+        if (Array.isArray(res) && res[0]) sssSorular.push(res[0]);
+        else sssSorular.push({ id: Date.now(), soru, cevap });
+      } catch(e) { sssSorular.push({ id: Date.now(), soru, cevap }); }
+      sssListeGuncelle();
+      bildirim('✓ Soru eklendi!');
+      return;
+    }
+    const soru = soruEl.value.trim();
+    const cevap = cevapEl.value.trim();
+    if (!soru || !cevap) { bildirim('❌ Soru ve cevap boş bırakılamaz!', 'error'); return; }
     try {
-      const res = await sbFetch('sss', 'POST', yeni);
-      if (res && res[0]) sssSorular.push(res[0]);
+      const res = await sbFetch('sss', 'POST', { soru, cevap });
+      if (Array.isArray(res) && res[0]) sssSorular.push(res[0]);
       else sssSorular.push({ id: Date.now(), soru, cevap });
     } catch(e) { sssSorular.push({ id: Date.now(), soru, cevap }); }
-    veriKaydet('sss_sorular', sssSorular);
+    soruEl.value = '';
+    cevapEl.value = '';
     sssListeGuncelle();
     bildirim('✓ Soru eklendi!');
   }

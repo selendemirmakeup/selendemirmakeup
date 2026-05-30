@@ -1215,30 +1215,10 @@
     <div class="section-label" style="justify-content:center;">Merak Edilenler</div>
     <h2 class="section-h2">Sık Sorulan <em>Sorular</em></h2>
   </div>
-  <div style="max-width:720px; margin:0 auto;" class="reveal">
+  <div style="max-width:720px; margin:0 auto;" class="reveal" id="sssContainer">
     <div class="sss-item" onclick="toggleSSS(this)">
       <div class="sss-q">Randevu ne kadar önceden alınmalı? <span class="sss-icon">+</span></div>
-      <div class="sss-a">Düğün ve özel organizasyonlar için en az 2-3 hafta öncesinden randevu almanızı öneririm. Popüler tarihlerde (özellikle yaz ayları) daha erken rezervasyon yapılması gerekebilir.</div>
-    </div>
-    <div class="sss-item" onclick="toggleSSS(this)">
-      <div class="sss-q">Eve geliyor musunuz? <span class="sss-icon">+</span></div>
-      <div class="sss-a">Evet! İstanbul ve çevresinde eve gelerek hizmet veriyorum. Lokasyona göre ulaşım ücreti eklenebilir. Detaylar için WhatsApp'tan iletişime geçebilirsiniz.</div>
-    </div>
-    <div class="sss-item" onclick="toggleSSS(this)">
-      <div class="sss-q">Hangi ürünleri kullanıyorsunuz? <span class="sss-icon">+</span></div>
-      <div class="sss-a">Profesyonel ve kalıcı markalar kullanıyorum. Cilt tipinize ve tercihlerinize göre ürün seçimi yapılmaktadır. Hassas cildiniz varsa önceden belirtmenizi öneririm.</div>
-    </div>
-    <div class="sss-item" onclick="toggleSSS(this)">
-      <div class="sss-q">Kapora alıyor musunuz? <span class="sss-icon">+</span></div>
-      <div class="sss-a">Evet, randevu kesinleştirmek için kapora alınmaktadır. Kapora miktarı ve ödeme detayları WhatsApp üzerinden iletilmektedir.</div>
-    </div>
-    <div class="sss-item" onclick="toggleSSS(this)">
-      <div class="sss-q">Makyaj ne kadar sürer? <span class="sss-icon">+</span></div>
-      <div class="sss-a">Sadece makyaj yaklaşık 60-90 dakika, türban tasarımı 45-60 dakika, ikisi birlikte ise 2-2.5 saat sürmektedir. Organizasyon öncesi yeterli zaman bırakmanızı öneririm.</div>
-    </div>
-    <div class="sss-item" onclick="toggleSSS(this)">
-      <div class="sss-q">İptal veya değişiklik yapabilir miyim? <span class="sss-icon">+</span></div>
-      <div class="sss-a">Randevu değişiklikleri en az 48 saat önceden bildirilmelidir. İptal durumunda kapora iade politikası WhatsApp üzerinden iletilmektedir.</div>
+      <div class="sss-a">Düğün ve özel organizasyonlar için en az 2-3 hafta öncesinden randevu almanızı öneririm.</div>
     </div>
   </div>
 </section>
@@ -1676,14 +1656,15 @@
       });
       const sssList = await sRes.json();
       if (Array.isArray(sssList) && sssList.length > 0) {
-        const items = document.querySelectorAll('.sss-item');
-        sssList.forEach((s, i) => {
-          if (!items[i]) return;
-          const q = items[i].querySelector('.sss-q');
-          const a = items[i].querySelector('.sss-a');
-          if (q && s.soru) q.childNodes[0].textContent = s.soru + ' ';
-          if (a && s.cevap) a.textContent = s.cevap;
-        });
+        const container = document.getElementById('sssContainer');
+        if (container) {
+          container.innerHTML = sssList.map(s => 
+            '<div class="sss-item" onclick="toggleSSS(this)">' +
+            '<div class="sss-q">' + s.soru + ' <span class="sss-icon">+</span></div>' +
+            '<div class="sss-a">' + s.cevap + '</div>' +
+            '</div>'
+          ).join('');
+        }
       }
     } catch(e) { console.log('Veri yuklenemedi:', e); }
   }
