@@ -1559,25 +1559,7 @@
     grid.prepend(kart);
   }
 
-  // Yorumları Supabase'den yükle
-  async function yorumlariYukle() {
-    try {
-      const res = await fetch(SB_URL + '/rest/v1/yorumlar?onaylandi=eq.true&order=created_at.desc', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        // Mevcut yorumları temizle
-        const grid = document.getElementById('yorumlarGrid');
-        if (grid) grid.innerHTML = '';
-        data.forEach(y => {
-          const tarih = y.created_at ? new Date(y.created_at).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }) : (y.tarih || '');
-          yorumKartiEkle({ ad: y.ad, metin: y.metin, puan: y.puan || 5, org: y.org || '', tarih });
-        });
-      }
-    } catch(e) { console.log('Yorumlar yüklenemedi:', e); }
-  }
-  yorumlariYukle();
+
   // ─────────────────────────────────────────────────────────
 
   function toggleSSS(el) {
@@ -1682,8 +1664,7 @@
           if (fyEl && f.fiyat) fyEl.textContent = f.fiyat;
           if (ntEl && f.not_metin) ntEl.textContent = f.not_metin;
           if (lsEl && f.ozellikler) {
-            const items = f.ozellikler.split('
-').filter(x => x.trim());
+            const items = f.ozellikler.split('\n').filter(x => x.trim());
             lsEl.innerHTML = items.map(i => '<li class="fiyat-item">' + i.trim() + '</li>').join('');
           }
         });
