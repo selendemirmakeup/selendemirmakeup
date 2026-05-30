@@ -1007,8 +1007,8 @@
   }
 
   function yorumPanelGuncelle() {
-    const bekleyenler = yorumlar.filter(y => y.durum === 'bekliyor');
-    const onaylilar = yorumlar.filter(y => y.durum === 'onaylandi');
+    const bekleyenler = yorumlar.filter(y => y.onaylandi === false || y.durum === 'bekliyor');
+    const onaylilar = yorumlar.filter(y => y.onaylandi === true || y.durum === 'onaylandi');
 
     document.getElementById('bekleyenSayi').textContent = bekleyenler.length;
     document.getElementById('onayliSayi').textContent = onaylilar.length;
@@ -1046,8 +1046,8 @@
   }
 
   async function yorumOnayla(id) {
-    await sbFetch('yorumlar?id=eq.' + id, 'PATCH', { durum: 'onaylandi' });
-    yorumlar = yorumlar.map(y => y.id == id ? {...y, durum:'onaylandi'} : y);
+    await sbFetch('yorumlar?id=eq.' + id, 'PATCH', { onaylandi: true });
+    yorumlar = yorumlar.map(y => y.id == id ? {...y, onaylandi:true, durum:'onaylandi'} : y);
     veriKaydet('yorumlar_panel', yorumlar);
     yorumPanelGuncelle();
     istatistikGuncelle();
@@ -1344,8 +1344,8 @@
   // ── İSTATİSTİK ───────────────────────────────────────
   function istatistikGuncelle() {
     document.getElementById('statRandevu').textContent = randevular.length;
-    document.getElementById('statYorum').textContent = yorumlar.filter(y => y.durum === 'onaylandi').length;
-    document.getElementById('statBekleyen').textContent = yorumlar.filter(y => y.durum === 'bekliyor').length;
+    document.getElementById('statYorum').textContent = yorumlar.filter(y => y.onaylandi === true || y.durum === 'onaylandi').length;
+    document.getElementById('statBekleyen').textContent = yorumlar.filter(y => y.onaylandi === false || y.durum === 'bekliyor').length;
     document.getElementById('statGaleri').textContent = galeriGorseller.length;
   }
 
