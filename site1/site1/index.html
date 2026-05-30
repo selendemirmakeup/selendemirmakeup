@@ -1145,32 +1145,32 @@
     <h2 class="section-h2">Şeffaf <em>Fiyatlar</em></h2>
     <p class="section-p">Sürpriz ücret yok. İhtiyacınıza en uygun paketi seçin.</p>
   </div>
-  <div class="fiyat-grid reveal">
-    <div class="fiyat-card">
-      <div class="fiyat-name">Sadece Makyaj</div>
-      <p class="fiyat-desc">Profesyonel makyaj uygulaması</p>
+  <div class="fiyat-grid reveal" id="fiyatGrid">
+    <div class="fiyat-card" id="fiyat-f1">
+      <div class="fiyat-name" id="f1-ad">Sadece Makyaj</div>
+      <p class="fiyat-desc" id="f1-aciklama">Profesyonel makyaj uygulaması</p>
       <div class="fiyat-price">
         <span class="fiyat-currency">₺</span>
-        <span id="price1">—</span>
+        <span id="f1-fiyat">—</span>
       </div>
-      <p class="fiyat-note">Fiyat bilgisi için iletişime geçin</p>
-      <ul class="fiyat-list">
+      <p class="fiyat-note" id="f1-not">Fiyat bilgisi için iletişime geçin</p>
+      <ul class="fiyat-list" id="f1-liste">
         <li class="fiyat-item">Cilt hazırlığı dahil</li>
         <li class="fiyat-item">Kalıcı ürünler</li>
         <li class="fiyat-item">Tüm organizasyonlar</li>
       </ul>
       <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="fiyat-cta">Randevu Al</a>
     </div>
-    <div class="fiyat-card popular">
+    <div class="fiyat-card popular" id="fiyat-f2">
       <div class="popular-badge">En Popüler</div>
-      <div class="fiyat-name">Makyaj + Türban</div>
-      <p class="fiyat-desc">Komple gelin hazırlığı</p>
+      <div class="fiyat-name" id="f2-ad">Makyaj + Türban</div>
+      <p class="fiyat-desc" id="f2-aciklama">Komple gelin hazırlığı</p>
       <div class="fiyat-price">
         <span class="fiyat-currency">₺</span>
-        <span>—</span>
+        <span id="f2-fiyat">—</span>
       </div>
-      <p class="fiyat-note">Fiyat bilgisi için iletişime geçin</p>
-      <ul class="fiyat-list">
+      <p class="fiyat-note" id="f2-not">Fiyat bilgisi için iletişime geçin</p>
+      <ul class="fiyat-list" id="f2-liste">
         <li class="fiyat-item">Tüm makyaj hizmetleri</li>
         <li class="fiyat-item">Kişiye özel türban</li>
         <li class="fiyat-item">Aksesuvar uyumu</li>
@@ -1178,15 +1178,15 @@
       </ul>
       <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="fiyat-cta">Randevu Al</a>
     </div>
-    <div class="fiyat-card">
-      <div class="fiyat-name">Sadece Türban</div>
-      <p class="fiyat-desc">Özgün türban tasarımı</p>
+    <div class="fiyat-card" id="fiyat-f3">
+      <div class="fiyat-name" id="f3-ad">Sadece Türban</div>
+      <p class="fiyat-desc" id="f3-aciklama">Özgün türban tasarımı</p>
       <div class="fiyat-price">
         <span class="fiyat-currency">₺</span>
-        <span>—</span>
+        <span id="f3-fiyat">—</span>
       </div>
-      <p class="fiyat-note">Fiyat bilgisi için iletişime geçin</p>
-      <ul class="fiyat-list">
+      <p class="fiyat-note" id="f3-not">Fiyat bilgisi için iletişime geçin</p>
+      <ul class="fiyat-list" id="f3-liste">
         <li class="fiyat-item">Yüz & kıyafet analizi</li>
         <li class="fiyat-item">Özgün tasarım</li>
         <li class="fiyat-item">Aksesuvar önerisi</li>
@@ -1673,16 +1673,23 @@
       });
       const fiyatlar = await fRes.json();
       if (Array.isArray(fiyatlar) && fiyatlar.length > 0) {
-        const fiyatCards = document.querySelectorAll('.fiyat-card');
-        const fMap = {'f1': 0, 'f2': 1, 'f3': 2};
         fiyatlar.forEach(f => {
-          const i = fMap[f.not];
-          if (i === undefined || !fiyatCards[i]) return;
-          const card = fiyatCards[i];
-          const priceEl = card.querySelector('.fiyat-price span:last-child');
-          const descEl = card.querySelector('.fiyat-desc');
-          if (priceEl && f.fiyat) priceEl.textContent = f.fiyat;
-          if (descEl && f.aciklama) descEl.textContent = f.aciklama;
+          const k = f.not; // f1, f2, f3
+          if (!k) return;
+          const adEl = document.getElementById(k + '-ad');
+          const acEl = document.getElementById(k + '-aciklama');
+          const fyEl = document.getElementById(k + '-fiyat');
+          const ntEl = document.getElementById(k + '-not');
+          const lsEl = document.getElementById(k + '-liste');
+          if (adEl && f.ad) adEl.textContent = f.ad;
+          if (acEl && f.aciklama) acEl.textContent = f.aciklama;
+          if (fyEl && f.fiyat) fyEl.textContent = f.fiyat;
+          if (ntEl && f.not_metin) ntEl.textContent = f.not_metin;
+          if (lsEl && f.ozellikler) {
+            const items = f.ozellikler.split('
+').filter(x => x.trim());
+            lsEl.innerHTML = items.map(i => '<li class="fiyat-item">' + i.trim() + '</li>').join('');
+          }
         });
       }
 

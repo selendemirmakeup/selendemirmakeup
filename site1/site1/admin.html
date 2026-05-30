@@ -598,38 +598,59 @@
           <div class="section-card-header">
             <div class="section-card-title">💰 Hizmet Fiyatları</div>
           </div>
-          <div class="fiyat-edit-grid">
-            <div class="fiyat-edit-card">
-              <div class="fiyat-edit-name">Sadece Makyaj</div>
-              <div class="p-field">
-                <label class="p-label">Fiyat (₺)</label>
-                <input type="number" class="p-input" id="fiyat1" placeholder="örn: 2500" min="0"/>
+          <div style="display:flex; flex-direction:column; gap:20px; padding:24px;">
+            <!-- Paket 1 -->
+            <div style="border:1px solid var(--border); border-radius:12px; padding:20px;">
+              <div style="font-size:14px; font-weight:600; margin-bottom:16px; color:var(--pink-dark);">💄 Sadece Makyaj</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div class="p-field">
+                  <label class="p-label">Fiyat (₺)</label>
+                  <input type="text" class="p-input" id="fiyat1" placeholder="örn: 2500"/>
+                </div>
+                <div class="p-field">
+                  <label class="p-label">Alt Başlık</label>
+                  <input type="text" class="p-input" id="fiyat1Not" placeholder="Profesyonel makyaj uygulaması"/>
+                </div>
               </div>
               <div class="p-field">
-                <label class="p-label">Alt Başlık</label>
-                <input type="text" class="p-input" id="fiyat1Not" placeholder="Profesyonel makyaj uygulaması"/>
-              </div>
-            </div>
-            <div class="fiyat-edit-card" style="border-color:var(--pink);">
-              <div class="fiyat-edit-name">Makyaj + Türban ⭐</div>
-              <div class="p-field">
-                <label class="p-label">Fiyat (₺)</label>
-                <input type="number" class="p-input" id="fiyat2" placeholder="örn: 3500" min="0"/>
-              </div>
-              <div class="p-field">
-                <label class="p-label">Alt Başlık</label>
-                <input type="text" class="p-input" id="fiyat2Not" placeholder="Komple gelin hazırlığı"/>
+                <label class="p-label">Özellikler (her satıra bir özellik)</label>
+                <textarea class="p-input" id="fiyat1Ozellik" rows="3" placeholder="Cilt hazırlığı dahil&#10;Kalıcı ürünler&#10;Tüm organizasyonlar" style="resize:vertical;"></textarea>
               </div>
             </div>
-            <div class="fiyat-edit-card">
-              <div class="fiyat-edit-name">Sadece Türban</div>
-              <div class="p-field">
-                <label class="p-label">Fiyat (₺)</label>
-                <input type="number" class="p-input" id="fiyat3" placeholder="örn: 1500" min="0"/>
+            <!-- Paket 2 -->
+            <div style="border:2px solid var(--pink); border-radius:12px; padding:20px;">
+              <div style="font-size:14px; font-weight:600; margin-bottom:16px; color:var(--pink-dark);">⭐ Makyaj + Türban</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div class="p-field">
+                  <label class="p-label">Fiyat (₺)</label>
+                  <input type="text" class="p-input" id="fiyat2" placeholder="örn: 3500"/>
+                </div>
+                <div class="p-field">
+                  <label class="p-label">Alt Başlık</label>
+                  <input type="text" class="p-input" id="fiyat2Not" placeholder="Komple gelin hazırlığı"/>
+                </div>
               </div>
               <div class="p-field">
-                <label class="p-label">Alt Başlık</label>
-                <input type="text" class="p-input" id="fiyat3Not" placeholder="Özgün türban tasarımı"/>
+                <label class="p-label">Özellikler (her satıra bir özellik)</label>
+                <textarea class="p-input" id="fiyat2Ozellik" rows="4" placeholder="Tüm makyaj hizmetleri&#10;Kişiye özel türban&#10;Aksesuvar uyumu&#10;Fotoğraf hazırlığı" style="resize:vertical;"></textarea>
+              </div>
+            </div>
+            <!-- Paket 3 -->
+            <div style="border:1px solid var(--border); border-radius:12px; padding:20px;">
+              <div style="font-size:14px; font-weight:600; margin-bottom:16px; color:var(--pink-dark);">🧣 Sadece Türban</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div class="p-field">
+                  <label class="p-label">Fiyat (₺)</label>
+                  <input type="text" class="p-input" id="fiyat3" placeholder="örn: 1500"/>
+                </div>
+                <div class="p-field">
+                  <label class="p-label">Alt Başlık</label>
+                  <input type="text" class="p-input" id="fiyat3Not" placeholder="Özgün türban tasarımı"/>
+                </div>
+              </div>
+              <div class="p-field">
+                <label class="p-label">Özellikler (her satıra bir özellik)</label>
+                <textarea class="p-input" id="fiyat3Ozellik" rows="3" placeholder="Yüz &amp; kıyafet analizi&#10;Özgün tasarım&#10;Aksesuvar önerisi" style="resize:vertical;"></textarea>
               </div>
             </div>
           </div>
@@ -1144,9 +1165,21 @@
       const data = await sbFetch('fiyatlar?order=id.asc');
       if (Array.isArray(data) && data.length > 0) {
         data.forEach(f => {
-          if (f.not === 'f1') { document.getElementById('fiyat1').value = f.fiyat || ''; document.getElementById('fiyat1Not').value = f.aciklama || ''; }
-          if (f.not === 'f2') { document.getElementById('fiyat2').value = f.fiyat || ''; document.getElementById('fiyat2Not').value = f.aciklama || ''; }
-          if (f.not === 'f3') { document.getElementById('fiyat3').value = f.fiyat || ''; document.getElementById('fiyat3Not').value = f.aciklama || ''; }
+          if (f.not === 'f1') {
+            document.getElementById('fiyat1').value = f.fiyat || '';
+            document.getElementById('fiyat1Not').value = f.aciklama || '';
+            if (f.ozellikler) document.getElementById('fiyat1Ozellik').value = f.ozellikler;
+          }
+          if (f.not === 'f2') {
+            document.getElementById('fiyat2').value = f.fiyat || '';
+            document.getElementById('fiyat2Not').value = f.aciklama || '';
+            if (f.ozellikler) document.getElementById('fiyat2Ozellik').value = f.ozellikler;
+          }
+          if (f.not === 'f3') {
+            document.getElementById('fiyat3').value = f.fiyat || '';
+            document.getElementById('fiyat3Not').value = f.aciklama || '';
+            if (f.ozellikler) document.getElementById('fiyat3Ozellik').value = f.ozellikler;
+          }
         });
         return;
       }
@@ -1166,12 +1199,15 @@
     const f = {
       f1: document.getElementById('fiyat1').value,
       f1not: document.getElementById('fiyat1Not').value,
+      f1ozellik: document.getElementById('fiyat1Ozellik').value,
       f2: document.getElementById('fiyat2').value,
       f2not: document.getElementById('fiyat2Not').value,
+      f2ozellik: document.getElementById('fiyat2Ozellik').value,
       f3: document.getElementById('fiyat3').value,
       f3not: document.getElementById('fiyat3Not').value,
-      ulasim: document.getElementById('ulasimUcret').value,
-      ulasimNot: document.getElementById('ulasimNot').value,
+      f3ozellik: document.getElementById('fiyat3Ozellik').value,
+      ulasim: document.getElementById('ulasimUcret') ? document.getElementById('ulasimUcret').value : '',
+      ulasimNot: document.getElementById('ulasimNot') ? document.getElementById('ulasimNot').value : '',
     };
     veriKaydet('fiyatlar', [f]);
     try {
