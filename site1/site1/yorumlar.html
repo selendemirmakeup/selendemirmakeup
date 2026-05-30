@@ -122,48 +122,10 @@
     <p class="section-p" style="margin:0 auto;">Onların gözünden özel günleri 🌸</p>
   </div>
 
-  <!-- Sabit örnek yorumlar -->
-  <div id="sabit-yorumlar" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:40px;" class="reveal">
-    <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative;">
-      <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
-      <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"Düğün günümde hayallerimden de güzel göründüm. Selen hanımın ellerinin değdiği her şey mükemmel oluyor. Teşekkürler!"</p>
-      <div style="display:flex; align-items:center; gap:12px;">
-        <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
-        <div>
-          <div style="font-size:13px; font-weight:500;">Zeynep K.</div>
-          <div style="font-size:11px; color:var(--muted);">Düğün — Mayıs 2026</div>
-        </div>
-      </div>
-      <div style="position:absolute; top:20px; right:20px; font-size:12px; color:var(--pink);">⭐⭐⭐⭐⭐</div>
-    </div>
-    <div style="background:linear-gradient(135deg,var(--pink-deep),var(--pink-dark)); border-radius:20px; padding:32px; color:white; position:relative;">
-      <div style="font-size:32px; color:rgba(255,255,255,0.5); margin-bottom:16px;">❝</div>
-      <p style="font-size:14px; color:rgba(255,255,255,0.85); line-height:1.8; margin-bottom:20px; font-style:italic;">"Nişan günü türban tasarımım inanılmaz şıktı. Herkes nereden yaptırdım diye sordu. Kesinlikle tavsiye ederim!"</p>
-      <div style="display:flex; align-items:center; gap:12px;">
-        <div style="width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
-        <div>
-          <div style="font-size:13px; font-weight:500; color:white;">Fatma S.</div>
-          <div style="font-size:11px; color:rgba(255,255,255,0.6);">Nişan — Nisan 2026</div>
-        </div>
-      </div>
-      <div style="position:absolute; top:20px; right:20px; font-size:12px; color:rgba(255,255,255,0.8);">⭐⭐⭐⭐⭐</div>
-    </div>
-    <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative;">
-      <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
-      <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"Kına gecesi makyajım sabah 7'den gece 12'ye kadar hiç bozulmadı. Profesyonelliği ve güler yüzü için çok teşekkürler."</p>
-      <div style="display:flex; align-items:center; gap:12px;">
-        <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
-        <div>
-          <div style="font-size:13px; font-weight:500;">Elif T.</div>
-          <div style="font-size:11px; color:var(--muted);">Kına — Mart 2026</div>
-        </div>
-      </div>
-      <div style="position:absolute; top:20px; right:20px; font-size:12px; color:var(--pink);">⭐⭐⭐⭐⭐</div>
-    </div>
+  <!-- Müşteri yorumları (Supabase'den çekilir) -->
+  <div id="musteri-yorumlari" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:48px;" class="reveal">
+    <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">Yorumlar yükleniyor... 🌸</div>
   </div>
-
-  <!-- Müşteri yorumları (Google Sheets'ten çekilir) -->
-  <div id="musteri-yorumlari" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:48px;"></div>
 
   <!-- Yorum yaz formu -->
   <div style="max-width:600px; margin:0 auto;" class="reveal">
