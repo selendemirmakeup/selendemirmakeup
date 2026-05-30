@@ -1622,6 +1622,46 @@
 
   async function sayfaVerileriniYukle() {
     try {
+      // Ayarları yükle
+      const aRes = await fetch(SB_URL + '/rest/v1/ayarlar', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+      const ayarlar = await aRes.json();
+      if (Array.isArray(ayarlar) && ayarlar.length > 0) {
+        const a = {};
+        ayarlar.forEach(row => a[row.anahtar] = row.deger);
+
+        // Site başlığı
+        if (a.site_baslik) {
+          document.querySelectorAll('.nav-logo, .footer-logo').forEach(el => el.textContent = a.site_baslik);
+        }
+        // Hero metinleri
+        if (a.hero_baslik1) {
+          const h1 = document.querySelector('.hero-h1');
+          if (h1) {
+            const em = h1.querySelector('em');
+            if (em) em.textContent = a.hero_baslik2 || em.textContent;
+            h1.childNodes[0].textContent = (a.hero_baslik1 || '') + ' ';
+          }
+        }
+        if (a.hero_metin) {
+          const p = document.querySelector('.hero-p');
+          if (p) p.textContent = a.hero_metin;
+        }
+        // WhatsApp
+        if (a.whatsapp) {
+          document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
+            el.href = 'https://wa.me/' + a.whatsapp + '?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8';
+          });
+        }
+        // Instagram
+        if (a.instagram) {
+          document.querySelectorAll('a[href*="instagram.com"]').forEach(el => {
+            if (!el.href.includes('reel')) el.href = 'https://instagram.com/' + a.instagram;
+          });
+        }
+      }
+
       // Fiyatları yükle
       const fRes = await fetch(SB_URL + '/rest/v1/fiyatlar?order=id.asc', {
         headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
