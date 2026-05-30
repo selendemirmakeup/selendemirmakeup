@@ -1555,16 +1555,23 @@
     grid.prepend(kart);
   }
 
-  // Yorumları yükle
+  // Yorumları Supabase'den yükle
   async function yorumlariYukle() {
-    if (YORUM_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyuVIYzaWMhdUQdMXfhPrqfMwXkxt6DOQXT1bMR51JT0FeMUKm-6GNENdESzJJg_pNbEg/exec") return;
     try {
-      const res = await fetch(YORUM_SCRIPT_URL + '?tip=yorumlar');
+      const res = await fetch(SB_URL + '/rest/v1/yorumlar?onaylandi=eq.true&order=created_at.desc', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
       const data = await res.json();
-      if (data.yorumlar) {
-        data.yorumlar.forEach(y => yorumKartiEkle(y));
+      if (Array.isArray(data) && data.length > 0) {
+        // Mevcut yorumları temizle
+        const grid = document.getElementById('yorumlarGrid');
+        if (grid) grid.innerHTML = '';
+        data.forEach(y => {
+          const tarih = y.created_at ? new Date(y.created_at).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }) : (y.tarih || '');
+          yorumKartiEkle({ ad: y.ad, metin: y.metin, puan: y.puan || 5, org: y.org || '', tarih });
+        });
       }
-    } catch(e) {}
+    } catch(e) { console.log('Yorumlar yüklenemedi:', e); }
   }
   yorumlariYukle();
   // ─────────────────────────────────────────────────────────
@@ -1611,7 +1618,7 @@
 
   // ── Supabase veri yükle ───────────────────────────────
   const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
-  const SB_KEY = 'sb_publishable_F3kZ2IZjIhkJ1-rPSTRKnA_1NuIG7xI';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZraGtkdXRkbWlldXBwcnlldHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNDU4MjgsImV4cCI6MjA5NTYyMTgyOH0.UzndmLNMNlvH8_rks_OqoLsqiXbW2tmY_Y1_q2PEhps';
 
   async function sayfaVerileriniYukle() {
     try {
