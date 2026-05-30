@@ -1211,10 +1211,23 @@
     };
     veriKaydet('fiyatlar', [f]);
     try {
-      await sbFetch('fiyatlar', 'DELETE');
-      await sbFetch('fiyatlar', 'POST', { ad: 'Sadece Makyaj', fiyat: f.f1, aciklama: f.f1not, not: 'f1' });
-      await sbFetch('fiyatlar', 'POST', { ad: 'Makyaj + Türban', fiyat: f.f2, aciklama: f.f2not, not: 'f2' });
-      await sbFetch('fiyatlar', 'POST', { ad: 'Sadece Türban', fiyat: f.f3, aciklama: f.f3not, not: 'f3' });
+      // UPSERT - not alanına göre güncelle, yoksa ekle
+      const paketler = [
+        { ad: 'Sadece Makyaj', fiyat: f.f1, aciklama: f.f1not, ozellikler: f.f1ozellik, not: 'f1' },
+        { ad: 'Makyaj + Türban', fiyat: f.f2, aciklama: f.f2not, ozellikler: f.f2ozellik, not: 'f2' },
+        { ad: 'Sadece Türban', fiyat: f.f3, aciklama: f.f3not, ozellikler: f.f3ozellik, not: 'f3' }
+      ];
+      for (const paket of paketler) {
+        // Önce var mı kontrol et
+        const mevcut = await sbFetch('fiyatlar?not=eq.' + paket.not);
+        if (Array.isArray(mevcut) && mevcut.length > 0) {
+          // Güncelle
+          await sbFetch('fiyatlar?not=eq.' + paket.not, 'PATCH', paket);
+        } else {
+          // Ekle
+          await sbFetch('fiyatlar', 'POST', paket);
+        }
+      }
     } catch(e) { console.log('Fiyat kaydetme hatası:', e); }
     bildirim('💾 Fiyatlar kaydedildi!');
   }
