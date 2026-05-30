@@ -1650,7 +1650,12 @@
         });
       }
 
-      // SSS yükle
+    } catch(e) { console.log('Veri yuklenemedi:', e); }
+  }
+
+  // SSS ayrı yükle - diğer hataların etkisinde kalmasın
+  async function sssYukle() {
+    try {
       const sRes = await fetch(SB_URL + '/rest/v1/sss?order=id.asc', {
         headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
       });
@@ -1658,7 +1663,7 @@
       if (Array.isArray(sssList) && sssList.length > 0) {
         const container = document.getElementById('sssContainer');
         if (container) {
-          container.innerHTML = sssList.map(s => 
+          container.innerHTML = sssList.map(s =>
             '<div class="sss-item" onclick="toggleSSS(this)">' +
             '<div class="sss-q">' + s.soru + ' <span class="sss-icon">+</span></div>' +
             '<div class="sss-a">' + s.cevap + '</div>' +
@@ -1666,10 +1671,11 @@
           ).join('');
         }
       }
-    } catch(e) { console.log('Veri yuklenemedi:', e); }
+    } catch(e) { console.log('SSS yuklenemedi:', e); }
   }
 
   sayfaVerileriniYukle();
+  sssYukle();
   // ─────────────────────────────────────────────────────
 </script>
 </body>
