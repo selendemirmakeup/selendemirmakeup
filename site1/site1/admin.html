@@ -861,7 +861,8 @@
 
   // ── SUPABASE ──────────────────────────────────────────
   const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
-  const SB_KEY = 'sb_publishable_F3kZ2IZjIhkJ1-rPSTRKnA_1NuIG7xI';
+  const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZraGtkdXRkbWlldXBwcnlldHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwODUzMTgsImV4cCI6MjA2MzY2MTMxOH0.Ot7nXGVGGUfuiOhVROEQ0nKMk4LRVFgxPTqgRkP5sE4';
 
   async function sbFetch(path, method = 'GET', body = null) {
     const opts = {
@@ -874,40 +875,19 @@
       }
     };
     if (body) opts.body = JSON.stringify(body);
-    const res = await fetch(SB_URL + '/rest/v1/' + path, opts);
-    return res.json();
+    try {
+      const res = await fetch(SB_URL + '/rest/v1/' + path, opts);
+      const text = await res.text();
+      return text ? JSON.parse(text) : null;
+    } catch(e) { console.error('SB hata:', e); return null; }
   }
 
   function veriAl(key) {
     try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; }
   }
 
-  async function veriKaydet(key, val) {
+  function veriKaydet(key, val) {
     localStorage.setItem(key, JSON.stringify(val));
-    // Supabase'e kaydet
-    try {
-      if (key === 'fiyatlar') {
-        const f = Array.isArray(val) ? val[0] : val;
-        // Önce sil, sonra ekle
-        await sbFetch('fiyatlar?id=gt.0', 'DELETE');
-        await sbFetch('fiyatlar', 'POST', {
-          ad: 'Sadece Makyaj', fiyat: f.f1 || '', aciklama: f.f1not || '', not: 'f1'
-        });
-        await sbFetch('fiyatlar', 'POST', {
-          ad: 'Makyaj + Türban', fiyat: f.f2 || '', aciklama: f.f2not || '', not: 'f2'
-        });
-        await sbFetch('fiyatlar', 'POST', {
-          ad: 'Sadece Türban', fiyat: f.f3 || '', aciklama: f.f3not || '', not: 'f3'
-        });
-        console.log('Fiyatlar Supabase kaydedildi');
-      } else if (key === 'sss_sorular') {
-        await sbFetch('sss?id=gt.0', 'DELETE');
-        for (const s of val) {
-          await sbFetch('sss', 'POST', { soru: s.soru, cevap: s.cevap });
-        }
-        console.log('SSS Supabase kaydedildi');
-      }
-    } catch(e) { console.log('Supabase hata:', e); }
   }
 
   // ── PANEL BAŞLAT ─────────────────────────────────────
@@ -918,6 +898,7 @@
     sssYukle();
     reelListeGuncelle();
     ayarlariYukle();
+    galeriYukle();
     istatistikGuncelle();
   }
 
@@ -927,16 +908,21 @@
   async function randevulariYukle() {
     try {
       const data = await sbFetch('randevular?order=created_at.desc');
-      if (Array.isArray(data)) randevular = data;
-      else randevular = veriAl('randevular');
-    } catch(e) { randevular = veriAl('randevular'); }
-    if (randevular.length === 0) {
-      randevular = [
-        { id:1, ad:'Ayşe Yılmaz', tel:'0532 111 22 33', hizmet:'Makyaj + Türban', org:'Düğün', tarih:'2026-06-15', saat:'09:00', durum:'bekliyor', not:'Doğal makyaj istiyor' },
-        { id:2, ad:'Fatma Kaya', tel:'0533 444 55 66', hizmet:'Sadece Makyaj', org:'Nişan', tarih:'2026-06-20', saat:'10:30', durum:'onaylandi', not:'' },
-        { id:3, ad:'Zeynep Demir', tel:'0534 777 88 99', hizmet:'Sadece Türban', org:'Kına', tarih:'2026-06-25', saat:'14:00', durum:'bekliyor', not:'Pembe tonlar' },
-      ];
-      veriKaydet('randevular', randevular);
+      if (Array.isArray(data) && data.length > 0) {
+        randevular = data;
+      } else {
+        randevular = veriAl('randevular');
+        if (randevular.length === 0) {
+          randevular = [
+            { id:1, ad:'Ayşe Yılmaz', tel:'0532 111 22 33', hizmet:'Makyaj + Türban', org:'Düğün', tarih:'2026-06-15', saat:'09:00', durum:'bekliyor', not:'Doğal makyaj istiyor' },
+            { id:2, ad:'Fatma Kaya', tel:'0533 444 55 66', hizmet:'Sadece Makyaj', org:'Nişan', tarih:'2026-06-20', saat:'10:30', durum:'onaylandi', not:'' },
+            { id:3, ad:'Zeynep Demir', tel:'0534 777 88 99', hizmet:'Sadece Türban', org:'Kına', tarih:'2026-06-25', saat:'14:00', durum:'bekliyor', not:'Pembe tonlar' },
+          ];
+          veriKaydet('randevular', randevular);
+        }
+      }
+    } catch(e) {
+      randevular = veriAl('randevular');
     }
     tabloGuncelle();
     istatistikGuncelle();
@@ -953,27 +939,26 @@
       tbody.innerHTML = liste.map(r => `
         <tr>
           <td><strong>${r.ad}</strong>${r.not ? '<br><span style="font-size:11px;color:var(--muted);">' + r.not + '</span>' : ''}</td>
-          <td>${r.tel}</td>
-          <td>${r.hizmet}</td>
-          <td>${r.org}</td>
-          <td>${r.tarih}<br><span style="font-size:11px;color:var(--muted);">${r.saat}</span></td>
+          <td>${r.tel || ''}</td>
+          <td>${r.hizmet || ''}</td>
+          <td>${r.org || ''}</td>
+          <td>${r.tarih || ''}<br><span style="font-size:11px;color:var(--muted);">${r.saat || ''}</span></td>
           <td>${durumBadge(r.durum)}</td>
           <td style="display:flex; gap:6px; flex-wrap:wrap;">
-            ${r.durum !== 'onaylandi' ? '<button class="act-btn act-btn-green" onclick="randevuDurumGuncelle(' + r.id + ', \'onaylandi\')">✓ Onayla</button>' : ''}
-            ${r.durum !== 'iptal' ? '<button class="act-btn act-btn-red" onclick="randevuDurumGuncelle(' + r.id + ', \'iptal\')">✕ İptal</button>' : ''}
+            ${r.durum !== 'onaylandi' ? '<button class="act-btn act-btn-green" onclick="randevuDurumGuncelle(\'' + r.id + '\', \'onaylandi\')">✓ Onayla</button>' : ''}
+            ${r.durum !== 'iptal' ? '<button class="act-btn act-btn-red" onclick="randevuDurumGuncelle(\'' + r.id + '\', \'iptal\')">✕ İptal</button>' : ''}
           </td>
         </tr>
       `).join('');
     }
 
-    // Dashboard son 3
     const son = document.getElementById('sonRandevular');
-    const son3 = randevular.slice(-3).reverse();
+    const son3 = randevular.slice(0, 3);
     son.innerHTML = son3.map(r => `
       <tr>
         <td><strong>${r.ad}</strong></td>
-        <td>${r.hizmet}</td>
-        <td>${r.tarih}</td>
+        <td>${r.hizmet || ''}</td>
+        <td>${r.tarih || ''}</td>
         <td>${durumBadge(r.durum)}</td>
       </tr>
     `).join('') || '<tr><td colspan="4" style="text-align:center; color:var(--muted); padding:32px;">Henüz randevu yok</td></tr>';
@@ -985,8 +970,9 @@
     return '<span class="badge badge-orange">⏳ Bekliyor</span>';
   }
 
-  function randevuDurumGuncelle(id, yeniDurum) {
-    randevular = randevular.map(r => r.id === id ? {...r, durum: yeniDurum} : r);
+  async function randevuDurumGuncelle(id, yeniDurum) {
+    await sbFetch('randevular?id=eq.' + id, 'PATCH', { durum: yeniDurum });
+    randevular = randevular.map(r => r.id == id ? {...r, durum: yeniDurum} : r);
     veriKaydet('randevular', randevular);
     tabloGuncelle();
     istatistikGuncelle();
@@ -998,15 +984,24 @@
   // ── YORUMLAR ─────────────────────────────────────────
   let yorumlar = [];
 
-  function yorumlariYukle() {
-    yorumlar = veriAl('yorumlar_panel');
-    if (yorumlar.length === 0) {
-      yorumlar = [
-        { id:1, ad:'Zeynep K.', metin:'Düğün günümde hayallerimden de güzel göründüm!', puan:5, org:'Düğün', tarih:'Mayıs 2026', durum:'onaylandi' },
-        { id:2, ad:'Elif T.', metin:'Kına gecesi makyajım hiç bozulmadı. Teşekkürler!', puan:5, org:'Kına', tarih:'Mart 2026', durum:'onaylandi' },
-        { id:3, ad:'Merve A.', metin:'Nişan tasarımım harikaydı, çok beğendim.', puan:5, org:'Nişan', tarih:'Mayıs 2026', durum:'bekliyor' },
-      ];
-      veriKaydet('yorumlar_panel', yorumlar);
+  async function yorumlariYukle() {
+    try {
+      const data = await sbFetch('yorumlar?order=created_at.desc');
+      if (Array.isArray(data) && data.length > 0) {
+        yorumlar = data;
+      } else {
+        yorumlar = veriAl('yorumlar_panel');
+        if (yorumlar.length === 0) {
+          yorumlar = [
+            { id:1, ad:'Zeynep K.', metin:'Düğün günümde hayallerimden de güzel göründüm!', puan:5, org:'Düğün', tarih:'Mayıs 2026', durum:'onaylandi' },
+            { id:2, ad:'Elif T.', metin:'Kına gecesi makyajım hiç bozulmadı. Teşekkürler!', puan:5, org:'Kına', tarih:'Mart 2026', durum:'onaylandi' },
+            { id:3, ad:'Merve A.', metin:'Nişan tasarımım harikaydı, çok beğendim.', puan:5, org:'Nişan', tarih:'Mayıs 2026', durum:'bekliyor' },
+          ];
+          veriKaydet('yorumlar_panel', yorumlar);
+        }
+      }
+    } catch(e) {
+      yorumlar = veriAl('yorumlar_panel');
     }
     yorumPanelGuncelle();
     istatistikGuncelle();
@@ -1029,7 +1024,6 @@
       ? '<p style="color:var(--muted); font-size:14px; padding:8px;">Henüz onaylı yorum yok</p>'
       : onaylilar.map(y => yorumKartiHTML(y, false)).join('');
 
-    // Dashboard
     const dashDiv = document.getElementById('dashYorumlar');
     dashDiv.innerHTML = bekleyenler.length === 0
       ? '<p style="color:var(--muted); font-size:14px;">Bekleyen yorum yok 🌸</p>'
@@ -1042,27 +1036,29 @@
         <strong style="font-size:14px;">${y.ad}</strong>
         <span class="badge badge-pink">${y.org}</span>
         <span style="font-size:12px; color:var(--muted);">${y.tarih}</span>
-        <span style="font-size:13px;">${'⭐'.repeat(y.puan)}</span>
+        <span style="font-size:13px;">${'⭐'.repeat(y.puan || 5)}</span>
       </div>
       <div class="yorum-panel-text">"${y.metin}"</div>
       <div class="yorum-panel-actions">
-        ${bekliyor ? '<button class="act-btn act-btn-green" onclick="yorumOnayla(' + y.id + ')">✓ Onayla</button>' : ''}
-        <button class="act-btn act-btn-red" onclick="yorumSil(' + y.id + ')">🗑 Sil</button>
+        ${bekliyor ? '<button class="act-btn act-btn-green" onclick="yorumOnayla(\'' + y.id + '\')">✓ Onayla</button>' : ''}
+        <button class="act-btn act-btn-red" onclick="yorumSil(\'' + y.id + '\')">🗑 Sil</button>
       </div>
     </div>`;
   }
 
-  function yorumOnayla(id) {
-    yorumlar = yorumlar.map(y => y.id === id ? {...y, durum:'onaylandi'} : y);
+  async function yorumOnayla(id) {
+    await sbFetch('yorumlar?id=eq.' + id, 'PATCH', { durum: 'onaylandi' });
+    yorumlar = yorumlar.map(y => y.id == id ? {...y, durum:'onaylandi'} : y);
     veriKaydet('yorumlar_panel', yorumlar);
     yorumPanelGuncelle();
     istatistikGuncelle();
     bildirim('✓ Yorum onaylandı ve sitede yayınlandı!');
   }
 
-  function yorumSil(id) {
+  async function yorumSil(id) {
     if (!confirm('Bu yorumu silmek istediğinizden emin misiniz?')) return;
-    yorumlar = yorumlar.filter(y => y.id !== id);
+    await sbFetch('yorumlar?id=eq.' + id, 'DELETE');
+    yorumlar = yorumlar.filter(y => y.id != id);
     veriKaydet('yorumlar_panel', yorumlar);
     yorumPanelGuncelle();
     istatistikGuncelle();
@@ -1072,18 +1068,52 @@
   // ── GALERİ ───────────────────────────────────────────
   let galeriGorseller = [];
 
-  function galeriEkle(input) {
+  async function galeriYukle() {
+    try {
+      // Supabase Storage'dan listele
+      const res = await fetch(SB_URL + '/storage/v1/object/list/galeri', {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ limit: 100, offset: 0, prefix: '' })
+      });
+      const files = await res.json();
+      if (Array.isArray(files)) {
+        galeriGorseller = files.map(f => ({
+          id: f.name,
+          src: SB_URL + '/storage/v1/object/public/galeri/' + f.name,
+          isim: f.name
+        }));
+      }
+    } catch(e) { console.log('Galeri yükleme hatası:', e); }
+    galeriGuncellePanel();
+    istatistikGuncelle();
+  }
+
+  async function galeriEkle(input) {
     const files = Array.from(input.files);
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        galeriGorseller.push({ id: Date.now() + Math.random(), src: e.target.result, isim: file.name });
-        galeriGuncellePanel();
-        istatistikGuncelle();
-      };
-      reader.readAsDataURL(file);
-    });
-    bildirim('📸 ' + files.length + ' fotoğraf eklendi!');
+    bildirim('📸 Yükleniyor...');
+    for (const file of files) {
+      const ext = file.name.split('.').pop();
+      const isim = Date.now() + '_' + Math.random().toString(36).substr(2,6) + '.' + ext;
+      try {
+        const res = await fetch(SB_URL + '/storage/v1/object/galeri/' + isim, {
+          method: 'POST',
+          headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': file.type },
+          body: file
+        });
+        if (res.ok) {
+          galeriGorseller.push({
+            id: isim,
+            src: SB_URL + '/storage/v1/object/public/galeri/' + isim,
+            isim: isim
+          });
+        }
+      } catch(e) { console.log('Yükleme hatası:', e); }
+    }
+    galeriGuncellePanel();
+    istatistikGuncelle();
+    bildirim('📸 ' + files.length + ' fotoğraf yüklendi!');
+    input.value = '';
   }
 
   function galeriGuncellePanel() {
@@ -1091,7 +1121,7 @@
     document.getElementById('galeriSayi').textContent = galeriGorseller.length + ' görsel';
 
     const ekleBtn = `<div class="galeri-add" onclick="document.getElementById('galeriInput').click()">
-      <input type="file" id="galeriInput" accept="image/*" multiple onchange="galeriEkle(this)"/>
+      <input type="file" id="galeriInput" accept="image/*" multiple onchange="galeriEkle(this)" style="position:absolute;inset:0;opacity:0;cursor:pointer;"/>
       <div class="galeri-add-icon">➕</div>
       <div class="galeri-add-text">Fotoğraf Ekle</div>
     </div>`;
@@ -1104,15 +1134,33 @@
     `).join('') + ekleBtn;
   }
 
-  function galeriSil(id) {
-    galeriGorseller = galeriGorseller.filter(g => g.id != id);
+  async function galeriSil(id) {
+    if (!confirm('Bu görseli silmek istediğinizden emin misiniz?')) return;
+    try {
+      await fetch(SB_URL + '/storage/v1/object/galeri/' + id, {
+        method: 'DELETE',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+    } catch(e) { console.log('Silme hatası:', e); }
+    galeriGorseller = galeriGorseller.filter(g => g.id !== id);
     galeriGuncellePanel();
     istatistikGuncelle();
     bildirim('🗑 Görsel silindi.', 'error');
   }
 
   // ── FİYATLAR ─────────────────────────────────────────
-  function fiyatlariYukle() {
+  async function fiyatlariYukle() {
+    try {
+      const data = await sbFetch('fiyatlar?order=id.asc');
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach(f => {
+          if (f.not === 'f1') { document.getElementById('fiyat1').value = f.fiyat || ''; document.getElementById('fiyat1Not').value = f.aciklama || ''; }
+          if (f.not === 'f2') { document.getElementById('fiyat2').value = f.fiyat || ''; document.getElementById('fiyat2Not').value = f.aciklama || ''; }
+          if (f.not === 'f3') { document.getElementById('fiyat3').value = f.fiyat || ''; document.getElementById('fiyat3Not').value = f.aciklama || ''; }
+        });
+        return;
+      }
+    } catch(e) {}
     const f = veriAl('fiyatlar')[0] || {};
     if (f.f1) document.getElementById('fiyat1').value = f.f1;
     if (f.f1not) document.getElementById('fiyat1Not').value = f.f1not;
@@ -1124,7 +1172,7 @@
     if (f.ulasimNot) document.getElementById('ulasimNot').value = f.ulasimNot;
   }
 
-  function fiyatlariKaydet() {
+  async function fiyatlariKaydet() {
     const f = {
       f1: document.getElementById('fiyat1').value,
       f1not: document.getElementById('fiyat1Not').value,
@@ -1136,13 +1184,27 @@
       ulasimNot: document.getElementById('ulasimNot').value,
     };
     veriKaydet('fiyatlar', [f]);
+    try {
+      await sbFetch('fiyatlar', 'DELETE');
+      await sbFetch('fiyatlar', 'POST', { ad: 'Sadece Makyaj', fiyat: f.f1, aciklama: f.f1not, not: 'f1' });
+      await sbFetch('fiyatlar', 'POST', { ad: 'Makyaj + Türban', fiyat: f.f2, aciklama: f.f2not, not: 'f2' });
+      await sbFetch('fiyatlar', 'POST', { ad: 'Sadece Türban', fiyat: f.f3, aciklama: f.f3not, not: 'f3' });
+    } catch(e) { console.log('Fiyat kaydetme hatası:', e); }
     bildirim('💾 Fiyatlar kaydedildi!');
   }
 
   // ── SSS ──────────────────────────────────────────────
   let sssSorular = [];
 
-  function sssYukle() {
+  async function sssYukle() {
+    try {
+      const data = await sbFetch('sss?order=id.asc');
+      if (Array.isArray(data) && data.length > 0) {
+        sssSorular = data;
+        sssListeGuncelle();
+        return;
+      }
+    } catch(e) {}
     sssSorular = veriAl('sss_sorular');
     if (sssSorular.length === 0) {
       sssSorular = [
@@ -1168,23 +1230,116 @@
     `).join('') || '<p style="padding:24px; color:var(--muted); font-size:14px;">Henüz soru yok</p>';
   }
 
-  function sssSoruEkle() {
+  async function sssSoruEkle() {
     const soru = prompt('Soru:');
     if (!soru) return;
     const cevap = prompt('Cevap:');
     if (!cevap) return;
-    sssSorular.push({ id: Date.now(), soru, cevap });
+    const yeni = { soru, cevap };
+    try {
+      const res = await sbFetch('sss', 'POST', yeni);
+      if (res && res[0]) sssSorular.push(res[0]);
+      else sssSorular.push({ id: Date.now(), soru, cevap });
+    } catch(e) { sssSorular.push({ id: Date.now(), soru, cevap }); }
     veriKaydet('sss_sorular', sssSorular);
     sssListeGuncelle();
     bildirim('✓ Soru eklendi!');
   }
 
-  function sssSil(id) {
+  async function sssSil(id) {
     if (!confirm('Bu soruyu silmek istiyor musunuz?')) return;
+    await sbFetch('sss?id=eq.' + id, 'DELETE');
     sssSorular = sssSorular.filter(s => s.id !== id);
     veriKaydet('sss_sorular', sssSorular);
     sssListeGuncelle();
     bildirim('🗑 Soru silindi.', 'error');
+  }
+
+  // ── REELS ────────────────────────────────────────────
+  let reeller = [];
+
+  function reelListeGuncelle() {
+    reeller = veriAl('reeller');
+    const liste = document.getElementById('reelListesi');
+    if (!liste) return;
+    liste.innerHTML = reeller.length === 0
+      ? '<p style="color:var(--muted); font-size:14px;">Henüz reel eklenmedi</p>'
+      : reeller.map((r, i) => `
+        <div style="padding:12px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:14px; font-weight:500;">${r.aciklama || 'Reel ' + (i+1)}</div>
+            <div style="font-size:12px; color:var(--muted);">${r.link}</div>
+          </div>
+          <button class="act-btn act-btn-red" onclick="reelSil(${i})">🗑 Sil</button>
+        </div>
+      `).join('');
+  }
+
+  function reelEkle() {
+    const link = document.getElementById('reelLink').value.trim();
+    const aciklama = document.getElementById('reelAciklama').value.trim();
+    if (!link) { bildirim('❌ Link girin!', 'error'); return; }
+    reeller.push({ link, aciklama });
+    veriKaydet('reeller', reeller);
+    document.getElementById('reelLink').value = '';
+    document.getElementById('reelAciklama').value = '';
+    reelListeGuncelle();
+    bildirim('✓ Reel eklendi!');
+  }
+
+  function reelKaydet() { reelEkle(); }
+
+  function reelSil(i) {
+    if (!confirm('Bu reeli silmek istiyor musunuz?')) return;
+    reeller.splice(i, 1);
+    veriKaydet('reeller', reeller);
+    reelListeGuncelle();
+    bildirim('🗑 Reel silindi.', 'error');
+  }
+
+  // ── AYARLAR ──────────────────────────────────────────
+  function ayarlariYukle() {
+    const a = veriAl('ayarlar')[0] || {};
+    if (a.baslik) document.getElementById('ayar_baslik').value = a.baslik;
+    if (a.sehir) document.getElementById('ayar_sehir').value = a.sehir;
+    if (a.instagram) document.getElementById('ayar_instagram').value = a.instagram;
+    if (a.wp) document.getElementById('ayar_wp').value = a.wp;
+    if (a.h1_1) document.getElementById('ayar_h1_1').value = a.h1_1;
+    if (a.h1_2) document.getElementById('ayar_h1_2').value = a.h1_2;
+    if (a.hero_metin) document.getElementById('ayar_hero_metin').value = a.hero_metin;
+    if (a.gelin) document.getElementById('ayar_gelin').value = a.gelin;
+    if (a.hizmet_sayi) document.getElementById('ayar_hizmet_sayi').value = a.hizmet_sayi;
+    if (a.memnuniyet) document.getElementById('ayar_memnuniyet').value = a.memnuniyet;
+  }
+
+  function ayarlariKaydet() {
+    const a = {
+      baslik: document.getElementById('ayar_baslik').value,
+      sehir: document.getElementById('ayar_sehir').value,
+      instagram: document.getElementById('ayar_instagram').value,
+      wp: document.getElementById('ayar_wp').value,
+      h1_1: document.getElementById('ayar_h1_1').value,
+      h1_2: document.getElementById('ayar_h1_2').value,
+      hero_metin: document.getElementById('ayar_hero_metin').value,
+      gelin: document.getElementById('ayar_gelin').value,
+      hizmet_sayi: document.getElementById('ayar_hizmet_sayi').value,
+      memnuniyet: document.getElementById('ayar_memnuniyet').value,
+    };
+    veriKaydet('ayarlar', [a]);
+    bildirim('💾 Ayarlar kaydedildi!');
+  }
+
+  function sifreDegistir() {
+    const eski = document.getElementById('eskiSifre').value;
+    const yeni = document.getElementById('yeniSifre').value;
+    const tekrar = document.getElementById('yeniSifreTekrar').value;
+    if (eski !== SIFRE) { bildirim('❌ Mevcut şifre yanlış!', 'error'); return; }
+    if (yeni !== tekrar) { bildirim('❌ Yeni şifreler eşleşmiyor!', 'error'); return; }
+    if (yeni.length < 6) { bildirim('❌ Şifre en az 6 karakter olmalı!', 'error'); return; }
+    bildirim('✓ Şifre güncellendi! (Kod güncellemesi gerekli)', 'success');
+    document.getElementById('eskiSifre').value = '';
+    document.getElementById('yeniSifre').value = '';
+    document.getElementById('yeniSifreTekrar').value = '';
   }
 
   // ── İSTATİSTİK ───────────────────────────────────────
@@ -1194,7 +1349,6 @@
     document.getElementById('statBekleyen').textContent = yorumlar.filter(y => y.durum === 'bekliyor').length;
     document.getElementById('statGaleri').textContent = galeriGorseller.length;
   }
-</script>
 
 </body>
 </html>
