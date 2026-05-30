@@ -678,16 +678,42 @@
       </div>
 
       <!-- SSS -->
+      <!-- SSS -->
       <div id="tab-sss" class="tab-content">
         <div class="topbar">
           <h1 class="page-title"><em>SSS</em> Yönetimi</h1>
           <div class="topbar-right">
-            <button class="p-btn" onclick="toggleSssForm()">➕ Soru Ekle</button>
+            <button class="p-btn" onclick="toggleSssForm(false)">➕ Soru Ekle</button>
           </div>
         </div>
+
+        <!-- Ekle / Düzenle formu -->
+        <div class="section-card" id="sssForm" style="display:none; margin-bottom:20px;">
+          <div class="section-card-header">
+            <div class="section-card-title" id="sssFormBaslik">➕ Yeni Soru Ekle</div>
+          </div>
+          <div style="padding:24px;">
+            <input type="hidden" id="sssEditId" value=""/>
+            <div class="p-field">
+              <label class="p-label">Soru</label>
+              <input type="text" class="p-input" id="yeniSoru" placeholder="Örn: Randevu ne kadar önceden alınmalı?"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">Cevap</label>
+              <textarea class="p-input" id="yeniCevap" rows="3" placeholder="Sorunun cevabını buraya yazın..." style="resize:vertical;"></textarea>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button class="p-btn" onclick="sssSoruKaydet()">💾 Kaydet</button>
+              <button onclick="toggleSssForm(false)" style="padding:11px 20px; border:1.5px solid var(--border); border-radius:10px; background:white; font-family:'DM Sans',sans-serif; font-size:13px; cursor:pointer; color:var(--muted);">İptal</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Liste -->
         <div class="section-card" id="sssList">
           <div class="section-card-header">
             <div class="section-card-title">❓ Sık Sorulan Sorular</div>
+            <span class="badge badge-pink" id="sssSayi">0 soru</span>
           </div>
           <div id="sssListesi" style="padding:8px 0;"></div>
         </div>
@@ -1244,72 +1270,129 @@
         return;
       }
     } catch(e) {}
-    sssSorular = veriAl('sss_sorular');
-    if (sssSorular.length === 0) {
-      sssSorular = [
-        { id:1, soru:'Randevu ne kadar önceden alınmalı?', cevap:'Düğün ve özel organizasyonlar için en az 2-3 hafta öncesinden randevu almanızı öneririm.' },
-        { id:2, soru:'Eve geliyor musunuz?', cevap:'Evet! İstanbul ve çevresinde eve gelerek hizmet veriyorum.' },
-        { id:3, soru:'Kapora alıyor musunuz?', cevap:'Evet, randevu kesinleştirmek için kapora alınmaktadır.' },
-      ];
-      veriKaydet('sss_sorular', sssSorular);
-    }
+    // Supabase'den gelmezse localStorage fallback
+    sssSorular = veriAl('sss_sorular') || [];
     sssListeGuncelle();
   }
 
   function sssListeGuncelle() {
     const liste = document.getElementById('sssListesi');
-    liste.innerHTML = sssSorular.map(s => `
-      <div style="padding:16px 24px; border-bottom:1px solid var(--border); display:flex; gap:12px; align-items:flex-start;">
-        <div style="flex:1;">
-          <div style="font-size:14px; font-weight:500; margin-bottom:4px;">${s.soru}</div>
-          <div style="font-size:13px; color:var(--muted);">${s.cevap}</div>
-        </div>
-        <button class="act-btn act-btn-red" onclick="sssSil(${s.id})">🗑</button>
-      </div>
-    `).join('') || '<p style="padding:24px; color:var(--muted); font-size:14px;">Henüz soru yok</p>';
-  }
-
-  function toggleSssForm() {
-    const f = document.getElementById('sssForm');
-    if (f) f.style.display = f.style.display === 'none' ? 'block' : 'none';
-  }
-
-  async function sssSoruEkle() {
-    const soruEl = document.getElementById('yeniSoru');
-    const cevapEl = document.getElementById('yeniCevap');
-    if (!soruEl || !cevapEl) {
-      // Fallback to prompt
-      const soru = prompt('Soru:');
-      if (!soru) return;
-      const cevap = prompt('Cevap:');
-      if (!cevap) return;
-      const yeni = { soru, cevap };
-      try {
-        const res = await sbFetch('sss', 'POST', yeni);
-        if (Array.isArray(res) && res[0]) sssSorular.push(res[0]);
-        else sssSorular.push({ id: Date.now(), soru, cevap });
-      } catch(e) { sssSorular.push({ id: Date.now(), soru, cevap }); }
-      sssListeGuncelle();
-      bildirim('✓ Soru eklendi!');
+    const sayiEl = document.getElementById('sssSayi');
+    if (sayiEl) sayiEl.textContent = sssSorular.length + ' soru';
+    if (!liste) return;
+    if (sssSorular.length === 0) {
+      liste.innerHTML = '<p style="padding:24px; color:var(--muted); font-size:14px; text-align:center;">Henüz soru eklenmemiş</p>';
       return;
     }
+    liste.innerHTML = sssSorular.map(s => `
+      <div style="padding:16px 24px; border-bottom:1px solid var(--border); display:flex; gap:12px; align-items:flex-start;">
+        <div style="flex:1; min-width:0;">
+          <div style="font-size:14px; font-weight:500; margin-bottom:5px;">${s.soru}</div>
+          <div style="font-size:13px; color:var(--muted); line-height:1.55;">${s.cevap}</div>
+        </div>
+        <div style="display:flex; gap:6px; flex-shrink:0; margin-top:2px;">
+          <button class="act-btn act-btn-pink" onclick="sssDuzenle(${s.id})" title="Düzenle">✏️ Düzenle</button>
+          <button class="act-btn act-btn-red" onclick="sssSil(${s.id})" title="Sil">🗑 Sil</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Formu aç: false = yeni ekle, id = düzenle modu
+  function toggleSssForm(editId) {
+    const f = document.getElementById('sssForm');
+    const baslik = document.getElementById('sssFormBaslik');
+    const soruEl = document.getElementById('yeniSoru');
+    const cevapEl = document.getElementById('yeniCevap');
+    const editIdEl = document.getElementById('sssEditId');
+
+    if (!f) return;
+
+    // Zaten açıksa ve aynı mod → kapat
+    const suankiId = editIdEl ? editIdEl.value : '';
+    const ayniMod = (editId === false && suankiId === '') || (editId && String(editId) === suankiId);
+    if (f.style.display !== 'none' && ayniMod) {
+      f.style.display = 'none';
+      return;
+    }
+
+    // Düzenleme modu
+    if (editId && editId !== false) {
+      const s = sssSorular.find(x => x.id === editId);
+      if (!s) return;
+      baslik.textContent = '✏️ Soruyu Düzenle';
+      soruEl.value = s.soru;
+      cevapEl.value = s.cevap;
+      editIdEl.value = editId;
+    } else {
+      // Yeni ekleme modu
+      baslik.textContent = '➕ Yeni Soru Ekle';
+      soruEl.value = '';
+      cevapEl.value = '';
+      editIdEl.value = '';
+    }
+
+    f.style.display = 'block';
+    soruEl.focus();
+    f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function sssDuzenle(id) {
+    toggleSssForm(id);
+  }
+
+  // Tek fonksiyon: hem ekle hem güncelle
+  async function sssSoruKaydet() {
+    const soruEl = document.getElementById('yeniSoru');
+    const cevapEl = document.getElementById('yeniCevap');
+    const editIdEl = document.getElementById('sssEditId');
     const soru = soruEl.value.trim();
     const cevap = cevapEl.value.trim();
-    if (!soru || !cevap) { bildirim('❌ Soru ve cevap boş bırakılamaz!', 'error'); return; }
-    try {
-      const res = await sbFetch('sss', 'POST', { soru, cevap });
-      if (Array.isArray(res) && res[0]) sssSorular.push(res[0]);
-      else sssSorular.push({ id: Date.now(), soru, cevap });
-    } catch(e) { sssSorular.push({ id: Date.now(), soru, cevap }); }
+    const editId = editIdEl ? editIdEl.value : '';
+
+    if (!soru || !cevap) {
+      bildirim('❌ Soru ve cevap boş bırakılamaz!', 'error');
+      return;
+    }
+
+    if (editId) {
+      // GÜNCELLE
+      try {
+        await sbFetch('sss?id=eq.' + editId, 'PATCH', { soru, cevap });
+        const idx = sssSorular.findIndex(x => String(x.id) === String(editId));
+        if (idx !== -1) { sssSorular[idx].soru = soru; sssSorular[idx].cevap = cevap; }
+        bildirim('✓ Soru güncellendi!');
+      } catch(e) {
+        // Supabase hata → sadece local güncelle
+        const idx = sssSorular.findIndex(x => String(x.id) === String(editId));
+        if (idx !== -1) { sssSorular[idx].soru = soru; sssSorular[idx].cevap = cevap; }
+        bildirim('✓ Güncellendi (lokal)');
+      }
+    } else {
+      // YENİ EKLE
+      try {
+        const res = await sbFetch('sss', 'POST', { soru, cevap });
+        if (Array.isArray(res) && res[0]) sssSorular.push(res[0]);
+        else sssSorular.push({ id: Date.now(), soru, cevap });
+        bildirim('✓ Soru eklendi!');
+      } catch(e) {
+        sssSorular.push({ id: Date.now(), soru, cevap });
+        bildirim('✓ Soru eklendi (lokal)');
+      }
+    }
+
+    veriKaydet('sss_sorular', sssSorular);
+    sssListeGuncelle();
+    // Formu kapat & temizle
+    document.getElementById('sssForm').style.display = 'none';
     soruEl.value = '';
     cevapEl.value = '';
-    sssListeGuncelle();
-    bildirim('✓ Soru eklendi!');
+    if (editIdEl) editIdEl.value = '';
   }
 
   async function sssSil(id) {
     if (!confirm('Bu soruyu silmek istiyor musunuz?')) return;
-    await sbFetch('sss?id=eq.' + id, 'DELETE');
+    try { await sbFetch('sss?id=eq.' + id, 'DELETE'); } catch(e) {}
     sssSorular = sssSorular.filter(s => s.id !== id);
     veriKaydet('sss_sorular', sssSorular);
     sssListeGuncelle();
