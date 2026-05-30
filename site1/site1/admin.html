@@ -986,29 +986,21 @@
   async function yorumlariYukle() {
     try {
       const data = await sbFetch('yorumlar?order=created_at.desc');
-      if (Array.isArray(data) && data.length > 0) {
+      if (Array.isArray(data)) {
         yorumlar = data;
       } else {
-        yorumlar = veriAl('yorumlar_panel');
-        if (yorumlar.length === 0) {
-          yorumlar = [
-            { id:1, ad:'Zeynep K.', metin:'Düğün günümde hayallerimden de güzel göründüm!', puan:5, org:'Düğün', tarih:'Mayıs 2026', durum:'onaylandi' },
-            { id:2, ad:'Elif T.', metin:'Kına gecesi makyajım hiç bozulmadı. Teşekkürler!', puan:5, org:'Kına', tarih:'Mart 2026', durum:'onaylandi' },
-            { id:3, ad:'Merve A.', metin:'Nişan tasarımım harikaydı, çok beğendim.', puan:5, org:'Nişan', tarih:'Mayıs 2026', durum:'bekliyor' },
-          ];
-          veriKaydet('yorumlar_panel', yorumlar);
-        }
+        yorumlar = [];
       }
     } catch(e) {
-      yorumlar = veriAl('yorumlar_panel');
+      yorumlar = [];
     }
     yorumPanelGuncelle();
     istatistikGuncelle();
   }
 
   function yorumPanelGuncelle() {
-    const bekleyenler = yorumlar.filter(y => y.onaylandi === false || y.durum === 'bekliyor');
-    const onaylilar = yorumlar.filter(y => y.onaylandi === true || y.durum === 'onaylandi');
+    const bekleyenler = yorumlar.filter(y => !y.onaylandi);
+    const onaylilar = yorumlar.filter(y => y.onaylandi === true);
 
     document.getElementById('bekleyenSayi').textContent = bekleyenler.length;
     document.getElementById('onayliSayi').textContent = onaylilar.length;
@@ -1030,11 +1022,12 @@
   }
 
   function yorumKartiHTML(y, bekliyor) {
+    const tarih = y.created_at ? new Date(y.created_at).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }) : (y.tarih || '');
     return `<div class="yorum-panel-card">
       <div class="yorum-panel-meta">
         <strong style="font-size:14px;">${y.ad}</strong>
-        <span class="badge badge-pink">${y.org}</span>
-        <span style="font-size:12px; color:var(--muted);">${y.tarih}</span>
+        <span class="badge badge-pink">${y.org || ''}</span>
+        <span style="font-size:12px; color:var(--muted);">${tarih}</span>
         <span style="font-size:13px;">${'⭐'.repeat(y.puan || 5)}</span>
       </div>
       <div class="yorum-panel-text">"${y.metin}"</div>
@@ -1047,7 +1040,7 @@
 
   async function yorumOnayla(id) {
     await sbFetch('yorumlar?id=eq.' + id, 'PATCH', { onaylandi: true });
-    yorumlar = yorumlar.map(y => y.id == id ? {...y, onaylandi:true, durum:'onaylandi'} : y);
+    yorumlar = yorumlar.map(y => y.id == id ? {...y, onaylandi:true} : y);
     veriKaydet('yorumlar_panel', yorumlar);
     yorumPanelGuncelle();
     istatistikGuncelle();
@@ -1344,8 +1337,8 @@
   // ── İSTATİSTİK ───────────────────────────────────────
   function istatistikGuncelle() {
     document.getElementById('statRandevu').textContent = randevular.length;
-    document.getElementById('statYorum').textContent = yorumlar.filter(y => y.onaylandi === true || y.durum === 'onaylandi').length;
-    document.getElementById('statBekleyen').textContent = yorumlar.filter(y => y.onaylandi === false || y.durum === 'bekliyor').length;
+    document.getElementById('statYorum').textContent = yorumlar.filter(y => y.onaylandi === true).length;
+    document.getElementById('statBekleyen').textContent = yorumlar.filter(y => !y.onaylandi).length;
     document.getElementById('statGaleri').textContent = galeriGorseller.length;
   }
 
