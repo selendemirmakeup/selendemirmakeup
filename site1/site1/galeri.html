@@ -839,41 +839,14 @@
       <div class="section-label">Çalışmalarım</div>
       <h2 class="section-h2">Galeri</h2>
     </div>
-    <a href="https://instagram.com/selendmiiirr" target="_blank" class="galeri-link">Instagram'da Daha Fazlası →</a>
+    <a href="https://instagram.com/selendmiiir" target="_blank" class="galeri-link">Instagram'da Daha Fazlası →</a>
   </div>
-  <div class="galeri-grid reveal">
-    <div class="galeri-item" onclick="openLightbox(this)">
-      <div class="galeri-inner">S</div>
-      <div class="galeri-overlay"><span class="galeri-overlay-text">Gelin Makyajı</span></div>
-    </div>
-    <div class="galeri-item" onclick="openLightbox(this)">
-      <div class="galeri-inner">✨</div>
-      <div class="galeri-overlay"><span class="galeri-overlay-text">Türban Tasarımı</span></div>
-    </div>
-    <div class="galeri-item" onclick="openLightbox(this)">
-      <div class="galeri-inner">💄</div>
-      <div class="galeri-overlay"><span class="galeri-overlay-text">Nişan Makyajı</span></div>
-    </div>
-    <div class="galeri-item" onclick="openLightbox(this)">
-      <div class="galeri-inner">🌸</div>
-      <div class="galeri-overlay"><span class="galeri-overlay-text">Kına Gecesi</span></div>
-    </div>
-    <div class="galeri-item" onclick="openLightbox(this)">
-      <div class="galeri-inner">🤍</div>
-      <div class="galeri-overlay"><span class="galeri-overlay-text">Düğün Hazırlığı</span></div>
-    </div>
-    <div class="galeri-item" onclick="openLightbox(this)">
-      <div class="galeri-inner">🧣</div>
-      <div class="galeri-overlay"><span class="galeri-overlay-text">Türban & Aksesuar</span></div>
-    </div>
-    <div class="galeri-item" onclick="openLightbox(this)">
-      <div class="galeri-inner">💍</div>
-      <div class="galeri-overlay"><span class="galeri-overlay-text">Söz Töreni</span></div>
+  <div class="galeri-grid reveal" id="galeriGrid">
+    <div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">
+      <div style="font-size:32px; margin-bottom:12px;">🌸</div>
+      <div>Fotoğraflar yükleniyor...</div>
     </div>
   </div>
-  <p style="text-align:center; margin-top:28px; font-size:13px; color:var(--muted);">
-    📸 Fotoğraflarınızı eklemek için görselleri bu alana yükleyin
-  </p>
 </section>
 <section id="oncesi-sonrasi" style="padding-top:120px;">
   <div class="reveal" style="text-align:center; margin-bottom:56px;">
@@ -984,5 +957,47 @@
   });
 </script>
 
+
+<script>
+  const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZraGtkdXRkbWlldXBwcnlldHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwODUzMTgsImV4cCI6MjA2MzY2MTMxOH0.Ot7nXGVGGUfuiOhVROEQ0nKMk4LRVFgxPTqgRkP5sE4';
+
+  async function galeriYukle() {
+    const grid = document.getElementById('galeriGrid');
+    try {
+      const res = await fetch(SB_URL + '/storage/v1/object/list/galeri', {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ limit: 100, offset: 0, prefix: '' })
+      });
+      const files = await res.json();
+      if (!Array.isArray(files) || files.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);"><div style="font-size:32px; margin-bottom:12px;">🌸</div><div>Yakında fotoğraflar eklenecek</div></div>';
+        return;
+      }
+      grid.innerHTML = files.map(f => {
+        const url = SB_URL + '/storage/v1/object/public/galeri/' + f.name;
+        return `<div class="galeri-item" onclick="openLightboxImg('${url}', '${f.name}')">
+          <img src="${url}" alt="Selen Demir Makeup" style="width:100%;height:100%;object-fit:cover;"/>
+          <div class="galeri-overlay"><span class="galeri-overlay-text">Selen Demir Makeup</span></div>
+        </div>`;
+      }).join('');
+    } catch(e) {
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">Fotoğraflar yüklenemedi</div>';
+    }
+  }
+
+  function openLightboxImg(src, caption) {
+    const lb = document.getElementById('lightbox');
+    const content = document.getElementById('lightboxContent');
+    const cap = document.getElementById('lightboxCaption');
+    content.innerHTML = '<img src="' + src + '" alt="' + caption + '" style="max-width:90vw;max-height:85vh;border-radius:12px;object-fit:contain;"/>';
+    cap.textContent = 'Selen Demir Makeup';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  galeriYukle();
+</script>
 </body>
 </html>
