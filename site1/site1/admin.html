@@ -1023,19 +1023,21 @@
 
   function yorumKartiHTML(y, bekliyor) {
     const tarih = y.created_at ? new Date(y.created_at).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }) : (y.tarih || '');
-    return `<div class="yorum-panel-card">
-      <div class="yorum-panel-meta">
-        <strong style="font-size:14px;">${y.ad}</strong>
-        <span class="badge badge-pink">${y.org || ''}</span>
-        <span style="font-size:12px; color:var(--muted);">${tarih}</span>
-        <span style="font-size:13px;">${'⭐'.repeat(y.puan || 5)}</span>
-      </div>
-      <div class="yorum-panel-text">"${y.metin}"</div>
-      <div class="yorum-panel-actions">
-        ${bekliyor ? '<button class="act-btn act-btn-green" onclick="yorumOnayla(\'' + y.id + '\')">✓ Onayla</button>' : ''}
-        <button class="act-btn act-btn-red" onclick="yorumSil(\'' + y.id + '\')">🗑 Sil</button>
-      </div>
-    </div>`;
+    const yid = y.id;
+    const yildiz = '⭐'.repeat(y.puan || 5);
+    let html = '<div class="yorum-panel-card">';
+    html += '<div class="yorum-panel-meta">';
+    html += '<strong style="font-size:14px;">' + y.ad + '</strong>';
+    html += '<span class="badge badge-pink">' + (y.org || '') + '</span>';
+    html += '<span style="font-size:12px; color:var(--muted);">' + tarih + '</span>';
+    html += '<span style="font-size:13px;">' + yildiz + '</span>';
+    html += '</div>';
+    html += '<div class="yorum-panel-text">"' + y.metin + '"</div>';
+    html += '<div class="yorum-panel-actions">';
+    if (bekliyor) html += '<button class="act-btn act-btn-green" onclick="yorumOnayla(' + yid + ')">✓ Onayla</button>';
+    html += '<button class="act-btn act-btn-red" onclick="yorumSil(' + yid + ')">🗑 Sil</button>';
+    html += '</div></div>';
+    return html;
   }
 
   async function yorumOnayla(id) {
