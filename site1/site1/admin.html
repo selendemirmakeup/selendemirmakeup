@@ -1288,34 +1288,53 @@
   }
 
   // ── AYARLAR ──────────────────────────────────────────
-  function ayarlariYukle() {
-    const a = veriAl('ayarlar')[0] || {};
-    if (a.baslik) document.getElementById('ayar_baslik').value = a.baslik;
-    if (a.instagram) document.getElementById('ayar_instagram').value = a.instagram;
-    if (a.wp) document.getElementById('ayar_wp').value = a.wp;
-    if (a.h1_1) document.getElementById('ayar_h1_1').value = a.h1_1;
-    if (a.h1_2) document.getElementById('ayar_h1_2').value = a.h1_2;
-    if (a.hero_metin) document.getElementById('ayar_hero_metin').value = a.hero_metin;
-    if (a.gelin) document.getElementById('ayar_gelin').value = a.gelin;
-    if (a.hizmet_sayi) document.getElementById('ayar_hizmet_sayi').value = a.hizmet_sayi;
-    if (a.memnuniyet) document.getElementById('ayar_memnuniyet').value = a.memnuniyet;
+  function getVal(id) {
+    const el = document.getElementById(id);
+    return el ? el.value : null;
   }
 
-  function ayarlariKaydet() {
-    const a = {
-      baslik: document.getElementById('ayar_baslik').value,
-      sehir: document.getElementById('ayar_sehir').value,
-      instagram: document.getElementById('ayar_instagram').value,
-      wp: document.getElementById('ayar_wp').value,
-      h1_1: document.getElementById('ayar_h1_1').value,
-      h1_2: document.getElementById('ayar_h1_2').value,
-      hero_metin: document.getElementById('ayar_hero_metin').value,
-      gelin: document.getElementById('ayar_gelin').value,
-      hizmet_sayi: document.getElementById('ayar_hizmet_sayi').value,
-      memnuniyet: document.getElementById('ayar_memnuniyet').value,
+  async function ayarlariYukle() {
+    try {
+      const data = await sbFetch('ayarlar');
+      if (Array.isArray(data) && data.length > 0) {
+        const a = {};
+        data.forEach(row => a[row.anahtar] = row.deger);
+        if (a.site_baslik) document.getElementById('ayar_baslik').value = a.site_baslik;
+        if (a.instagram) document.getElementById('ayar_instagram').value = a.instagram;
+        if (a.whatsapp) document.getElementById('ayar_wp').value = a.whatsapp;
+        if (a.hero_baslik1) document.getElementById('ayar_h1_1').value = a.hero_baslik1;
+        if (a.hero_baslik2) document.getElementById('ayar_h1_2').value = a.hero_baslik2;
+        if (a.hero_metin) document.getElementById('ayar_hero_metin').value = a.hero_metin;
+        const ybEl = document.getElementById('ayar_yorumlar_baslik');
+        const yaEl = document.getElementById('ayar_yorumlar_alt');
+        if (ybEl && a.yorumlar_baslik) ybEl.value = a.yorumlar_baslik;
+        if (yaEl && a.yorumlar_alt) yaEl.value = a.yorumlar_alt;
+      }
+    } catch(e) { console.log('Ayarlar yüklenemedi:', e); }
+  }
+
+  async function ayarlariKaydet() {
+    const map = {
+      'site_baslik': 'ayar_baslik',
+      'instagram': 'ayar_instagram',
+      'whatsapp': 'ayar_wp',
+      'hero_baslik1': 'ayar_h1_1',
+      'hero_baslik2': 'ayar_h1_2',
+      'hero_metin': 'ayar_hero_metin',
+      'yorumlar_baslik': 'ayar_yorumlar_baslik',
+      'yorumlar_alt': 'ayar_yorumlar_alt'
     };
-    veriKaydet('ayarlar', [a]);
-    bildirim('💾 Ayarlar kaydedildi!');
+    try {
+      for (const [anahtar, elId] of Object.entries(map)) {
+        const deger = getVal(elId);
+        if (deger !== null) {
+          await sbFetch('ayarlar?anahtar=eq.' + anahtar, 'PATCH', { deger });
+        }
+      }
+      bildirim('💾 Ayarlar kaydedildi!');
+    } catch(e) {
+      bildirim('❌ Kaydetme hatası!', 'error');
+    }
   }
 
   function sifreDegistir() {
