@@ -1679,55 +1679,50 @@
       const ayarlar = await aRes.json();
       const a = {};
       if (Array.isArray(ayarlar) && ayarlar.length > 0) {
-        ayarlar.forEach(row => a[row.anahtar] = row.deger);
-
-        // Site başlığı
-        if (a.site_baslik) {
-          document.querySelectorAll('.nav-logo, .footer-logo').forEach(el => el.textContent = a.site_baslik);
-        }
-        // İstatistik sayıları
-        // İstatistik etiketleri
-        if (a.stat1_label) { const el = document.getElementById('heroStatLabel1'); if(el) el.textContent = a.stat1_label; }
-        if (a.stat2_label) { const el = document.getElementById('heroStatLabel2'); if(el) el.textContent = a.stat2_label; }
-        if (a.stat3_label) { const el = document.getElementById('heroStatLabel3'); if(el) el.textContent = a.stat3_label; }
-        // Sayıları sessizce yerleştir (animasyon IntersectionObserver ile çalışacak)
-        if (a.stat1_sayi) { const el = document.getElementById('heroStat1'); if(el) el.setAttribute('data-hedef', a.stat1_sayi); el.textContent = a.stat1_sayi; }
-        if (a.stat2_sayi) { const el = document.getElementById('heroStat2'); if(el) el.setAttribute('data-hedef', a.stat2_sayi); el.textContent = a.stat2_sayi; }
-        if (a.stat3_sayi) { const el = document.getElementById('heroStat3'); if(el) el.setAttribute('data-hedef', a.stat3_sayi); el.textContent = a.stat3_sayi; }
-        // Hero metinleri
-        if (a.hero_baslik1) {
-          const h1 = document.querySelector('.hero-h1');
-          if (h1) {
-            const em = h1.querySelector('em');
-            if (em) em.textContent = a.hero_baslik2 || em.textContent;
-            h1.childNodes[0].textContent = (a.hero_baslik1 || '') + ' ';
-          }
-        }
-        if (a.hero_metin) {
-          const p = document.querySelector('.hero-p');
-          if (p) p.textContent = a.hero_metin;
-        }
-        // WhatsApp
-        if (a.whatsapp) {
-          document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
-            el.href = 'https://wa.me/' + a.whatsapp + '?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8';
-          });
-        }
-        // Instagram
-        if (a.instagram) {
-          document.querySelectorAll('a[href*="instagram.com"]').forEach(el => {
-            if (!el.href.includes('reel')) el.href = 'https://instagram.com/' + a.instagram;
-          });
-        }
+        ayarlar.forEach(row => { a[row.anahtar] = row.deger; });
       }
 
-        // Neden Ben / Hizmetler metin alanları
-        const nbFields = ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt'];
-        nbFields.forEach(k => { const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k]; });
-
-        // Dinamik kartlar
-        if (a.hizmet_kartlar) {
-          try {
+      // Site başlığı
+      if (a.site_baslik) {
+        document.querySelectorAll('.nav-logo, .footer-logo').forEach(el => el.textContent = a.site_baslik);
+      }
+      // Hero istatistik etiketleri
+      if (a.stat1_label) { const el = document.getElementById('heroStatLabel1'); if(el) el.textContent = a.stat1_label; }
+      if (a.stat2_label) { const el = document.getElementById('heroStatLabel2'); if(el) el.textContent = a.stat2_label; }
+      if (a.stat3_label) { const el = document.getElementById('heroStatLabel3'); if(el) el.textContent = a.stat3_label; }
+      if (a.stat1_sayi) { const el = document.getElementById('heroStat1'); if(el) { el.setAttribute('data-hedef', a.stat1_sayi); el.textContent = a.stat1_sayi; } }
+      if (a.stat2_sayi) { const el = document.getElementById('heroStat2'); if(el) { el.setAttribute('data-hedef', a.stat2_sayi); el.textContent = a.stat2_sayi; } }
+      if (a.stat3_sayi) { const el = document.getElementById('heroStat3'); if(el) { el.setAttribute('data-hedef', a.stat3_sayi); el.textContent = a.stat3_sayi; } }
+      // Hero metinleri
+      if (a.hero_baslik1) {
+        const h1 = document.querySelector('.hero-h1');
+        if (h1) {
+          const em = h1.querySelector('em');
+          const emText = em ? em.outerHTML.replace(em.textContent, a.hero_baslik2 || em.textContent) : '';
+          h1.innerHTML = a.hero_baslik1 + ' ' + emText;
+        }
+      }
+      if (a.hero_metin) {
+        const el = document.querySelector('.hero-p');
+        if (el) el.textContent = a.hero_metin;
+      }
+      if (a.whatsapp) {
+        document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
+          el.href = 'https://wa.me/' + a.whatsapp.replace(/\D/g,'') + '?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8';
+        });
+      }
+      if (a.instagram) {
+        document.querySelectorAll('a[href*="instagram.com"]').forEach(el => {
+          el.href = 'https://instagram.com/' + a.instagram.replace('@','');
+        });
+      }
+      // Neden Ben / Hizmetler metin alanları
+      ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt'].forEach(k => {
+        const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k];
+      });
+      // Dinamik kartlar
+      if (a.hizmet_kartlar) {
+        try {
           const kartlar = JSON.parse(a.hizmet_kartlar);
           const kolon = parseInt(a.kart_kolon) || 3;
           const container = document.getElementById('hizmetKartContainer');
@@ -1742,14 +1737,14 @@
               const ac = dk ? '#f4a0bc' : 'var(--pink-deep)';
               if (t === 'markalar') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('') + '</div>';
               if (t === 'etiketler') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map((e,i) => '<span style="font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:' + (i===0?'var(--pink-deep)':'#fdf0f3') + ';color:' + (i===0?'#fff':'#993556') + ';">' + e.trim() + '</span>').join('') + '</div>';
-              if (t === 'liste') return '<ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">' + k.ekstra.split('\n').filter(l=>l.trim()).map(l => '<li style="font-size:12.5px;color:' + tc + ';display:flex;gap:8px;line-height:1.5;"><span style="color:' + ac + ';font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>' + l.trim() + '</li>').join('') + '</ul>';
-              if (t === 'ikonlu-liste') return '<div>' + k.ekstra.split('\n').filter(l=>l.trim()).map((l,i,arr) => { const [b,s] = l.split('|'); return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;' + (i<arr.length-1?'border-bottom:1px solid rgba(0,0,0,0.06);':'') + '"><div style="font-size:16px;width:30px;height:30px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + (b||'').split(' ')[0] + '</div><div><div style="font-size:12px;font-weight:700;color:var(--text);">' + (b||'').replace(/^\S+\s/,'') + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>';
-              if (t === 'adimlar') { const rows = k.ekstra.split('\n').filter(l=>l.trim()); return '<div>' + rows.map((l,i) => { const [b,s] = l.split('|'); const last = i===rows.length-1; return '<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:24px;height:24px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">' + (last?'✓':i+1) + '</div>' + (!last?'<div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div>':'') + '</div><div style="padding-bottom:' + (last?'0':'12px') + ';"><div style="font-size:12px;font-weight:700;color:var(--text);">' + (b||'') + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>'; }
+              if (t === 'liste') return '<ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">' + k.ekstra.split('\n').filter(l=>l.trim()).map(l => '<li style="font-size:12.5px;color:' + tc + ';display:flex;gap:8px;line-height:1.5;"><span style="color:' + ac + ';font-size:10px;flex-shrink:0;margin-top:2px;">&#10022;</span>' + l.trim() + '</li>').join('') + '</ul>';
+              if (t === 'ikonlu-liste') return '<div>' + k.ekstra.split('\n').filter(l=>l.trim()).map((l,i,arr) => { const p=l.split('|'); const b=p[0]||''; const s=p[1]||''; return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;' + (i<arr.length-1?'border-bottom:1px solid rgba(0,0,0,0.06);':'') + '"><div style="font-size:16px;width:30px;height:30px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + b.split(' ')[0] + '</div><div><div style="font-size:12px;font-weight:700;color:var(--text);">' + b.replace(/^\S+\s*/,'') + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>';
+              if (t === 'adimlar') { const rows=k.ekstra.split('\n').filter(l=>l.trim()); return '<div>' + rows.map((l,i) => { const p=l.split('|'); const b=p[0]||''; const s=p[1]||''; const last=i===rows.length-1; return '<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:24px;height:24px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">' + (last?'&#10003;':i+1) + '</div>' + (!last?'<div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div>':'') + '</div><div style="padding-bottom:' + (last?'0':'12px') + ';"><div style="font-size:12px;font-weight:700;color:var(--text);">' + b + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>'; }
               return '';
             }
-            const rows = Math.ceil(aktif.length / kolon);
+            const rowCount = Math.ceil(aktif.length / kolon);
             let html = '';
-            for (let r=0; r<rows; r++) {
+            for (let r=0; r<rowCount; r++) {
               const rowKartlar = aktif.slice(r*kolon, (r+1)*kolon);
               html += '<div style="display:grid;grid-template-columns:repeat(' + kolon + ',1fr);gap:14px;margin-bottom:14px;">';
               html += rowKartlar.map(k => {
@@ -1767,19 +1762,19 @@
             }
             container.innerHTML = html;
           }
-          } catch(e) { console.log('Kart render:', e); }
-        } // hizmet_kartlar if
-
-        if (a.nb_markalar_str) {
-          const mEl = document.getElementById('nb_markalar');
-          if (mEl) mEl.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
-        }
-        const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
-        if (yorumData.length > 0) {
-          const yEl = document.getElementById('nb_yorumlar');
-          if (yEl) yEl.innerHTML = yorumData.map(x => '<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"' + x.y + '"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ' + (x.k||'') + '</div></div>').join('');
-        }
-      } // ayarlar if kapanışı
+        } catch(e) { console.log('Kart render hatasi:', e); }
+      }
+      // Markalar
+      if (a.nb_markalar_str) {
+        const mEl = document.getElementById('nb_markalar');
+        if (mEl) mEl.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
+      }
+      // Yorumlar
+      const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
+      if (yorumData.length > 0) {
+        const yEl = document.getElementById('nb_yorumlar');
+        if (yEl) yEl.innerHTML = yorumData.map(x => '<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">' + x.y + '</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">&#8212; ' + (x.k||'') + '</div></div>').join('');
+      }
 
       const fRes = await fetch(SB_URL + '/rest/v1/fiyatlar?order=id.asc', {
         headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
