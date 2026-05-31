@@ -797,7 +797,7 @@
 
       <div id="tab-yorumlar" class="tab-content">
         <div class="topbar">
-          <h1 class="page-title"><em>Yorumlar</em></h1>
+          <h1 class="page-title" style="cursor:pointer;" onclick="onizlemeScrollTo('yorumlar')" title="Önizlemede göster"><em>Yorumlar</em></h1>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
@@ -850,7 +850,7 @@
       <!-- HİZMETLER -->
       <div id="tab-hizmetler" class="tab-content">
         <div class="topbar">
-          <h1 class="page-title"><em>Hizmetler</em> Editörü</h1>
+          <h1 class="page-title" style="cursor:pointer;" onclick="onizlemeScrollTo('hizmetler')" title="Önizlemede göster"><em>Hizmetler</em> Editörü</h1>
           <div class="topbar-right" style="display:flex;gap:10px;">
             <button class="p-btn" style="background:#fff;color:var(--pink-dark);border:1.5px solid var(--pink);" onclick="kartEkle()">➕ Yeni Kart</button>
             <button class="p-btn" onclick="hizmetlerTamKaydet()">💾 Kaydet & Yayınla</button>
@@ -886,7 +886,7 @@
         <!-- KPI Satırı -->
         <div class="section-card" style="margin-bottom:20px;">
           <div class="section-card-header">
-            <div class="section-card-title">📊 İstatistik Kartları (Üst Bant)</div>
+            <div class="section-card-title" style="cursor:pointer;" onclick="onizlemeScrollTo('hizmetler')" title="Önizlemede göster">📊 İstatistik Kartları (Üst Bant) <span style="font-size:10px;color:var(--muted);">👁</span></div>
           </div>
           <div style="padding:24px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px;">
             <div class="p-field"><label class="p-label">KPI 1 Sayı</label><input class="p-input" id="nb_kpi1_sayi" placeholder="150+"/></div>
@@ -909,7 +909,7 @@
 
         <!-- Müşteri Yorumları -->
         <div class="section-card" style="margin-bottom:20px;">
-          <div class="section-card-header"><div class="section-card-title">⭐ Müşteri Yorumları</div></div>
+          <div class="section-card-header"><div class="section-card-title" style="cursor:pointer;" onclick="onizlemeScrollTo('yorumlar')" title="Önizlemede göster">⭐ Müşteri Yorumları <span style="font-size:10px;color:var(--muted);">👁</span></div></div>
           <div style="padding:24px;display:flex;flex-direction:column;gap:16px;">
             <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;">
               <div class="p-field"><label class="p-label">Yorum 1</label><textarea class="p-input" id="nb_yorum1" rows="2"></textarea></div>
@@ -930,14 +930,14 @@
 
       <div id="tab-fiyatlar" class="tab-content">
         <div class="topbar">
-          <h1 class="page-title"><em>Fiyatlar</em></h1>
+          <h1 class="page-title" style="cursor:pointer;" onclick="onizlemeScrollTo('fiyatlar')" title="Önizlemede göster"><em>Fiyatlar</em></h1>
           <div class="topbar-right">
             <button class="p-btn" onclick="fiyatlariKaydet()">💾 Kaydet & Uygula</button>
           </div>
         </div>
         <div class="section-card">
           <div class="section-card-header">
-            <div class="section-card-title">💰 Hizmet Fiyatları</div>
+            <div class="section-card-title" style="cursor:pointer;" onclick="onizlemeScrollTo('fiyatlar')" title="Önizlemede göster">💰 Hizmet Fiyatları <span style="font-size:10px;color:var(--muted);">👁</span></div>
           </div>
           <div style="display:flex; flex-direction:column; gap:20px; padding:24px;">
             <!-- Paket 1 -->
@@ -1021,7 +1021,7 @@
       <!-- SSS -->
       <div id="tab-sss" class="tab-content">
         <div class="topbar">
-          <h1 class="page-title"><em>SSS</em> Yönetimi</h1>
+          <h1 class="page-title" style="cursor:pointer;" onclick="onizlemeScrollTo('sss')" title="Önizlemede göster"><em>SSS</em> Yönetimi</h1>
           <div class="topbar-right">
             <button class="p-btn" onclick="toggleSssForm(false)">➕ Soru Ekle</button>
           </div>
@@ -1050,7 +1050,7 @@
         <!-- Liste -->
         <div class="section-card" id="sssList">
           <div class="section-card-header">
-            <div class="section-card-title">❓ Sık Sorulan Sorular</div>
+            <div class="section-card-title" style="cursor:pointer;" onclick="onizlemeScrollTo('sss')" title="Önizlemede göster">❓ Sık Sorulan Sorular <span style="font-size:10px;color:var(--muted);">👁</span></div>
             <span class="badge badge-pink" id="sssSayi">0 soru</span>
           </div>
           <div id="sssListesi" style="padding:8px 0;"></div>
@@ -1306,44 +1306,31 @@
     }
   }
 
+  // Önizlemede belirli bir elemente scroll et
+  function onizlemeScrollTo(elementId) {
+    if (!onizlemeAcik) return;
+    const frame = document.getElementById('onizlemeFrame');
+    if (!frame) return;
+    try {
+      const el = frame.contentWindow.document.getElementById(elementId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } catch(e) {
+      // Cross-origin - iframe'i o anchor ile yükle
+      const base = 'https://selendemirmakeup.com/';
+      frame.src = base + '?_t=' + Date.now() + '#' + elementId;
+    }
+  }
+
   function onizlemeGuncelle(sekmeId) {
     if (!onizlemeAcik) return;
     const frame = document.getElementById('onizlemeFrame');
     if (!frame) return;
     const url = SEKME_URL[sekmeId] || 'https://selendemirmakeup.com/';
-
-    // Eğer iframe zaten aynı sayfadaysa, sadece scroll et
-    const mevcutSrc = frame.src || '';
-    const mevcutBase = mevcutSrc.split('?')[0].split('#')[0];
-    const yeniBase = url.split('?')[0].split('#')[0];
-    const hash = url.includes('#') ? url.split('#')[1] : '';
-
-    if (mevcutBase === yeniBase && frame.contentWindow) {
-      // Aynı sayfa — sadece hash ile scroll
-      try {
-        if (hash) {
-          frame.contentWindow.location.hash = hash;
-          // Smooth scroll
-          frame.contentWindow.document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          frame.contentWindow.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      } catch(e) {
-        // Cross-origin engeli varsa yeniden yükle
-        frame.src = url + '?_t=' + Date.now();
-      }
-    } else {
-      // Farklı sayfa — yeniden yükle, sonra hash'e git
-      frame.src = url + '?_t=' + Date.now();
-      if (hash) {
-        frame.onload = () => {
-          try {
-            frame.contentWindow.document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } catch(e) {}
-          frame.onload = null;
-        };
-      }
-    }
+    // Cache bypass ile yükle
+    const cacheBust = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+    frame.src = cacheBust;
   }
 
   function onizlemeYenile() {
@@ -2007,6 +1994,7 @@
           </div>
           <div style="flex:1;min-width:0;">
             <input value="${kart.baslik}" oninput="kartGuncelle(${i},'baslik',this.value)"
+              onfocus="onizlemeScrollTo('hizmetler')"
               style="width:100%;font-size:14px;font-weight:700;border:none;background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;padding:0;outline:none;"
               placeholder="Kart başlığı"/>
             <input value="${kart.etiket}" oninput="kartGuncelle(${i},'etiket',this.value)"
