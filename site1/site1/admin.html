@@ -141,6 +141,184 @@
     .main-content {
       margin-left: 240px; flex: 1; padding: 32px;
       min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+
+    /* Önizleme modu */
+    body.onizleme-aktif .main-content {
+      margin-right: 42%;
+    }
+
+    .onizleme-panel {
+      display: none;
+      position: fixed;
+      top: 0; right: 0;
+      width: 42%;
+      height: 100vh;
+      background: #f0f0f0;
+      border-left: 2px solid var(--border);
+      z-index: 200;
+      flex-direction: column;
+    }
+
+    body.onizleme-aktif .onizleme-panel {
+      display: flex;
+    }
+
+    .onizleme-header {
+      background: var(--sidebar);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .onizleme-header-title {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .onizleme-toolbar {
+      background: #2a2a3e;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .onizleme-device-btn {
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.6);
+    }
+
+    .onizleme-device-btn.aktif {
+      background: var(--pink);
+      color: #fff;
+    }
+
+    .onizleme-iframe-wrap {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 16px;
+      background: #1a1a2e;
+    }
+
+    .onizleme-iframe-wrap.mobile {
+      align-items: flex-start;
+      padding: 16px;
+    }
+
+    #onizlemeFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      transition: all 0.3s;
+    }
+
+    .onizleme-iframe-wrap.mobile #onizlemeFrame {
+      width: 375px;
+      height: 812px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .onizleme-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1.5px solid var(--pink);
+      background: transparent;
+      color: var(--pink);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    body.onizleme-aktif .onizleme-btn {
+      background: var(--pink);
+      color: #fff;
+    }
+
+    .onizleme-btn:hover {
+      background: var(--pink);
+      color: #fff;
+    }
+
+    .onizleme-refresh-btn {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .onizleme-refresh-btn:hover {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+
+    .onizleme-kapat-btn {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .onizleme-kapat-btn:hover {
+      background: #e05050;
+      color: #fff;
+    }
+
+    .onizleme-url-bar {
+      flex: 1;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 5px 12px;
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: default;
+    }
+
+    .onizleme-loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+      pointer-events: none;
     }
 
     /* Top bar */
@@ -441,6 +619,29 @@
     </aside>
 
     <!-- ANA İÇERİK -->
+      <!-- ÖNİZLEME PANELİ -->
+      <div class="onizleme-panel" id="onizlemePanel">
+        <div class="onizleme-header">
+          <div class="onizleme-header-title">
+            <span>👁️</span>
+            <span>Canlı Önizleme</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="onizleme-refresh-btn" onclick="onizlemeYenile()" title="Yenile">↻</button>
+            <button class="onizleme-kapat-btn" onclick="onizlemeToggle()" title="Kapat">✕</button>
+          </div>
+        </div>
+        <div class="onizleme-toolbar">
+          <button class="onizleme-device-btn aktif" id="devBtnDesktop" onclick="onizlemeDevice('desktop')">🖥 Masaüstü</button>
+          <button class="onizleme-device-btn" id="devBtnMobile" onclick="onizlemeDevice('mobile')">📱 Mobil</button>
+          <div class="onizleme-url-bar">selendemirmakeup.com</div>
+          <button class="onizleme-refresh-btn" onclick="window.open('https://selendemirmakeup.com','_blank')" title="Yeni sekmede aç" style="font-size:13px;">↗</button>
+        </div>
+        <div class="onizleme-iframe-wrap" id="onizlemeWrap">
+          <iframe id="onizlemeFrame" src="" title="Site önizleme"></iframe>
+        </div>
+      </div>
+
     <main class="main-content">
 
       <!-- DASHBOARD -->
@@ -448,7 +649,10 @@
         <div class="topbar">
           <h1 class="page-title">Hoş Geldin, <em>Selen</em> 🌸</h1>
           <div class="topbar-right">
-            <div class="badge-btn" onclick="window.open('https://selendemirmakeup.netlify.app','_blank')">🌐 <span>Siteyi Görüntüle</span></div>
+            <button class="onizleme-btn" onclick="onizlemeToggle()" id="onizlemeToggleBtn">
+              👁️ <span id="onizlemeBtnText">Önizleme Aç</span>
+            </button>
+            <div class="badge-btn" onclick="window.open('https://selendemirmakeup.com','_blank')">🌐 <span>Siteyi Görüntüle</span></div>
           </div>
         </div>
         <div class="stats-grid">
@@ -1048,11 +1252,76 @@
   }
 
   // ── SEKMELER ─────────────────────────────────────────
+  // ── ÖNİZLEME SİSTEMİ ─────────────────────────────────
+  let onizlemeAcik = false;
+  let suankiDevice = 'desktop';
+
+  // Sekme → URL mapping
+  const SEKME_URL = {
+    'dashboard':  'https://selendemirmakeup.com/',
+    'hizmetler':  'https://selendemirmakeup.com/#hizmetler',
+    'fiyatlar':   'https://selendemirmakeup.com/#fiyatlar',
+    'sss':        'https://selendemirmakeup.com/#sss',
+    'yorumlar':   'https://selendemirmakeup.com/#yorumlar',
+    'galeri':     'https://selendemirmakeup.com/galeri.html',
+    'reels':      'https://selendemirmakeup.com/reels.html',
+    'ayarlar':    'https://selendemirmakeup.com/',
+    'randevular': 'https://selendemirmakeup.com/#randevu',
+  };
+
+  let suankiSekme = 'dashboard';
+
+  function onizlemeToggle() {
+    onizlemeAcik = !onizlemeAcik;
+    document.body.classList.toggle('onizleme-aktif', onizlemeAcik);
+    const btn = document.getElementById('onizlemeBtnText');
+    if (btn) btn.textContent = onizlemeAcik ? 'Önizlemeyi Kapat' : 'Önizleme Aç';
+    if (onizlemeAcik) {
+      onizlemeGuncelle(suankiSekme);
+    }
+  }
+
+  function onizlemeGuncelle(sekmeId) {
+    if (!onizlemeAcik) return;
+    const frame = document.getElementById('onizlemeFrame');
+    if (!frame) return;
+    const url = SEKME_URL[sekmeId] || 'https://selendemirmakeup.com/';
+    // Cache bypass ile yükle
+    const cacheBust = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+    frame.src = cacheBust;
+  }
+
+  function onizlemeYenile() {
+    const frame = document.getElementById('onizlemeFrame');
+    if (!frame) return;
+    const url = SEKME_URL[suankiSekme] || 'https://selendemirmakeup.com/';
+    frame.src = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+  }
+
+  function onizlemeDevice(device) {
+    suankiDevice = device;
+    const wrap = document.getElementById('onizlemeWrap');
+    const d = document.getElementById('devBtnDesktop');
+    const m = document.getElementById('devBtnMobile');
+    if (!wrap) return;
+    if (device === 'mobile') {
+      wrap.classList.add('mobile');
+      if (d) d.classList.remove('aktif');
+      if (m) m.classList.add('aktif');
+    } else {
+      wrap.classList.remove('mobile');
+      if (d) d.classList.add('aktif');
+      if (m) m.classList.remove('aktif');
+    }
+  }
+
   function sekmeAc(id, el) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
     document.getElementById('tab-' + id).classList.add('active');
     if (el) el.classList.add('active');
+    suankiSekme = id;
+    onizlemeGuncelle(id);
   }
 
   // ── BİLDİRİM ─────────────────────────────────────────
@@ -1911,6 +2180,7 @@
       }
 
       bildirim('✅ Hizmetler kaydedildi ve siteye yansıtıldı!');
+      setTimeout(() => onizlemeYenile(), 800);
     } catch(e) { bildirim('❌ Kaydedilemedi: ' + e.message, 'error'); }
   }
 
@@ -1976,6 +2246,7 @@
         await sbFetch('ayarlar', 'POST', { anahtar: 'tema_rengi', deger: temaVeri });
       }
       bildirim('🎨 Tema kaydedildi! Site rengi güncellendi.');
+      setTimeout(() => onizlemeYenile(), 800);
     } catch(e) { bildirim('❌ Tema kaydedilemedi!', 'error'); }
   }
 
