@@ -1721,14 +1721,12 @@
         }
       }
 
-      // Fiyatları yükle
-      // Neden Ben / Hizmetler alanları
-      // Metin alanları
-      const nbFields = ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt'];
-      nbFields.forEach(k => { const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k]; });
+        // Neden Ben / Hizmetler metin alanları
+        const nbFields = ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt'];
+        nbFields.forEach(k => { const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k]; });
 
-      // Dinamik kartlar
-      if (a.hizmet_kartlar) {
+        // Dinamik kartlar
+        if (a.hizmet_kartlar) {
         try {
           const kartlar = JSON.parse(a.hizmet_kartlar);
           const kolon = parseInt(a.kart_kolon) || 3;
@@ -1771,15 +1769,17 @@
           }
         } catch(e) { console.log('Kart render:', e); }
       }
-      if (a.nb_markalar_str) {
-        const el = document.getElementById('nb_markalar');
-        if (el) el.innerHTML = a.nb_markalar_str.split(',').map(m => `<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">${m.trim()}</span>`).join('');
-      }
-      const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
-      if (yorumData.length > 0) {
-        const el = document.getElementById('nb_yorumlar');
-        if (el) el.innerHTML = yorumData.map(x=>`<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"${x.y}"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ${x.k||''}</div></div>`).join('');
-      }
+        if (a.nb_markalar_str) {
+          const el = document.getElementById('nb_markalar');
+          if (el) el.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
+        }
+        const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
+        if (yorumData.length > 0) {
+          const el = document.getElementById('nb_yorumlar');
+          if (el) el.innerHTML = yorumData.map(x => '<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"' + x.y + '"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ' + (x.k||'') + '</div></div>').join('');
+        }
+
+      } // ayarlar if kapanışı
 
       const fRes = await fetch(SB_URL + '/rest/v1/fiyatlar?order=id.asc', {
         headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
