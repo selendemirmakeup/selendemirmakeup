@@ -1554,7 +1554,7 @@
       await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
       document.getElementById('formContent').style.display = 'none';
       document.getElementById('successState').style.display = 'block';
-    } catch {
+    } catch(e) {
       btn.disabled = false;
       btn.innerHTML = 'Randevu Talebi Gönder 🌸';
       alert('Bir hata oluştu, lütfen tekrar deneyin.');
