@@ -2135,7 +2135,14 @@
 
   function kartGuncelle(idx, alan, deger) {
     hzKartlar[idx][alan] = deger;
-    kartListesiRender();
+    // Görsel değişiklikler için sadece ilgili elementi güncelle (re-render yok)
+    if (alan === 'aktif' || alan === 'renk' || alan === 'ekstraTip') {
+      // Bu değişiklikler görünümü değiştiriyor, tam render gerekli
+      const scrollY = window.scrollY;
+      kartListesiRender();
+      requestAnimationFrame(() => window.scrollTo(0, scrollY));
+    }
+    // baslik, etiket, aciklama, ekstra değiştiğinde sadece veriyi güncelle, DOM'u dokunma
   }
 
   function emojiSeciciAc(idx) {
@@ -2149,7 +2156,9 @@
     if (!emoji.trim()) return;
     hzKartlar[idx].emoji = emoji.trim();
     document.querySelectorAll('[id^="emoji_picker_"]').forEach(el => el.style.display = 'none');
+    const scrollY = window.scrollY;
     kartListesiRender();
+    requestAnimationFrame(() => window.scrollTo(0, scrollY));
   }
 
   function kartEkle() {
@@ -2160,10 +2169,9 @@
       aciklama: '', ekstra: '', ekstraTip: 'liste'
     });
     kartListesiRender();
-    // En alta kaydır
     setTimeout(() => {
       const liste = document.getElementById('kartListesi');
-      if (liste) liste.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
+      if (liste) liste.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
   }
 

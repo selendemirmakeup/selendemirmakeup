@@ -1770,13 +1770,13 @@
         } catch(e) { console.log('Kart render:', e); }
       }
         if (a.nb_markalar_str) {
-          const el = document.getElementById('nb_markalar');
-          if (el) el.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
+          const mEl = document.getElementById('nb_markalar');
+          if (mEl) mEl.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
         }
         const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
         if (yorumData.length > 0) {
-          const el = document.getElementById('nb_yorumlar');
-          if (el) el.innerHTML = yorumData.map(x => '<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"' + x.y + '"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ' + (x.k||'') + '</div></div>').join('');
+          const yEl = document.getElementById('nb_yorumlar');
+          if (yEl) yEl.innerHTML = yorumData.map(x => '<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"' + x.y + '"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ' + (x.k||'') + '</div></div>').join('');
         }
 
       } // ayarlar if kapanışı
