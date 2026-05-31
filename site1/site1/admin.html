@@ -1069,7 +1069,7 @@
         <div class="section-card">
           <div class="section-card-header">
             <div class="section-card-title">🎬 Instagram Reelleri</div>
-            <span style="font-size:12px; color:var(--muted);">Instagram reel linklerini ekleyin</span>
+            <span class="badge badge-pink" id="reelSayiBadge">0 reel</span>
           </div>
           <div id="reelListesi" style="padding:16px 24px;"></div>
           <div style="padding:16px 24px; border-top:1px solid var(--border);">
@@ -1392,7 +1392,7 @@
     yorumlariYukle();
     fiyatlariYukle();
     sssYukle();
-    reelListeGuncelle();
+    reellerYukle();
     ayarlariYukle();
     ziyaretAnalizYukle();
     hizmetlerYukle();
@@ -1748,43 +1748,84 @@
   // ── REELS ────────────────────────────────────────────
   let reeller = [];
 
+  // Instagram link → embed URL'e çevir
+  function reelEmbedUrl(link) {
+    // https://www.instagram.com/reel/ABC123/ → https://www.instagram.com/reel/ABC123/embed/
+    const match = link.match(/instagram\.com\/reel\/([^/?]+)/);
+    if (match) return 'https://www.instagram.com/reel/' + match[1] + '/embed/';
+    // Zaten embed ise olduğu gibi döndür
+    if (link.includes('/embed/')) return link;
+    return link;
+  }
+
+  async function reellerYukle() {
+    try {
+      const data = await sbFetch('reeller?order=id.asc');
+      if (Array.isArray(data)) {
+        reeller = data;
+      } else {
+        reeller = veriAl('reeller') || [];
+      }
+    } catch(e) {
+      reeller = veriAl('reeller') || [];
+    }
+    reelListeGuncelle();
+  }
+
   function reelListeGuncelle() {
-    reeller = veriAl('reeller');
     const liste = document.getElementById('reelListesi');
+    const badge = document.getElementById('reelSayiBadge');
     if (!liste) return;
+    if (badge) badge.textContent = reeller.length + ' reel';
     liste.innerHTML = reeller.length === 0
-      ? '<p style="color:var(--muted); font-size:14px;">Henüz reel eklenmedi</p>'
+      ? '<p style="color:var(--muted); font-size:14px; padding:8px;">Henüz reel eklenmedi</p>'
       : reeller.map((r, i) => `
-        <div style="padding:12px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div style="font-size:14px; font-weight:500;">${r.aciklama || 'Reel ' + (i+1)}</div>
-            <div style="font-size:12px; color:var(--muted);">${r.link}</div>
+        <div style="padding:14px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; gap:12px;">
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:14px; font-weight:600; margin-bottom:3px;">${r.aciklama || 'Reel ' + (i+1)}</div>
+            <div style="font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${r.link}</div>
           </div>
-          <button class="act-btn act-btn-red" onclick="reelSil(${i})">🗑 Sil</button>
+          <button class="act-btn act-btn-red" onclick="reelSil(${r.id || i})">🗑 Sil</button>
         </div>
       `).join('');
   }
 
-  function reelEkle() {
-    const link = document.getElementById('reelLink').value.trim();
-    const aciklama = document.getElementById('reelAciklama').value.trim();
-    if (!link) { bildirim('❌ Link girin!', 'error'); return; }
-    reeller.push({ link, aciklama });
-    veriKaydet('reeller', reeller);
-    document.getElementById('reelLink').value = '';
-    document.getElementById('reelAciklama').value = '';
-    reelListeGuncelle();
-    bildirim('✓ Reel eklendi!');
+  async function reelEkle() {
+    const linkEl = document.getElementById('reelLink');
+    const acEl = document.getElementById('reelAciklama');
+    const link = linkEl.value.trim();
+    const aciklama = acEl.value.trim();
+    if (!link) { bildirim('❌ Instagram linki girin!', 'error'); return; }
+    if (!link.includes('instagram.com')) { bildirim('❌ Geçerli bir Instagram linki girin!', 'error'); return; }
+
+    try {
+      const res = await sbFetch('reeller', 'POST', { link, aciklama });
+      if (Array.isArray(res) && res[0]) {
+        reeller.push(res[0]);
+      } else {
+        reeller.push({ id: Date.now(), link, aciklama });
+      }
+      linkEl.value = '';
+      acEl.value = '';
+      reelListeGuncelle();
+      bildirim('✓ Reel eklendi ve siteye yansıdı!');
+    } catch(e) {
+      bildirim('❌ Eklenemedi: ' + e.message, 'error');
+    }
   }
 
   function reelKaydet() { reelEkle(); }
 
-  function reelSil(i) {
+  async function reelSil(id) {
     if (!confirm('Bu reeli silmek istiyor musunuz?')) return;
-    reeller.splice(i, 1);
-    veriKaydet('reeller', reeller);
-    reelListeGuncelle();
-    bildirim('🗑 Reel silindi.', 'error');
+    try {
+      await sbFetch('reeller?id=eq.' + id, 'DELETE');
+      reeller = reeller.filter(r => r.id !== id);
+      reelListeGuncelle();
+      bildirim('🗑 Reel silindi.');
+    } catch(e) {
+      bildirim('❌ Silinemedi!', 'error');
+    }
   }
 
   // ── AYARLAR ──────────────────────────────────────────
