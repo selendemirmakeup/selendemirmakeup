@@ -620,108 +620,78 @@
       <!-- HİZMETLER -->
       <div id="tab-hizmetler" class="tab-content">
         <div class="topbar">
-          <h1 class="page-title"><em>Hizmetler</em> Yönetimi</h1>
-          <div class="topbar-right">
-            <button class="p-btn" onclick="hizmetlerKaydet()">💾 Kaydet</button>
+          <h1 class="page-title"><em>Hizmetler</em> Editörü</h1>
+          <div class="topbar-right" style="display:flex;gap:10px;">
+            <button class="p-btn" style="background:#fff;color:var(--pink-dark);border:1.5px solid var(--pink);" onclick="kartEkle()">➕ Yeni Kart</button>
+            <button class="p-btn" onclick="hizmetlerTamKaydet()">💾 Kaydet & Yayınla</button>
           </div>
         </div>
 
-        <!-- Başlık & Açıklama -->
+        <!-- Genel Ayarlar -->
         <div class="section-card" style="margin-bottom:20px;">
           <div class="section-card-header">
-            <div class="section-card-title">📝 Bölüm Başlığı & Açıklaması</div>
+            <div class="section-card-title">⚙️ Genel Ayarlar</div>
           </div>
-          <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+          <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; align-items:start;">
             <div class="p-field">
-              <label class="p-label">Bölüm Açıklaması (Başlık altı)</label>
-              <textarea class="p-input" id="nb_aciklama" rows="2" placeholder="Makyaj sadece görünüş değil..."></textarea>
+              <label class="p-label">Bölüm Açıklaması</label>
+              <textarea class="p-input" id="nb_aciklama" rows="3" placeholder="Makyaj sadece görünüş değil..."></textarea>
+            </div>
+            <div>
+              <label class="p-label" style="display:block;margin-bottom:8px;">Varsayılan Kolon Sayısı</label>
+              <div style="display:flex;gap:8px;" id="kolonSecici">
+                <button onclick="kolonSec(2)" id="kolon2" class="kolon-btn" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;">2 Kolon</button>
+                <button onclick="kolonSec(3)" id="kolon3" class="kolon-btn" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--pink);background:var(--pink-light);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--pink-dark);">3 Kolon</button>
+                <button onclick="kolonSec(4)" id="kolon4" class="kolon-btn" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;">4 Kolon</button>
+              </div>
+              <input type="hidden" id="kart_kolon" value="3"/>
             </div>
             <div class="p-field">
               <label class="p-label">Koyu Kart Alt Metni</label>
-              <textarea class="p-input" id="nb_alinti_alt" rows="2" placeholder="5 yıldır İstanbul'un dört bir yanında..."></textarea>
+              <textarea class="p-input" id="nb_alinti_alt" rows="3" placeholder="5 yıldır İstanbul'un dört bir yanında..."></textarea>
             </div>
           </div>
         </div>
 
-        <!-- KPI Kartlar -->
+        <!-- KPI Satırı -->
         <div class="section-card" style="margin-bottom:20px;">
           <div class="section-card-header">
-            <div class="section-card-title">📊 İstatistik Kartları</div>
+            <div class="section-card-title">📊 İstatistik Kartları (Üst Bant)</div>
           </div>
-          <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
-            <div class="p-field">
-              <label class="p-label">KPI 1 — Sayı</label>
-              <input type="text" class="p-input" id="nb_kpi1_sayi" placeholder="150+"/>
-            </div>
-            <div class="p-field">
-              <label class="p-label">KPI 1 — Başlık</label>
-              <input type="text" class="p-input" id="nb_kpi1_baslik" placeholder="Mutlu Gelin & Davetli"/>
-            </div>
-            <div class="p-field">
-              <label class="p-label">KPI 1 — Alt Metin</label>
-              <input type="text" class="p-input" id="nb_kpi1_alt" placeholder="İstanbul genelinde..."/>
-            </div>
-            <div class="p-field">
-              <label class="p-label">KPI 2 — Sayı</label>
-              <input type="text" class="p-input" id="nb_kpi2_sayi" placeholder="%98"/>
-            </div>
-            <div class="p-field">
-              <label class="p-label">KPI 2 — Başlık</label>
-              <input type="text" class="p-input" id="nb_kpi2_baslik" placeholder="Tavsiye Oranı"/>
-            </div>
-            <div class="p-field">
-              <label class="p-label">KPI 2 — Alt Metin</label>
-              <input type="text" class="p-input" id="nb_kpi2_alt" placeholder="Müşterilerin önerme oranı"/>
-            </div>
+          <div style="padding:24px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px;">
+            <div class="p-field"><label class="p-label">KPI 1 Sayı</label><input class="p-input" id="nb_kpi1_sayi" placeholder="150+"/></div>
+            <div class="p-field"><label class="p-label">KPI 1 Başlık</label><input class="p-input" id="nb_kpi1_baslik" placeholder="Mutlu Gelin"/></div>
+            <div class="p-field"><label class="p-label">KPI 1 Alt</label><input class="p-input" id="nb_kpi1_alt" placeholder="İstanbul genelinde"/></div>
+            <div class="p-field"><label class="p-label">KPI 2 Sayı</label><input class="p-input" id="nb_kpi2_sayi" placeholder="%98"/></div>
+            <div class="p-field"><label class="p-label">KPI 2 Başlık</label><input class="p-input" id="nb_kpi2_baslik" placeholder="Tavsiye Oranı"/></div>
+            <div class="p-field"><label class="p-label">KPI 2 Alt</label><input class="p-input" id="nb_kpi2_alt" placeholder="Önerme oranı"/></div>
           </div>
         </div>
 
-        <!-- Ürün & Türban -->
+        <!-- Kart Listesi -->
         <div class="section-card" style="margin-bottom:20px;">
           <div class="section-card-header">
-            <div class="section-card-title">💄 Ürün & Türban Kartları</div>
+            <div class="section-card-title">🃏 Kartlar <span style="font-size:12px;color:var(--muted);font-weight:400;">(sürükleyerek sırala)</span></div>
+            <span class="badge badge-pink" id="kartSayiBadge">0 kart</span>
           </div>
-          <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-            <div class="p-field">
-              <label class="p-label">Ürün Kartı Başlığı</label>
-              <input type="text" class="p-input" id="nb_urun_baslik" placeholder="Sadece En İyi Markalar"/>
-            </div>
-            <div class="p-field">
-              <label class="p-label">Ürün Kartı Açıklaması</label>
-              <textarea class="p-input" id="nb_urun_aciklama" rows="2" placeholder="Kalıcı ve cilde dost ürünler..."></textarea>
-            </div>
-            <div class="p-field" style="grid-column:1/-1;">
-              <label class="p-label">Markalar (virgülle ayırın)</label>
-              <input type="text" class="p-input" id="nb_markalar_str" placeholder="Charlotte Tilbury, MAC, Armani, NARS, Huda Beauty, Lancôme"/>
-            </div>
-            <div class="p-field">
-              <label class="p-label">Türban Kartı Başlığı</label>
-              <input type="text" class="p-input" id="nb_turban_baslik" placeholder="Her Yüze Özel Tasarım"/>
-            </div>
-            <div class="p-field">
-              <label class="p-label">Türban Kartı Açıklaması</label>
-              <textarea class="p-input" id="nb_turban_aciklama" rows="2" placeholder="Yüz şeklinize göre..."></textarea>
-            </div>
-          </div>
+          <div id="kartListesi" style="padding:16px;display:flex;flex-direction:column;gap:12px;"></div>
         </div>
 
         <!-- Müşteri Yorumları -->
         <div class="section-card" style="margin-bottom:20px;">
-          <div class="section-card-header">
-            <div class="section-card-title">⭐ Müşteri Yorumları</div>
-          </div>
-          <div style="padding:24px; display:flex; flex-direction:column; gap:16px;">
-            <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px;">
-              <div class="p-field"><label class="p-label">Yorum 1</label><textarea class="p-input" id="nb_yorum1" rows="2" placeholder="Düğün günüm için..."></textarea></div>
-              <div class="p-field"><label class="p-label">Kişi & Organizasyon</label><input type="text" class="p-input" id="nb_yorum1_kisi" placeholder="Ayşe K., Düğün Gelini"/></div>
+          <div class="section-card-header"><div class="section-card-title">⭐ Müşteri Yorumları</div></div>
+          <div style="padding:24px;display:flex;flex-direction:column;gap:16px;">
+            <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;">
+              <div class="p-field"><label class="p-label">Yorum 1</label><textarea class="p-input" id="nb_yorum1" rows="2"></textarea></div>
+              <div class="p-field"><label class="p-label">Kişi</label><input class="p-input" id="nb_yorum1_kisi" placeholder="Ayşe K., Düğün Gelini"/></div>
             </div>
-            <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px;">
-              <div class="p-field"><label class="p-label">Yorum 2</label><textarea class="p-input" id="nb_yorum2" rows="2" placeholder="Eve geldi..."></textarea></div>
-              <div class="p-field"><label class="p-label">Kişi & Organizasyon</label><input type="text" class="p-input" id="nb_yorum2_kisi" placeholder="Fatma S., Nişan"/></div>
+            <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;">
+              <div class="p-field"><label class="p-label">Yorum 2</label><textarea class="p-input" id="nb_yorum2" rows="2"></textarea></div>
+              <div class="p-field"><label class="p-label">Kişi</label><input class="p-input" id="nb_yorum2_kisi" placeholder="Fatma S., Nişan"/></div>
             </div>
-            <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px;">
-              <div class="p-field"><label class="p-label">Yorum 3</label><textarea class="p-input" id="nb_yorum3" rows="2" placeholder="Makyajım bozulmadı..."></textarea></div>
-              <div class="p-field"><label class="p-label">Kişi & Organizasyon</label><input type="text" class="p-input" id="nb_yorum3_kisi" placeholder="Merve T., Mezuniyet"/></div>
+            <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;">
+              <div class="p-field"><label class="p-label">Yorum 3</label><textarea class="p-input" id="nb_yorum3" rows="2"></textarea></div>
+              <div class="p-field"><label class="p-label">Kişi</label><input class="p-input" id="nb_yorum3_kisi" placeholder="Merve T., Mezuniyet"/></div>
             </div>
           </div>
         </div>
@@ -1683,34 +1653,257 @@
     document.getElementById('yeniSifreTekrar').value = '';
   }
 
-  // ── HİZMETLER (NEDEN BEN) ────────────────────────────
-  const HZ_FIELDS = [
-    'nb_aciklama','nb_alinti_alt',
-    'nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt',
-    'nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt',
-    'nb_urun_baslik','nb_urun_aciklama','nb_markalar_str',
-    'nb_turban_baslik','nb_turban_aciklama',
-    'nb_yorum1','nb_yorum1_kisi',
-    'nb_yorum2','nb_yorum2_kisi',
-    'nb_yorum3','nb_yorum3_kisi'
+  // ── HİZMETLER KART EDİTÖRÜ ──────────────────────────
+  let hzKartlar = [];
+  let hzKolonSayisi = 3;
+  let dragSrcIdx = null;
+
+  const VARSAYILAN_KARTLAR = [
+    { id:1, aktif:true, emoji:'💄', renk:'blush', baslik:'Sadece En İyi Markalar', etiket:'Ürün Seçimi', aciklama:'Uzun ömürlü, cilde dost ve fotoğrafta mükemmel görünen markalar kullanıyorum. Cilt tipinize özel ürün seçimi yapılıyor.', ekstra:'Charlotte Tilbury, MAC, Armani, NARS, Huda Beauty, Lancôme', ekstraTip:'markalar' },
+    { id:2, aktif:true, emoji:'🧕', renk:'white', baslik:'Her Yüze Özel Tasarım', etiket:'Türban Uzmanlığı', aciklama:'Yüz şeklinize, kıyafetinize ve organizasyona göre özel türban modeli tasarlıyorum. Modern ya da klasik — her ikisi de benim işim.', ekstra:'Gelin türbanı,Volanlı model,Minimal stil,Taçlı tasarım', ekstraTip:'etiketler' },
+    { id:3, aktif:true, emoji:'🏅', renk:'white', baslik:'Eğitimli & Belgeli Uzman', etiket:'Sertifikalar', aciklama:'', ekstra:'Profesyonel Gelin Makyajı Sertifikası
+Türban Tasarım & Stil Uzmanlığı
+İleri Düzey Cilt Analizi
+Kalıcı Makyaj Teknikleri', ekstraTip:'liste' },
+    { id:4, aktif:true, emoji:'🧳', renk:'white', baslik:'Tam Donanımlı', etiket:'Eve Geliyorum', aciklama:'İstanbul ve çevresinde kapınıza geliyorum.', ekstra:'Ring aydınlatma
+Profesyonel koltuk
+Tam fırça seti', ekstraTip:'liste' },
+    { id:5, aktif:true, emoji:'⏰', renk:'blush', baslik:'Size Söz Veriyorum', etiket:'Güvencelerim', aciklama:'', ekstra:'🕐 Dakiklik Garantisi|Asla gecikme olmaz
+🌸 Huzurlu Ortam|Stressiz uygulama
+💬 7/24 İletişim|WhatsApp ile hızlı yanıt', ekstraTip:'ikonlu-liste' },
+    { id:6, aktif:true, emoji:'🪄', renk:'white', baslik:'5 Adımda Mükemmel Sonuç', etiket:'Çalışma Süreci', aciklama:'', ekstra:'Ön Görüşme|Beklentiler & stil
+Cilt Hazırlık|Temizlik & primer
+Makyaj Uygulaması|Kişiye özel
+Türban Tasarımı|Yüz şekline özel
+Fotoğrafa Hazır|Setting & fixing', ekstraTip:'adimlar' },
   ];
+
+  const RENKLER = [
+    { key:'white', ad:'Beyaz', bg:'#ffffff', border:'#f0e4e9' },
+    { key:'blush', ad:'Pembe', bg:'#fff5f8', border:'#f4c0d1' },
+    { key:'dark',  ad:'Koyu',  bg:'#1e0f14', border:'#1e0f14' },
+    { key:'soft',  ad:'Krem',  bg:'#fdf8f6', border:'#f0e4e9' },
+  ];
+
+  const EMOJI_LISTESI = ['💄','🧕','🏅','🧳','⏰','🪄','✨','🌸','💬','📸','🎓','💍','🌺','⭐','🎨','💅','👁️','🪞','🌟','🔑'];
+
+  function kolonSec(n) {
+    hzKolonSayisi = n;
+    document.getElementById('kart_kolon').value = n;
+    [2,3,4].forEach(k => {
+      const btn = document.getElementById('kolon'+k);
+      if (!btn) return;
+      if (k === n) {
+        btn.style.borderColor = 'var(--pink)';
+        btn.style.background = 'var(--pink-light)';
+        btn.style.color = 'var(--pink-dark)';
+      } else {
+        btn.style.borderColor = 'var(--border)';
+        btn.style.background = '#fff';
+        btn.style.color = 'var(--text)';
+      }
+    });
+  }
+
+  function kartListesiRender() {
+    const liste = document.getElementById('kartListesi');
+    const badge = document.getElementById('kartSayiBadge');
+    if (!liste) return;
+    if (badge) badge.textContent = hzKartlar.filter(k=>k.aktif).length + ' aktif / ' + hzKartlar.length + ' toplam';
+
+    liste.innerHTML = hzKartlar.map((kart, i) => `
+      <div draggable="true" id="kart_row_${i}"
+        ondragstart="dragBasla(event,${i})"
+        ondragover="dragUzeri(event)"
+        ondrop="dragBirak(event,${i})"
+        ondragend="dragBitti()"
+        style="background:#fff;border:1.5px solid ${kart.aktif ? '#f0e4e9' : '#eee'};border-radius:14px;padding:16px;opacity:${kart.aktif?1:0.5};transition:all 0.2s;cursor:grab;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:${kart.aktif?'14px':'0'};">
+          <span style="font-size:20px;cursor:grab;">⠿</span>
+          <!-- Emoji seçici -->
+          <div style="position:relative;display:inline-block;">
+            <button onclick="emojiSeciciAc(${i})" style="font-size:24px;background:var(--soft);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;">${kart.emoji}</button>
+            <div id="emoji_picker_${i}" style="display:none;position:absolute;top:44px;left:0;z-index:99;background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px;width:240px;box-shadow:0 8px 24px rgba(0,0,0,0.12);">
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${EMOJI_LISTESI.map(e => `<button onclick="emojiSec(${i},'${e}')" style="font-size:20px;background:var(--soft);border:none;border-radius:6px;padding:6px;cursor:pointer;width:36px;">${e}</button>`).join('')}
+              </div>
+              <input type="text" placeholder="Özel emoji gir..." oninput="emojiSec(${i},this.value)" style="width:100%;margin-top:8px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;">
+            </div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <input value="${kart.baslik}" oninput="kartGuncelle(${i},'baslik',this.value)"
+              style="width:100%;font-size:14px;font-weight:700;border:none;background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;padding:0;outline:none;"
+              placeholder="Kart başlığı"/>
+            <input value="${kart.etiket}" oninput="kartGuncelle(${i},'etiket',this.value)"
+              style="width:100%;font-size:11px;font-weight:700;border:none;background:transparent;color:var(--pink-dark);font-family:'DM Sans',sans-serif;padding:0;outline:none;text-transform:uppercase;letter-spacing:0.08em;"
+              placeholder="ETİKET"/>
+          </div>
+          <!-- Renk seçici -->
+          <div style="display:flex;gap:4px;align-items:center;">
+            ${RENKLER.map(r => `<button onclick="kartGuncelle(${i},'renk','${r.key}')" title="${r.ad}" style="width:20px;height:20px;border-radius:50%;background:${r.bg};border:2px solid ${kart.renk===r.key?'var(--pink-dark)':r.border};cursor:pointer;"></button>`).join('')}
+          </div>
+          <!-- Aktif/Pasif toggle -->
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--muted);flex-shrink:0;">
+            <div onclick="kartGuncelle(${i},'aktif',${!kart.aktif})" style="width:36px;height:20px;border-radius:10px;background:${kart.aktif?'var(--pink)':'#ddd'};position:relative;cursor:pointer;transition:background 0.2s;">
+              <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;${kart.aktif?'right:2px;':'left:2px;'}transition:all 0.2s;"></div>
+            </div>
+            ${kart.aktif ? 'Görünür' : 'Gizli'}
+          </label>
+          <button onclick="kartSil(${i})" style="background:#fff0f0;border:none;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;color:#e05050;">🗑</button>
+        </div>
+        ${kart.aktif ? `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-left:36px;">
+          <div class="p-field">
+            <label class="p-label">Açıklama</label>
+            <textarea class="p-input" rows="2" oninput="kartGuncelle(${i},'aciklama',this.value)" placeholder="Kart açıklaması...">${kart.aciklama}</textarea>
+          </div>
+          <div class="p-field">
+            <label class="p-label">
+              İçerik Tipi:
+              <select onchange="kartGuncelle(${i},'ekstraTip',this.value)" style="margin-left:6px;font-size:11px;border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-family:'DM Sans',sans-serif;">
+                <option value="liste" ${kart.ekstraTip==='liste'?'selected':''}>✦ Madde listesi</option>
+                <option value="markalar" ${kart.ekstraTip==='markalar'?'selected':''}>🏷 Marka etiketleri</option>
+                <option value="etiketler" ${kart.ekstraTip==='etiketler'?'selected':''}>💊 Pill etiketler</option>
+                <option value="ikonlu-liste" ${kart.ekstraTip==='ikonlu-liste'?'selected':''}>🔲 İkonlu liste</option>
+                <option value="adimlar" ${kart.ekstraTip==='adimlar'?'selected':''}>🔢 Adım adım</option>
+                <option value="yok" ${kart.ekstraTip==='yok'?'selected':''}>— Yok</option>
+              </select>
+            </label>
+            <textarea class="p-input" rows="4" oninput="kartGuncelle(${i},'ekstra',this.value)" placeholder="${kartEkstraPlaceholder(kart.ekstraTip)}" style="font-size:12px;">${kart.ekstra}</textarea>
+          </div>
+        </div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function kartEkstraPlaceholder(tip) {
+    const map = {
+      'liste': 'Her satıra bir madde
+İkinci madde
+Üçüncü madde',
+      'markalar': 'Charlotte Tilbury, MAC, NARS',
+      'etiketler': 'Etiket1,Etiket2,Etiket3',
+      'ikonlu-liste': '🕐 Başlık|Alt açıklama
+🌸 Başlık2|Alt2',
+      'adimlar': 'Adım Adı|Alt açıklama
+Adım 2|Alt2',
+      'yok': ''
+    };
+    return map[tip] || '';
+  }
+
+  function kartGuncelle(idx, alan, deger) {
+    hzKartlar[idx][alan] = deger;
+    kartListesiRender();
+  }
+
+  function emojiSeciciAc(idx) {
+    // Diğerlerini kapat
+    document.querySelectorAll('[id^="emoji_picker_"]').forEach(el => el.style.display = 'none');
+    const picker = document.getElementById('emoji_picker_' + idx);
+    if (picker) picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function emojiSec(idx, emoji) {
+    if (!emoji.trim()) return;
+    hzKartlar[idx].emoji = emoji.trim();
+    document.querySelectorAll('[id^="emoji_picker_"]').forEach(el => el.style.display = 'none');
+    kartListesiRender();
+  }
+
+  function kartEkle() {
+    const yeniId = Date.now();
+    hzKartlar.push({
+      id: yeniId, aktif: true, emoji: '✨', renk: 'white',
+      baslik: 'Yeni Kart', etiket: 'YENİ',
+      aciklama: '', ekstra: '', ekstraTip: 'liste'
+    });
+    kartListesiRender();
+    // En alta kaydır
+    setTimeout(() => {
+      const liste = document.getElementById('kartListesi');
+      if (liste) liste.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }
+
+  function kartSil(idx) {
+    if (!confirm('Bu kartı silmek istiyor musunuz?')) return;
+    hzKartlar.splice(idx, 1);
+    kartListesiRender();
+  }
+
+  // Drag & Drop
+  function dragBasla(e, idx) {
+    dragSrcIdx = idx;
+    e.target.style.opacity = '0.4';
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  function dragUzeri(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    return false;
+  }
+
+  function dragBirak(e, idx) {
+    e.stopPropagation();
+    if (dragSrcIdx === null || dragSrcIdx === idx) return;
+    const [silinan] = hzKartlar.splice(dragSrcIdx, 1);
+    hzKartlar.splice(idx, 0, silinan);
+    dragSrcIdx = null;
+    kartListesiRender();
+    return false;
+  }
+
+  function dragBitti() {
+    dragSrcIdx = null;
+    document.querySelectorAll('[id^="kart_row_"]').forEach(el => el.style.opacity = '1');
+  }
+
+  // Dışarı tıklayınca emoji seçiciyi kapat
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('[id^="emoji_picker_"]') && !e.target.closest('button[onclick^="emojiSeciciAc"]')) {
+      document.querySelectorAll('[id^="emoji_picker_"]').forEach(el => el.style.display = 'none');
+    }
+  });
 
   async function hizmetlerYukle() {
     try {
       const data = await sbFetch('ayarlar');
-      if (!Array.isArray(data)) return;
+      if (!Array.isArray(data)) { hzKartlar = JSON.parse(JSON.stringify(VARSAYILAN_KARTLAR)); kartListesiRender(); return; }
       const a = {};
       data.forEach(r => a[r.anahtar] = r.deger);
-      HZ_FIELDS.forEach(k => {
-        const el = document.getElementById(k);
-        if (el && a[k]) el.value = a[k];
-      });
-    } catch(e) { console.log('Hizmetler yüklenemedi:', e); }
+
+      // Metin alanları
+      const textFields = ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt','nb_yorum1','nb_yorum1_kisi','nb_yorum2','nb_yorum2_kisi','nb_yorum3','nb_yorum3_kisi'];
+      textFields.forEach(k => { const el = document.getElementById(k); if (el && a[k]) el.value = a[k]; });
+
+      // Kolon sayısı
+      if (a.kart_kolon) { kolonSec(parseInt(a.kart_kolon)); }
+
+      // Kartlar
+      if (a.hizmet_kartlar) {
+        try { hzKartlar = JSON.parse(a.hizmet_kartlar); }
+        catch(e) { hzKartlar = JSON.parse(JSON.stringify(VARSAYILAN_KARTLAR)); }
+      } else {
+        hzKartlar = JSON.parse(JSON.stringify(VARSAYILAN_KARTLAR));
+      }
+      kartListesiRender();
+    } catch(e) {
+      hzKartlar = JSON.parse(JSON.stringify(VARSAYILAN_KARTLAR));
+      kartListesiRender();
+    }
   }
 
-  async function hizmetlerKaydet() {
+  async function hizmetlerTamKaydet() {
     try {
-      for (const k of HZ_FIELDS) {
+      const textFields = ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt','nb_yorum1','nb_yorum1_kisi','nb_yorum2','nb_yorum2_kisi','nb_yorum3','nb_yorum3_kisi','kart_kolon'];
+      
+      // kart_kolon değerini input'tan al
+      const kolonEl = document.getElementById('kart_kolon');
+      if (kolonEl) kolonEl.value = hzKolonSayisi;
+
+      for (const k of textFields) {
         const el = document.getElementById(k);
         if (!el) continue;
         const deger = el.value.trim();
@@ -1722,8 +1915,18 @@
           await sbFetch('ayarlar', 'POST', { anahtar: k, deger });
         }
       }
-      bildirim('💾 Hizmetler güncellendi!');
-    } catch(e) { bildirim('❌ Kaydedilemedi!', 'error'); }
+
+      // Kartları JSON olarak kaydet
+      const kartlarJson = JSON.stringify(hzKartlar);
+      const check = await sbFetch('ayarlar?anahtar=eq.hizmet_kartlar');
+      if (Array.isArray(check) && check.length > 0) {
+        await sbFetch('ayarlar?anahtar=eq.hizmet_kartlar', 'PATCH', { deger: kartlarJson });
+      } else {
+        await sbFetch('ayarlar', 'POST', { anahtar: 'hizmet_kartlar', deger: kartlarJson });
+      }
+
+      bildirim('✅ Hizmetler kaydedildi ve siteye yansıtıldı!');
+    } catch(e) { bildirim('❌ Kaydedilemedi: ' + e.message, 'error'); }
   }
 
   // ── TEMA RENGİ ────────────────────────────────────────
