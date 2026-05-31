@@ -1311,9 +1311,39 @@
     const frame = document.getElementById('onizlemeFrame');
     if (!frame) return;
     const url = SEKME_URL[sekmeId] || 'https://selendemirmakeup.com/';
-    // Cache bypass ile yükle
-    const cacheBust = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
-    frame.src = cacheBust;
+
+    // Eğer iframe zaten aynı sayfadaysa, sadece scroll et
+    const mevcutSrc = frame.src || '';
+    const mevcutBase = mevcutSrc.split('?')[0].split('#')[0];
+    const yeniBase = url.split('?')[0].split('#')[0];
+    const hash = url.includes('#') ? url.split('#')[1] : '';
+
+    if (mevcutBase === yeniBase && frame.contentWindow) {
+      // Aynı sayfa — sadece hash ile scroll
+      try {
+        if (hash) {
+          frame.contentWindow.location.hash = hash;
+          // Smooth scroll
+          frame.contentWindow.document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          frame.contentWindow.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } catch(e) {
+        // Cross-origin engeli varsa yeniden yükle
+        frame.src = url + '?_t=' + Date.now();
+      }
+    } else {
+      // Farklı sayfa — yeniden yükle, sonra hash'e git
+      frame.src = url + '?_t=' + Date.now();
+      if (hash) {
+        frame.onload = () => {
+          try {
+            frame.contentWindow.document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } catch(e) {}
+          frame.onload = null;
+        };
+      }
+    }
   }
 
   function onizlemeYenile() {
