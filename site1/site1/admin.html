@@ -543,6 +543,93 @@
       .galeri-panel-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
+    @media (max-width: 768px) {
+      .panel-wrap { flex-direction: column; }
+
+      .sidebar {
+        width: 100% !important;
+        height: auto;
+        position: fixed;
+        bottom: 0; left: 0; right: 0; top: auto;
+        z-index: 300;
+        flex-direction: row;
+        padding: 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .sidebar-logo, .sidebar-sub, .logout-btn { display: none !important; }
+
+      .sidebar-nav {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .sidebar-nav::-webkit-scrollbar { display: none; }
+
+      .sidebar-item {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 12px;
+        min-width: 58px;
+        border-radius: 0;
+        gap: 3px;
+      }
+      .sidebar-item span:not(.sidebar-icon) {
+        display: block !important;
+        font-size: 9px;
+        white-space: nowrap;
+      }
+      .sidebar-icon { font-size: 18px !important; }
+
+      .main-content {
+        margin-left: 0 !important;
+        margin-bottom: 72px;
+        padding: 16px !important;
+      }
+
+      body.onizleme-aktif .main-content { margin-right: 0 !important; }
+      .onizleme-panel { display: none !important; }
+      .onizleme-btn { display: none !important; }
+
+      .login-card { padding: 28px 20px !important; margin: 20px; width: calc(100% - 40px) !important; }
+
+      .topbar { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
+      .topbar-right { flex-wrap: wrap; gap: 8px; }
+      .page-title { font-size: 20px !important; }
+
+      .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+      .stat-card { padding: 14px !important; gap: 10px; }
+      .stat-num { font-size: 22px !important; }
+      .stat-label { font-size: 11px; }
+
+      .section-card-header { padding: 14px 16px !important; flex-wrap: wrap; gap: 8px; }
+
+      /* Form grid'leri tek kolon */
+      .p-input { font-size: 16px; }
+      [style*="grid-template-columns:1fr 1fr"],
+      [style*="grid-template-columns: 1fr 1fr"],
+      [style*="grid-template-columns:1fr 1fr 1fr"],
+      [style*="grid-template-columns:repeat(3"],
+      [style*="grid-template-columns:repeat(6"],
+      [style*="grid-template-columns:2fr 1fr"],
+      [style*="grid-template-columns:3fr 2fr"] { grid-template-columns: 1fr !important; }
+
+      .galeri-panel-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      #ziyaretGrafik { height: 80px !important; }
+      .p-btn { padding: 10px 14px !important; font-size: 13px !important; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr 1fr !important; }
+      .sidebar-item { min-width: 48px; padding: 7px 8px; }
+      .main-content { padding: 12px !important; }
+    }
+
     @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
     .fade-in { animation: fadeUp 0.4s ease both; }
   </style>

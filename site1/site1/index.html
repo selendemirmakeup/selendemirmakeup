@@ -822,6 +822,42 @@
 
     @media (max-width: 768px) { .footer-top { grid-template-columns: 1fr; gap: 32px; } }
 
+    /* ── MOBİL KAPSAMLI ─────────────────────────── */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr !important; min-height: auto !important; }
+      .hero-left { padding: 100px 24px 40px !important; }
+      .hero-right { display: none !important; }
+      .hero-stats { gap: 20px !important; flex-wrap: wrap; }
+      .hero-h1 { font-size: clamp(26px, 8vw, 38px) !important; }
+
+      #hizmetler { padding: 60px 20px !important; }
+      #hizmetler [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+      #hizmetler [style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
+      #hizmetler [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      #hizmetler [style*="grid-template-columns:2fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+      #hizmetler [style*="grid-template-columns:1fr 2fr"] { grid-template-columns: 1fr !important; }
+      #hizmetler [style*="grid-template-columns:3fr 2fr"] { grid-template-columns: 1fr !important; }
+      #hizmetKartContainer [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+      #hizmetSabitSatir { grid-template-columns: 1fr !important; }
+
+      #hakkimda { grid-template-columns: 1fr !important; padding: 60px 20px !important; }
+      #fiyatlar { padding: 60px 20px !important; }
+      .fiyat-grid { grid-template-columns: 1fr !important; max-width: 100% !important; }
+      #sss { padding: 60px 20px !important; }
+      #randevu { padding: 60px 20px !important; }
+      .randevu-inner { grid-template-columns: 1fr !important; gap: 32px !important; }
+      section { padding: 60px 20px !important; }
+      .yorum-grid { grid-template-columns: 1fr !important; }
+      .galeri-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      nav { padding: 16px 20px !important; }
+      .section-h2 { font-size: clamp(22px, 7vw, 32px) !important; }
+    }
+    @media (max-width: 480px) {
+      .galeri-grid { grid-template-columns: 1fr !important; }
+      #hizmetler { padding: 48px 16px !important; }
+      .hero-stats { flex-direction: column !important; gap: 14px !important; }
+    }
+
     .footer-logo {
       font-family: 'Playfair Display', serif;
       font-size: 26px; font-style: italic;
