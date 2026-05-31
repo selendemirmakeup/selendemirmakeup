@@ -1768,7 +1768,7 @@
             container.innerHTML = html;
           }
         } catch(e) { console.log('Kart render:', e); }
-      }
+
         if (a.nb_markalar_str) {
           const mEl = document.getElementById('nb_markalar');
           if (mEl) mEl.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
@@ -1778,7 +1778,6 @@
           const yEl = document.getElementById('nb_yorumlar');
           if (yEl) yEl.innerHTML = yorumData.map(x => '<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"' + x.y + '"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ' + (x.k||'') + '</div></div>').join('');
         }
-
       } // ayarlar if kapanışı
 
       const fRes = await fetch(SB_URL + '/rest/v1/fiyatlar?order=id.asc', {
