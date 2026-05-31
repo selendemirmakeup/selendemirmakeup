@@ -476,6 +476,32 @@
               <div class="stat-label">Galeri Görseli</div>
             </div>
           </div>
+          <div class="stat-card fade-in">
+            <div class="stat-icon" style="background:#f0f9ff; color:#0ea5e9;">👁️</div>
+            <div>
+              <div class="stat-num" id="statBugunZiyaret">0</div>
+              <div class="stat-label">Bugünkü Ziyaret</div>
+            </div>
+          </div>
+          <div class="stat-card fade-in">
+            <div class="stat-icon" style="background:#f0fdf4; color:#22c55e;">📈</div>
+            <div>
+              <div class="stat-num" id="statToplamZiyaret">0</div>
+              <div class="stat-label">Toplam Ziyaret</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ziyaretçi Grafiği -->
+        <div class="section-card fade-in" style="margin-bottom:20px;">
+          <div class="section-card-header">
+            <div class="section-card-title">📊 Son 14 Gün Ziyaretçi</div>
+            <span class="badge badge-pink" id="ziyaretToplamBadge">0 toplam</span>
+          </div>
+          <div style="padding:24px;">
+            <div id="ziyaretGrafik" style="display:flex; align-items:flex-end; gap:6px; height:120px; border-bottom:1px solid var(--border); padding-bottom:8px;"></div>
+            <div id="ziyaretGrafikEtiket" style="display:flex; gap:6px; margin-top:6px;"></div>
+          </div>
         </div>
 
         <!-- Son Randevular -->
@@ -828,6 +854,39 @@
           </div>
         </div>
 
+        <!-- İstatistik Sayıları -->
+        <div class="section-card" style="margin-bottom:20px;">
+          <div class="section-card-header">
+            <div class="section-card-title">📊 Ana Sayfa İstatistikleri</div>
+          </div>
+          <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div class="p-field">
+              <label class="p-label">1. Sayı (örn: 50+)</label>
+              <input type="text" class="p-input" id="ayar_stat1_sayi" placeholder="11+"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">1. Etiket (örn: Mutlu Gelin)</label>
+              <input type="text" class="p-input" id="ayar_stat1_label" placeholder="Mutlu Gelin"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">2. Sayı (örn: 3)</label>
+              <input type="text" class="p-input" id="ayar_stat2_sayi" placeholder="3"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">2. Etiket (örn: Hizmet Paketi)</label>
+              <input type="text" class="p-input" id="ayar_stat2_label" placeholder="Hizmet Paketi"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">3. Sayı (örn: %100)</label>
+              <input type="text" class="p-input" id="ayar_stat3_sayi" placeholder="%100"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">3. Etiket (örn: Müşteri Memnuniyeti)</label>
+              <input type="text" class="p-input" id="ayar_stat3_label" placeholder="Müşteri Memnuniyeti"/>
+            </div>
+          </div>
+        </div>
+
         <!-- Şifre Değiştir -->
         <div class="section-card">
           <div class="section-card-header">
@@ -937,6 +996,7 @@
     sssYukle();
     reelListeGuncelle();
     ayarlariYukle();
+    ziyaretAnalizYukle();
     galeriYukle();
     istatistikGuncelle();
   }
@@ -1427,6 +1487,12 @@
         const yaEl = document.getElementById('ayar_yorumlar_alt');
         if (ybEl && a.yorumlar_baslik) ybEl.value = a.yorumlar_baslik;
         if (yaEl && a.yorumlar_alt) yaEl.value = a.yorumlar_alt;
+        // İstatistikler
+        const statFields = ['stat1_sayi','stat1_label','stat2_sayi','stat2_label','stat3_sayi','stat3_label'];
+        statFields.forEach(k => {
+          const el = document.getElementById('ayar_' + k);
+          if (el && a[k]) el.value = a[k];
+        });
       }
     } catch(e) { console.log('Ayarlar yüklenemedi:', e); }
   }
@@ -1440,13 +1506,25 @@
       'hero_baslik2': 'ayar_h1_2',
       'hero_metin': 'ayar_hero_metin',
       'yorumlar_baslik': 'ayar_yorumlar_baslik',
-      'yorumlar_alt': 'ayar_yorumlar_alt'
+      'yorumlar_alt': 'ayar_yorumlar_alt',
+      'stat1_sayi': 'ayar_stat1_sayi',
+      'stat1_label': 'ayar_stat1_label',
+      'stat2_sayi': 'ayar_stat2_sayi',
+      'stat2_label': 'ayar_stat2_label',
+      'stat3_sayi': 'ayar_stat3_sayi',
+      'stat3_label': 'ayar_stat3_label'
     };
     try {
       for (const [anahtar, elId] of Object.entries(map)) {
         const deger = getVal(elId);
         if (deger !== null) {
-          await sbFetch('ayarlar?anahtar=eq.' + anahtar, 'PATCH', { deger });
+          // Önce var mı kontrol et, varsa PATCH, yoksa POST
+          const check = await sbFetch('ayarlar?anahtar=eq.' + anahtar);
+          if (Array.isArray(check) && check.length > 0) {
+            await sbFetch('ayarlar?anahtar=eq.' + anahtar, 'PATCH', { deger });
+          } else {
+            await sbFetch('ayarlar', 'POST', { anahtar, deger });
+          }
         }
       }
       bildirim('💾 Ayarlar kaydedildi!');
@@ -1474,6 +1552,69 @@
     document.getElementById('statYorum').textContent = yorumlar.filter(y => y.onaylandi === true).length;
     document.getElementById('statBekleyen').textContent = yorumlar.filter(y => !y.onaylandi).length;
     document.getElementById('statGaleri').textContent = galeriGorseller.length;
+  }
+
+  // ── ZİYARETÇİ ANALİZİ ────────────────────────────────
+  async function ziyaretAnalizYukle() {
+    try {
+      // Son 14 günün tarihlerini oluştur
+      const gunler = [];
+      for (let i = 13; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        gunler.push(d.toISOString().split('T')[0]);
+      }
+      const baslangic = gunler[0];
+      const data = await sbFetch('ziyaretler?tarih=gte.' + baslangic + '&order=tarih.asc');
+      
+      const bugun = new Date().toISOString().split('T')[0];
+      let bugunSayi = 0;
+      let toplamSayi = 0;
+      const gunMap = {};
+      
+      if (Array.isArray(data)) {
+        data.forEach(r => {
+          gunMap[r.tarih] = (gunMap[r.tarih] || 0) + (r.sayi || 0);
+          toplamSayi += (r.sayi || 0);
+          if (r.tarih === bugun) bugunSayi += (r.sayi || 0);
+        });
+      }
+
+      // Kartları güncelle
+      const bEl = document.getElementById('statBugunZiyaret');
+      const tEl = document.getElementById('statToplamZiyaret');
+      if (bEl) bEl.textContent = bugunSayi;
+      if (tEl) tEl.textContent = toplamSayi;
+
+      // Badge
+      const badge = document.getElementById('ziyaretToplamBadge');
+      if (badge) badge.textContent = toplamSayi + ' toplam';
+
+      // Grafik çiz
+      const grafik = document.getElementById('ziyaretGrafik');
+      const etiket = document.getElementById('ziyaretGrafikEtiket');
+      if (!grafik || !etiket) return;
+
+      const sayilar = gunler.map(g => gunMap[g] || 0);
+      const maxSayi = Math.max(...sayilar, 1);
+
+      grafik.innerHTML = sayilar.map((s, i) => {
+        const yuzde = Math.max((s / maxSayi) * 100, 2);
+        const tarih = gunler[i];
+        const renkli = tarih === bugun ? '#c0436a' : '#f0a0b0';
+        return `<div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+          <div style="font-size:10px; color:var(--muted); font-weight:600;">${s > 0 ? s : ''}</div>
+          <div title="${tarih}: ${s} ziyaret" style="width:100%; background:${renkli}; border-radius:4px 4px 0 0; height:${yuzde}%; min-height:4px; transition:height 0.5s ease; cursor:default;"></div>
+        </div>`;
+      }).join('');
+
+      etiket.innerHTML = gunler.map((g, i) => {
+        const kisa = g.slice(5); // MM-DD
+        const bugunMu = g === bugun;
+        return `<div style="flex:1; text-align:center; font-size:9px; color:${bugunMu ? '#c0436a' : 'var(--muted)'}; font-weight:${bugunMu ? '700' : '400'}; overflow:hidden;">${kisa}</div>`;
+      }).join('');
+
+    } catch(e) { console.log('Ziyaret analiz yüklenemedi:', e); }
   }
 
 </script>

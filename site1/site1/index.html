@@ -1010,16 +1010,16 @@
     </div>
     <div class="hero-stats">
       <div>
-        <div class="stat-num">11+</div>
-        <div class="stat-label">Mutlu Gelin</div>
+        <div class="stat-num" id="heroStat1">11+</div>
+        <div class="stat-label" id="heroStatLabel1">Mutlu Gelin</div>
       </div>
       <div>
-        <div class="stat-num">3</div>
-        <div class="stat-label">Hizmet Paketi</div>
+        <div class="stat-num" id="heroStat2">3</div>
+        <div class="stat-label" id="heroStatLabel2">Hizmet Paketi</div>
       </div>
       <div>
-        <div class="stat-num">%100</div>
-        <div class="stat-label">Müşteri Memnuniyeti</div>
+        <div class="stat-num" id="heroStat3">%100</div>
+        <div class="stat-label" id="heroStatLabel3">Müşteri Memnuniyeti</div>
       </div>
     </div>
   </div>
@@ -1598,6 +1598,13 @@
         if (a.site_baslik) {
           document.querySelectorAll('.nav-logo, .footer-logo').forEach(el => el.textContent = a.site_baslik);
         }
+        // İstatistik sayıları
+        if (a.stat1_sayi) { const el = document.getElementById('heroStat1'); if(el) el.textContent = a.stat1_sayi; }
+        if (a.stat1_label) { const el = document.getElementById('heroStatLabel1'); if(el) el.textContent = a.stat1_label; }
+        if (a.stat2_sayi) { const el = document.getElementById('heroStat2'); if(el) el.textContent = a.stat2_sayi; }
+        if (a.stat2_label) { const el = document.getElementById('heroStatLabel2'); if(el) el.textContent = a.stat2_label; }
+        if (a.stat3_sayi) { const el = document.getElementById('heroStat3'); if(el) el.textContent = a.stat3_sayi; }
+        if (a.stat3_label) { const el = document.getElementById('heroStatLabel3'); if(el) el.textContent = a.stat3_label; }
         // Hero metinleri
         if (a.hero_baslik1) {
           const h1 = document.querySelector('.hero-h1');
@@ -1676,6 +1683,35 @@
 
   sayfaVerileriniYukle();
   sssYukle();
+
+  // ── Ziyaretçi sayacı ─────────────────────────────────
+  async function ziyaretKaydet() {
+    try {
+      const bugun = new Date().toISOString().split('T')[0];
+      const sayfa = window.location.pathname || '/';
+      // Bugünkü kaydı bul
+      const res = await fetch(SB_URL + '/rest/v1/ziyaretler?tarih=eq.' + bugun + '&sayfa=eq.' + encodeURIComponent(sayfa), {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+      const rows = await res.json();
+      if (Array.isArray(rows) && rows.length > 0) {
+        // Mevcut kaydı artır
+        await fetch(SB_URL + '/rest/v1/ziyaretler?id=eq.' + rows[0].id, {
+          method: 'PATCH',
+          headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ sayi: (rows[0].sayi || 0) + 1 })
+        });
+      } else {
+        // Yeni kayıt oluştur
+        await fetch(SB_URL + '/rest/v1/ziyaretler', {
+          method: 'POST',
+          headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ tarih: bugun, sayfa: sayfa, sayi: 1 })
+        });
+      }
+    } catch(e) { /* sessizce geç */ }
+  }
+  ziyaretKaydet();
   // ─────────────────────────────────────────────────────
 </script>
 </body>
