@@ -1082,10 +1082,10 @@
   </div>
 
   <!-- Dinamik Kartlar -->
-  <div id="hizmetKartContainer" class="reveal"></div>
+  <div id="hizmetKartContainer" class="reveal" style="margin-bottom:14px;"></div>
 
-  <!-- Koyu Alıntı + Eve Geliyorum + Güvenceler (sabit) -->
-  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-top:14px;" class="reveal" id="hizmetSabitSatir">
+    <!-- Kart Sırası 2 -->
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-bottom:14px;" class="reveal">
     <div style="background:#1e0f14;border-radius:18px;padding:24px;">
       <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;line-height:1.4;margin-bottom:14px;">"Özel gününüzde aynaya baktığınızda <em style="color:#f4a0bc;font-style:italic;">tam istediğiniz gibi</em> hissetmenizi sağlıyorum."</div>
       <div style="font-size:12.5px;color:rgba(255,255,255,.72);line-height:1.65;margin-bottom:10px;" id="nb_alinti_alt">5 yıldır İstanbul'un dört bir yanında özel günler için hazırlanıyorum.</div>
@@ -1128,8 +1128,8 @@
     </div>
   </div>
 
-  <!-- Müşteri Yorumları (sabit, dinamik yükleme ile) -->
-  <div style="display:grid;grid-template-columns:1fr 2fr;gap:14px;margin-top:14px;" class="reveal">
+  <!-- Kart Sırası 3 -->
+  <div style="display:grid;grid-template-columns:1fr 2fr;gap:14px;" class="reveal">
     <div style="background:#fff;border:1px solid #f0e4e9;border-radius:18px;padding:22px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
       <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:6px;">Çalışma Süreci</div>
@@ -1148,13 +1148,14 @@
       <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;font-family:'Playfair Display',serif;">Onlar Anlatsın</div>
       <div style="color:var(--pink-deep);font-size:14px;letter-spacing:2px;margin-bottom:12px;">★★★★★</div>
       <div style="display:flex;flex-direction:column;gap:12px;" id="nb_yorumlar">
-        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Düğün günüm için hayallerimden bile güzel bir makyaj çıkardı."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Ayşe K., Düğün Gelini</div></div>
-        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Eve geldi, her şeyi getirdi, hiç stres yaşamadım."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Fatma S., Nişan</div></div>
-        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Makyajım sabah 8'den gece 12'ye kadar bozulmadı."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Merve T., Mezuniyet</div></div>
+        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Düğün günüm için hayallerimden bile güzel bir makyaj çıkardı. Tüm arkadaşlarıma tavsiye edeceğim."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Ayşe K., Düğün Gelini</div></div>
+        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Eve geldi, her şeyi getirdi, hiç stres yaşamadım. Türban tasarımı tam istediğim gibiydi."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Fatma S., Nişan</div></div>
+        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Makyajım sabah 8'den gece 12'ye kadar bozulmadı. Profesyonelliği beni çok rahatlattı."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Merve T., Mezuniyet</div></div>
       </div>
     </div>
   </div>
 </section>
+
 <!-- HAKKIMDA -->
 <section id="hakkimda">
   <div class="about-visual reveal">
@@ -1686,15 +1687,9 @@
 
       // Fiyatları yükle
       // Neden Ben / Hizmetler alanları
-      const nbTextFields = ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt'];
-      nbTextFields.forEach(k => { const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k]; });
-
-      // Yorumlar
-      const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
-      if (yorumData.length > 0) {
-        const el = document.getElementById('nb_yorumlar');
-        if (el) el.innerHTML = yorumData.map(x=>`<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"${x.y}"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ${x.k||''}</div></div>`).join('');
-      }
+      // Metin alanları
+      const nbFields = ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt'];
+      nbFields.forEach(k => { const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k]; });
 
       // Dinamik kartlar
       if (a.hizmet_kartlar) {
@@ -1702,69 +1697,52 @@
           const kartlar = JSON.parse(a.hizmet_kartlar);
           const kolon = parseInt(a.kart_kolon) || 3;
           const container = document.getElementById('hizmetKartContainer');
-          if (container && kartlar.length > 0) {
-            const aktifKartlar = kartlar.filter(k => k.aktif !== false);
-            const RENK_MAP = { white:'background:#fff;border:1px solid #f0e4e9;', blush:'background:#fff5f8;border:1px solid #f4c0d1;', dark:'background:#1e0f14;border:1px solid #1e0f14;', soft:'background:#fdf8f6;border:1px solid #f0e4e9;' };
-            
-            function renderEkstra(kart) {
-              if (!kart.ekstra) return '';
-              const tip = kart.ekstraTip || 'liste';
-              const isDark = kart.renk === 'dark';
-              const textClr = isDark ? 'rgba(255,255,255,0.75)' : 'var(--muted)';
-              const accentClr = isDark ? '#f4a0bc' : 'var(--pink-deep)';
-              if (tip === 'markalar') {
-                return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + kart.ekstra.split(',').map(m => `<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">${m.trim()}</span>`).join('') + '</div>';
-              }
-              if (tip === 'etiketler') {
-                const items = kart.ekstra.split(',');
-                return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + items.map((e,i) => `<span style="font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:${i===0?'var(--pink-deep)':'#fdf0f3'};color:${i===0?'#fff':'#993556'};">${e.trim()}</span>`).join('') + '</div>';
-              }
-              if (tip === 'liste') {
-                return '<ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">' + kart.ekstra.split('\\n').filter(l=>l.trim()).map(l => `<li style="font-size:12.5px;color:${textClr};display:flex;gap:8px;line-height:1.5;"><span style="color:${accentClr};font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>${l.trim()}</li>`).join('') + '</ul>';
-              }
-              if (tip === 'ikonlu-liste') {
-                return '<div style="display:flex;flex-direction:column;">' + kart.ekstra.split('\\n').filter(l=>l.trim()).map((l,i) => {
-                  const [bas, alt] = l.split('|');
-                  return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;${i<kart.ekstra.split('
-').filter(x=>x.trim()).length-1?'border-bottom:1px solid rgba(0,0,0,0.06);':''}"><div style="font-size:16px;width:32px;height:32px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${bas?.split(' ')[0]||'•'}</div><div><div style="font-size:12px;font-weight:700;color:var(--text);">${(bas||'').replace(/^[\S]+\s/,'')}</div>${alt?`<div style="font-size:11px;color:var(--muted);">${alt}</div>`:''}</div></div>`;
-                }).join('') + '</div>';
-              }
-              if (tip === 'adimlar') {
-                const satirlar = kart.ekstra.split('\\n').filter(l=>l.trim());
-                return '<div style="display:flex;flex-direction:column;">' + satirlar.map((l,i) => {
-                  const [bas, alt] = l.split('|');
-                  const sonMu = i === satirlar.length - 1;
-                  return `<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:26px;height:26px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">${sonMu?'✓':i+1}</div>${!sonMu?'<div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div>':''}</div><div style="padding-bottom:${sonMu?'0':'12px'};"><div style="font-size:12px;font-weight:700;color:var(--text);">${bas||''}</div>${alt?`<div style="font-size:11px;color:var(--muted);">${alt}</div>`:''}</div></div>`;
-                }).join('') + '</div>';
-              }
+          if (container) {
+            const aktif = kartlar.filter(k => k.aktif !== false);
+            const RENK = { white:'background:#fff;border:1px solid #f0e4e9;', blush:'background:#fff5f8;border:1px solid #f4c0d1;', dark:'background:#1e0f14;border:none;', soft:'background:#fdf8f6;border:1px solid #f0e4e9;' };
+            function ekstraRender(k) {
+              if (!k.ekstra) return '';
+              const t = k.ekstraTip || 'liste';
+              const dk = k.renk === 'dark';
+              const tc = dk ? 'rgba(255,255,255,0.75)' : 'var(--muted)';
+              const ac = dk ? '#f4a0bc' : 'var(--pink-deep)';
+              if (t === 'markalar') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('') + '</div>';
+              if (t === 'etiketler') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map((e,i) => '<span style="font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:' + (i===0?'var(--pink-deep)':'#fdf0f3') + ';color:' + (i===0?'#fff':'#993556') + ';">' + e.trim() + '</span>').join('') + '</div>';
+              if (t === 'liste') return '<ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">' + k.ekstra.split('\n').filter(l=>l.trim()).map(l => '<li style="font-size:12.5px;color:' + tc + ';display:flex;gap:8px;line-height:1.5;"><span style="color:' + ac + ';font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>' + l.trim() + '</li>').join('') + '</ul>';
+              if (t === 'ikonlu-liste') return '<div>' + k.ekstra.split('\n').filter(l=>l.trim()).map((l,i,arr) => { const [b,s] = l.split('|'); return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;' + (i<arr.length-1?'border-bottom:1px solid rgba(0,0,0,0.06);':'') + '"><div style="font-size:16px;width:30px;height:30px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + (b||'').split(' ')[0] + '</div><div><div style="font-size:12px;font-weight:700;color:var(--text);">' + (b||'').replace(/^\S+\s/,'') + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>';
+              if (t === 'adimlar') { const rows = k.ekstra.split('\n').filter(l=>l.trim()); return '<div>' + rows.map((l,i) => { const [b,s] = l.split('|'); const last = i===rows.length-1; return '<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:24px;height:24px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">' + (last?'✓':i+1) + '</div>' + (!last?'<div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div>':'') + '</div><div style="padding-bottom:' + (last?'0':'12px') + ';"><div style="font-size:12px;font-weight:700;color:var(--text);">' + (b||'') + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>'; }
               return '';
             }
-
-            const satirSayisi = Math.ceil(aktifKartlar.length / kolon);
+            const rows = Math.ceil(aktif.length / kolon);
             let html = '';
-            for (let s = 0; s < satirSayisi; s++) {
-              const satirKartlar = aktifKartlar.slice(s * kolon, (s+1) * kolon);
-              html += `<div style="display:grid;grid-template-columns:repeat(${kolon},1fr);gap:14px;margin-bottom:14px;">`;
-              html += satirKartlar.map(kart => {
-                const renkStyle = RENK_MAP[kart.renk] || RENK_MAP.white;
-                const isDark = kart.renk === 'dark';
-                const titleClr = isDark ? '#fff' : 'var(--text)';
-                const bodyClr = isDark ? 'rgba(255,255,255,0.72)' : 'var(--muted)';
-                const labelClr = isDark ? 'rgba(255,255,255,0.65)' : 'var(--pink-deep)';
-                return `<div style="${renkStyle}border-radius:18px;padding:22px;position:relative;overflow:hidden;">
-                  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
-                  <div style="font-size:26px;margin-bottom:12px;">${kart.emoji}</div>
-                  <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:${labelClr};font-weight:700;margin-bottom:5px;">${kart.etiket||''}</div>
-                  <div style="font-size:15px;font-weight:700;color:${titleClr};margin-bottom:8px;font-family:'Playfair Display',serif;">${kart.baslik||''}</div>
-                  ${kart.aciklama ? `<div style="font-size:12.5px;color:${bodyClr};line-height:1.65;margin-bottom:10px;">${kart.aciklama}</div>` : ''}
-                  ${renderEkstra(kart)}
-                </div>`;
+            for (let r=0; r<rows; r++) {
+              const rowKartlar = aktif.slice(r*kolon, (r+1)*kolon);
+              html += '<div style="display:grid;grid-template-columns:repeat(' + kolon + ',1fr);gap:14px;margin-bottom:14px;">';
+              html += rowKartlar.map(k => {
+                const rs = RENK[k.renk] || RENK.white;
+                const dk = k.renk === 'dark';
+                return '<div style="' + rs + 'border-radius:18px;padding:22px;position:relative;overflow:hidden;">' +
+                  '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>' +
+                  '<div style="font-size:26px;margin-bottom:12px;">' + k.emoji + '</div>' +
+                  '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:' + (dk?'rgba(255,255,255,0.65)':'var(--pink-deep)') + ';font-weight:700;margin-bottom:5px;">' + (k.etiket||'') + '</div>' +
+                  '<div style="font-size:15px;font-weight:700;color:' + (dk?'#fff':'var(--text)') + ';margin-bottom:8px;font-family:'Playfair Display',serif;">' + (k.baslik||'') + '</div>' +
+                  (k.aciklama ? '<div style="font-size:12.5px;color:' + (dk?'rgba(255,255,255,0.72)':'var(--muted)') + ';line-height:1.65;margin-bottom:10px;">' + k.aciklama + '</div>' : '') +
+                  ekstraRender(k) + '</div>';
               }).join('');
               html += '</div>';
             }
             container.innerHTML = html;
           }
-        } catch(e) { console.log('Kart render hatası:', e); }
+        } catch(e) { console.log('Kart render:', e); }
+      }
+      if (a.nb_markalar_str) {
+        const el = document.getElementById('nb_markalar');
+        if (el) el.innerHTML = a.nb_markalar_str.split(',').map(m => `<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">${m.trim()}</span>`).join('');
+      }
+      const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
+      if (yorumData.length > 0) {
+        const el = document.getElementById('nb_yorumlar');
+        if (el) el.innerHTML = yorumData.map(x=>`<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"${x.y}"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ${x.k||''}</div></div>`).join('');
       }
 
       const fRes = await fetch(SB_URL + '/rest/v1/fiyatlar?order=id.asc', {
