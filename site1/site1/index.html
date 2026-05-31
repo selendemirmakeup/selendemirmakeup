@@ -1720,20 +1720,17 @@
                 return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + items.map((e,i) => `<span style="font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:${i===0?'var(--pink-deep)':'#fdf0f3'};color:${i===0?'#fff':'#993556'};">${e.trim()}</span>`).join('') + '</div>';
               }
               if (tip === 'liste') {
-                return '<ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">' + kart.ekstra.split('
-').filter(l=>l.trim()).map(l => `<li style="font-size:12.5px;color:${textClr};display:flex;gap:8px;line-height:1.5;"><span style="color:${accentClr};font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>${l.trim()}</li>`).join('') + '</ul>';
+                return '<ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">' + kart.ekstra.split('\\n').filter(l=>l.trim()).map(l => `<li style="font-size:12.5px;color:${textClr};display:flex;gap:8px;line-height:1.5;"><span style="color:${accentClr};font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>${l.trim()}</li>`).join('') + '</ul>';
               }
               if (tip === 'ikonlu-liste') {
-                return '<div style="display:flex;flex-direction:column;">' + kart.ekstra.split('
-').filter(l=>l.trim()).map((l,i) => {
+                return '<div style="display:flex;flex-direction:column;">' + kart.ekstra.split('\\n').filter(l=>l.trim()).map((l,i) => {
                   const [bas, alt] = l.split('|');
                   return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;${i<kart.ekstra.split('
 ').filter(x=>x.trim()).length-1?'border-bottom:1px solid rgba(0,0,0,0.06);':''}"><div style="font-size:16px;width:32px;height:32px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${bas?.split(' ')[0]||'•'}</div><div><div style="font-size:12px;font-weight:700;color:var(--text);">${(bas||'').replace(/^[\S]+\s/,'')}</div>${alt?`<div style="font-size:11px;color:var(--muted);">${alt}</div>`:''}</div></div>`;
                 }).join('') + '</div>';
               }
               if (tip === 'adimlar') {
-                const satirlar = kart.ekstra.split('
-').filter(l=>l.trim());
+                const satirlar = kart.ekstra.split('\\n').filter(l=>l.trim());
                 return '<div style="display:flex;flex-direction:column;">' + satirlar.map((l,i) => {
                   const [bas, alt] = l.split('|');
                   const sonMu = i === satirlar.length - 1;
