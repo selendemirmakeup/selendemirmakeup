@@ -740,7 +740,7 @@
           </div>
         </div>
         <div class="stats-grid">
-          
+
           <div class="stat-card fade-in">
             <div class="stat-icon green">⭐</div>
             <div>
@@ -781,29 +781,20 @@
         <!-- Ziyaretçi Grafiği -->
         <div class="section-card fade-in" style="margin-bottom:20px;">
           <div class="section-card-header">
-    
-
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-          <!-- Bekleyen -->
-          <div class="section-card">
-            <div class="section-card-header">
-              <div class="section-card-title">⏳ Onay Bekleyenler</div>
-              <span class="badge badge-orange" id="bekleyenSayi">0</span>
-            </div>
-            <div id="bekleyenYorumlar" style="padding:16px; color:var(--muted); font-size:14px;">Bekleyen yorum yok</div>
+            <div class="section-card-title">📊 Son 14 Gün Ziyaretçi</div>
+            <span class="badge badge-pink" id="ziyaretToplamBadge">0 toplam</span>
           </div>
-          <!-- Onaylı -->
-          <div class="section-card">
-            <div class="section-card-header">
-              <div class="section-card-title">✅ Onaylı Yorumlar</div>
-              <span class="badge badge-green" id="onayliSayi">0</span>
-            </div>
-            <div id="onayliYorumlar" style="padding:16px; color:var(--muted); font-size:14px;">Henüz onaylı yorum yok</div>
+          <div style="padding:24px;">
+            <div id="ziyaretGrafik" style="display:flex; align-items:flex-end; gap:6px; height:120px; border-bottom:1px solid var(--border); padding-bottom:8px;"></div>
+            <div id="ziyaretGrafikEtiket" style="display:flex; gap:6px; margin-top:6px;"></div>
           </div>
         </div>
+
+        
       </div>
 
-      <!-- GALERİ -->
+      <!-- RANDEVULAR -->
+
       <div id="tab-yorumlar" class="tab-content">
         <div class="topbar">
           <h1 class="page-title"><em>Yorumlar</em></h1>
