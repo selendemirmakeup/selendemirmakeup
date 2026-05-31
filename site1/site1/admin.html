@@ -804,6 +804,32 @@
       </div>
 
       <!-- GALERİ -->
+      <div id="tab-yorumlar" class="tab-content">
+        <div class="topbar">
+          <h1 class="page-title"><em>Yorumlar</em></h1>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+          <!-- Bekleyen -->
+          <div class="section-card">
+            <div class="section-card-header">
+              <div class="section-card-title">⏳ Onay Bekleyenler</div>
+              <span class="badge badge-orange" id="bekleyenSayi">0</span>
+            </div>
+            <div id="bekleyenYorumlar" style="padding:16px; color:var(--muted); font-size:14px;">Bekleyen yorum yok</div>
+          </div>
+          <!-- Onaylı -->
+          <div class="section-card">
+            <div class="section-card-header">
+              <div class="section-card-title">✅ Onaylı Yorumlar</div>
+              <span class="badge badge-green" id="onayliSayi">0</span>
+            </div>
+            <div id="onayliYorumlar" style="padding:16px; color:var(--muted); font-size:14px;">Henüz onaylı yorum yok</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALERİ -->
       <div id="tab-galeri" class="tab-content">
         <div class="topbar">
           <h1 class="page-title"><em>Galeri</em></h1>
