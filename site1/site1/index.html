@@ -1056,51 +1056,143 @@
 </section>
 
 <!-- HİZMETLER -->
-<section id="hizmetler">
-  <div class="hizmet-header reveal">
-    <div class="section-label">Neler Yapıyorum</div>
+<section id="hizmetler" style="background:#fff; padding:100px 80px;">
+  <div class="hizmet-header reveal" style="margin-bottom:3rem;">
+    <div class="section-label">Neden Ben</div>
     <h2 class="section-h2">Sizin İçin <em>Özel</em> Hizmetler</h2>
-    <p class="section-p">Her organizasyon için ayrı ayrı düşünülmüş, kişiye özel dokunuşlarla hazırlanan hizmet paketlerim.</p>
+    <p class="section-p" id="nb_aciklama">Makyaj sadece görünüş değil, o gün kendinizi nasıl hissettirdiğinizdir. Benim işim sizi en güzel, en özgüvenli halinize taşımak.</p>
   </div>
-  <div class="hizmet-grid">
-    <div class="hizmet-card reveal">
-      <div class="hizmet-icon">💄</div>
-      <div class="hizmet-badge">Temel Paket</div>
-      <div class="hizmet-name">Sadece Makyaj</div>
-      <p class="hizmet-desc">Cilt tipinize ve tercihlerinize göre özelleştirilmiş, uzun süre kalıcı profesyonel makyaj uygulaması.</p>
-      <ul class="hizmet-features">
-        <li class="hizmet-feature">Cilt analizi ve hazırlık</li>
-        <li class="hizmet-feature">Kalıcı fondöten uygulama</li>
-        <li class="hizmet-feature">Göz & dudak tasarımı</li>
-        <li class="hizmet-feature">Setting & fixing</li>
-      </ul>
-      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="hizmet-cta">Randevu Al</a>
+
+  <!-- KPI Satırı -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;" class="reveal">
+    <div style="display:flex;align-items:center;gap:16px;background:var(--soft);border-radius:14px;padding:16px 20px;">
+      <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--pink-deep);line-height:1;min-width:64px;" id="nb_kpi1_sayi">150+</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;" id="nb_kpi1_baslik">Mutlu Gelin & Davetli</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;" id="nb_kpi1_alt">İstanbul genelinde gerçekleştirilen çalışmalar</div>
+      </div>
     </div>
-    <div class="hizmet-card featured reveal">
-      <div class="hizmet-icon">✨</div>
-      <div class="hizmet-badge">En Popüler</div>
-      <div class="hizmet-name">Makyaj + Türban</div>
-      <p class="hizmet-desc">Komple gelin hazırlığı paketi. Makyaj ve türban tasarımının mükemmel uyumuyla unutulmaz bir görünüm.</p>
-      <ul class="hizmet-features">
-        <li class="hizmet-feature">Tüm makyaj hizmetleri</li>
-        <li class="hizmet-feature">Kişiye özel türban tasarımı</li>
-        <li class="hizmet-feature">Aksesuvar uyumu</li>
-        <li class="hizmet-feature">Fotoğraf çekimi hazırlığı</li>
-      </ul>
-      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="hizmet-cta">Randevu Al</a>
+    <div style="display:flex;align-items:center;gap:16px;background:var(--soft);border-radius:14px;padding:16px 20px;">
+      <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--pink-deep);line-height:1;min-width:64px;" id="nb_kpi2_sayi">%98</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;" id="nb_kpi2_baslik">Tavsiye Oranı</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4;" id="nb_kpi2_alt">Müşterilerin arkadaşlarına önerme oranı</div>
+      </div>
     </div>
-    <div class="hizmet-card reveal">
-      <div class="hizmet-icon">🧣</div>
-      <div class="hizmet-badge">Türban Paketi</div>
-      <div class="hizmet-name">Sadece Türban</div>
-      <p class="hizmet-desc">Organizasyonunuza özel, yüz şeklinize ve kıyafetinize uygun yaratıcı türban tasarımı.</p>
-      <ul class="hizmet-features">
-        <li class="hizmet-feature">Yüz analizi</li>
-        <li class="hizmet-feature">Kıyafet renk uyumu</li>
-        <li class="hizmet-feature">Özgün tasarım</li>
-        <li class="hizmet-feature">Aksesuvar önerisi</li>
+  </div>
+
+  <!-- Kart Sırası 1 -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;" class="reveal">
+    <div style="background:#fff5f8;border:1px solid #f4c0d1;border-radius:18px;padding:22px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
+      <div style="font-size:26px;margin-bottom:12px;">💄</div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:5px;">Ürün Seçimi</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;font-family:'Playfair Display',serif;" id="nb_urun_baslik">Sadece En İyi Markalar</div>
+      <div style="font-size:12.5px;color:var(--muted);line-height:1.65;margin-bottom:10px;" id="nb_urun_aciklama">Uzun ömürlü, cilde dost ve fotoğrafta mükemmel görünen markalar kullanıyorum. Cilt tipinize özel ürün seçimi yapılıyor.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;" id="nb_markalar">
+        <span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">Charlotte Tilbury</span>
+        <span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">MAC</span>
+        <span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">Armani</span>
+        <span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">NARS</span>
+        <span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">Huda Beauty</span>
+        <span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">Lancôme</span>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid #f0e4e9;border-radius:18px;padding:22px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
+      <div style="font-size:26px;margin-bottom:12px;">🧕</div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:5px;">Türban Uzmanlığı</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;font-family:'Playfair Display',serif;" id="nb_turban_baslik">Her Yüze Özel Tasarım</div>
+      <div style="font-size:12.5px;color:var(--muted);line-height:1.65;margin-bottom:10px;" id="nb_turban_aciklama">Yüz şeklinize, kıyafetinize ve organizasyona göre özel türban modeli tasarlıyorum. Modern ya da klasik — her ikisi de benim işim.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;">
+        <span style="font-size:11px;background:var(--pink-deep);color:#fff;padding:4px 10px;border-radius:20px;font-weight:600;">Gelin türbanı</span>
+        <span style="font-size:11px;background:#fdf0f3;color:#993556;padding:4px 10px;border-radius:20px;font-weight:600;">Volanlı model</span>
+        <span style="font-size:11px;background:#fdf0f3;color:#993556;padding:4px 10px;border-radius:20px;font-weight:600;">Minimal stil</span>
+        <span style="font-size:11px;background:#fdf0f3;color:#993556;padding:4px 10px;border-radius:20px;font-weight:600;">Taçlı tasarım</span>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid #f0e4e9;border-radius:18px;padding:22px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
+      <div style="font-size:26px;margin-bottom:12px;">🏅</div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:5px;">Sertifikalar</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;font-family:'Playfair Display',serif;">Eğitimli & Belgeli Uzman</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">
+        <li style="font-size:12.5px;color:var(--muted);display:flex;gap:8px;line-height:1.5;"><span style="color:var(--pink-deep);font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>Profesyonel Gelin Makyajı Sertifikası</li>
+        <li style="font-size:12.5px;color:var(--muted);display:flex;gap:8px;line-height:1.5;"><span style="color:var(--pink-deep);font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>Türban Tasarım & Stil Uzmanlığı</li>
+        <li style="font-size:12.5px;color:var(--muted);display:flex;gap:8px;line-height:1.5;"><span style="color:var(--pink-deep);font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>İleri Düzey Cilt Analizi</li>
+        <li style="font-size:12.5px;color:var(--muted);display:flex;gap:8px;line-height:1.5;"><span style="color:var(--pink-deep);font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>Kalıcı Makyaj Teknikleri</li>
       </ul>
-      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="hizmet-cta">Randevu Al</a>
+    </div>
+  </div>
+
+  <!-- Kart Sırası 2 -->
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-bottom:14px;" class="reveal">
+    <div style="background:#1e0f14;border-radius:18px;padding:24px;">
+      <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;line-height:1.4;margin-bottom:14px;">"Özel gününüzde aynaya baktığınızda <em style="color:#f4a0bc;font-style:italic;">tam istediğiniz gibi</em> hissetmenizi sağlıyorum."</div>
+      <div style="font-size:12.5px;color:rgba(255,255,255,.72);line-height:1.65;margin-bottom:10px;" id="nb_alinti_alt">5 yıldır İstanbul'un dört bir yanında özel günler için hazırlanıyorum.</div>
+      <div style="width:24px;height:2px;background:rgba(255,255,255,.25);border-radius:2px;margin:10px 0;"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;">
+        <span style="font-size:11px;background:rgba(255,255,255,.15);color:#fff;padding:4px 10px;border-radius:20px;font-weight:600;">5+ Yıl Deneyim</span>
+        <span style="font-size:11px;background:rgba(255,255,255,.15);color:#fff;padding:4px 10px;border-radius:20px;font-weight:600;">150+ Gelin</span>
+        <span style="font-size:11px;background:rgba(255,255,255,.15);color:#fff;padding:4px 10px;border-radius:20px;font-weight:600;">%98 Tavsiye</span>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid #f0e4e9;border-radius:18px;padding:22px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
+      <div style="font-size:26px;margin-bottom:12px;">🧳</div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:5px;">Eve Geliyorum</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;font-family:'Playfair Display',serif;">Tam Donanımlı</div>
+      <div style="font-size:12.5px;color:var(--muted);line-height:1.65;margin-bottom:10px;">İstanbul ve çevresinde kapınıza geliyorum.</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;">
+        <li style="font-size:12.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--pink-deep);font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>Ring aydınlatma</li>
+        <li style="font-size:12.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--pink-deep);font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>Profesyonel koltuk</li>
+        <li style="font-size:12.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--pink-deep);font-size:10px;flex-shrink:0;margin-top:2px;">✦</span>Tam fırça seti</li>
+      </ul>
+    </div>
+    <div style="background:#fff5f8;border:1px solid #f4c0d1;border-radius:18px;padding:22px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
+      <div style="font-size:26px;margin-bottom:12px;">⏰</div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:5px;">Güvencelerim</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;font-family:'Playfair Display',serif;">Size Söz Veriyorum</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f0e4e9;">
+        <div style="font-size:16px;width:32px;height:32px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🕐</div>
+        <div><div style="font-size:12px;font-weight:700;color:var(--text);">Dakiklik Garantisi</div><div style="font-size:11px;color:var(--muted);">Asla gecikme olmaz</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f0e4e9;">
+        <div style="font-size:16px;width:32px;height:32px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🌸</div>
+        <div><div style="font-size:12px;font-weight:700;color:var(--text);">Huzurlu Ortam</div><div style="font-size:11px;color:var(--muted);">Stressiz uygulama</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:9px 0;">
+        <div style="font-size:16px;width:32px;height:32px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">💬</div>
+        <div><div style="font-size:12px;font-weight:700;color:var(--text);">7/24 İletişim</div><div style="font-size:11px;color:var(--muted);">WhatsApp ile hızlı yanıt</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kart Sırası 3 -->
+  <div style="display:grid;grid-template-columns:1fr 2fr;gap:14px;" class="reveal">
+    <div style="background:#fff;border:1px solid #f0e4e9;border-radius:18px;padding:22px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:6px;">Çalışma Süreci</div>
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;font-family:'Playfair Display',serif;">5 Adımda Mükemmel Sonuç</div>
+      <div style="display:flex;flex-direction:column;">
+        <div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:26px;height:26px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">1</div><div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div></div><div style="padding-bottom:12px;"><div style="font-size:12px;font-weight:700;color:var(--text);">Ön Görüşme</div><div style="font-size:11px;color:var(--muted);">Beklentiler & stil planlaması</div></div></div>
+        <div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:26px;height:26px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">2</div><div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div></div><div style="padding-bottom:12px;"><div style="font-size:12px;font-weight:700;color:var(--text);">Cilt Hazırlık</div><div style="font-size:11px;color:var(--muted);">Temizlik & uzun ömürlü primer</div></div></div>
+        <div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:26px;height:26px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">3</div><div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div></div><div style="padding-bottom:12px;"><div style="font-size:12px;font-weight:700;color:var(--text);">Makyaj Uygulaması</div><div style="font-size:11px;color:var(--muted);">Kişiye özel renk & teknik</div></div></div>
+        <div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:26px;height:26px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">4</div><div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div></div><div style="padding-bottom:12px;"><div style="font-size:12px;font-weight:700;color:var(--text);">Türban Tasarımı</div><div style="font-size:11px;color:var(--muted);">Yüz şekline özel model</div></div></div>
+        <div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:26px;height:26px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">✓</div></div><div style="padding-bottom:12px;"><div style="font-size:12px;font-weight:700;color:var(--text);">Fotoğrafa Hazır</div><div style="font-size:11px;color:var(--muted);">Setting & fixing ile kalıcılık</div></div></div>
+      </div>
+    </div>
+    <div style="background:#fff5f8;border:1px solid #f4c0d1;border-radius:18px;padding:22px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:5px;">Müşteri Yorumları</div>
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;font-family:'Playfair Display',serif;">Onlar Anlatsın</div>
+      <div style="color:var(--pink-deep);font-size:14px;letter-spacing:2px;margin-bottom:12px;">★★★★★</div>
+      <div style="display:flex;flex-direction:column;gap:12px;" id="nb_yorumlar">
+        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Düğün günüm için hayallerimden bile güzel bir makyaj çıkardı. Tüm arkadaşlarıma tavsiye edeceğim."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Ayşe K., Düğün Gelini</div></div>
+        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Eve geldi, her şeyi getirdi, hiç stres yaşamadım. Türban tasarımı tam istediğim gibiydi."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Fatma S., Nişan</div></div>
+        <div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"Makyajım sabah 8'den gece 12'ye kadar bozulmadı. Profesyonelliği beni çok rahatlattı."</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— Merve T., Mezuniyet</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1635,6 +1727,19 @@
       }
 
       // Fiyatları yükle
+      // Neden Ben / Hizmetler alanları
+      const nbFields = ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt','nb_urun_baslik','nb_urun_aciklama','nb_turban_baslik','nb_turban_aciklama'];
+      nbFields.forEach(k => { const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k]; });
+      if (a.nb_markalar_str) {
+        const el = document.getElementById('nb_markalar');
+        if (el) el.innerHTML = a.nb_markalar_str.split(',').map(m => `<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">${m.trim()}</span>`).join('');
+      }
+      const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
+      if (yorumData.length > 0) {
+        const el = document.getElementById('nb_yorumlar');
+        if (el) el.innerHTML = yorumData.map(x=>`<div style="background:var(--soft);border-radius:12px;padding:14px;"><div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:5px;">"${x.y}"</div><div style="font-size:11px;font-weight:700;color:var(--pink-deep);">— ${x.k||''}</div></div>`).join('');
+      }
+
       const fRes = await fetch(SB_URL + '/rest/v1/fiyatlar?order=id.asc', {
         headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
       });
@@ -1751,6 +1856,27 @@
     }, { threshold: 0.3 });
     obs.observe(statEl);
   }
+
+  // ── TEMA RENGİ UYGULA ────────────────────────────────
+  async function temaUygula() {
+    try {
+      const res = await fetch(SB_URL + '/rest/v1/ayarlar?anahtar=eq.tema_rengi', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        const t = JSON.parse(data[0].deger);
+        const root = document.documentElement;
+        if (t.deep)   root.style.setProperty('--pink-deep', t.deep);
+        if (t.dark)   root.style.setProperty('--pink-dark', t.dark);
+        if (t.light)  root.style.setProperty('--pink-light', t.light);
+        if (t.deep)   root.style.setProperty('--pink', t.deep);
+        if (t.soft)   root.style.setProperty('--soft', t.soft);
+        if (t.border) root.style.setProperty('--border', t.border);
+      }
+    } catch(e) {}
+  }
+  temaUygula();
 
   sayfaVerileriniYukle();
   sssYukle();

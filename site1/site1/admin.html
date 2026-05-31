@@ -412,6 +412,10 @@
           <span class="sidebar-icon">🖼️</span>
           <span>Galeri</span>
         </div>
+        <div class="sidebar-item" onclick="sekmeAc('hizmetler', this)">
+          <span class="sidebar-icon">✨</span>
+          <span>Hizmetler</span>
+        </div>
         <div class="sidebar-item" onclick="sekmeAc('fiyatlar', this)">
           <span class="sidebar-icon">💰</span>
           <span>Fiyatlar</span>
@@ -613,6 +617,117 @@
       </div>
 
       <!-- FİYATLAR -->
+      <!-- HİZMETLER -->
+      <div id="tab-hizmetler" class="tab-content">
+        <div class="topbar">
+          <h1 class="page-title"><em>Hizmetler</em> Yönetimi</h1>
+          <div class="topbar-right">
+            <button class="p-btn" onclick="hizmetlerKaydet()">💾 Kaydet</button>
+          </div>
+        </div>
+
+        <!-- Başlık & Açıklama -->
+        <div class="section-card" style="margin-bottom:20px;">
+          <div class="section-card-header">
+            <div class="section-card-title">📝 Bölüm Başlığı & Açıklaması</div>
+          </div>
+          <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div class="p-field">
+              <label class="p-label">Bölüm Açıklaması (Başlık altı)</label>
+              <textarea class="p-input" id="nb_aciklama" rows="2" placeholder="Makyaj sadece görünüş değil..."></textarea>
+            </div>
+            <div class="p-field">
+              <label class="p-label">Koyu Kart Alt Metni</label>
+              <textarea class="p-input" id="nb_alinti_alt" rows="2" placeholder="5 yıldır İstanbul'un dört bir yanında..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Kartlar -->
+        <div class="section-card" style="margin-bottom:20px;">
+          <div class="section-card-header">
+            <div class="section-card-title">📊 İstatistik Kartları</div>
+          </div>
+          <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+            <div class="p-field">
+              <label class="p-label">KPI 1 — Sayı</label>
+              <input type="text" class="p-input" id="nb_kpi1_sayi" placeholder="150+"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">KPI 1 — Başlık</label>
+              <input type="text" class="p-input" id="nb_kpi1_baslik" placeholder="Mutlu Gelin & Davetli"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">KPI 1 — Alt Metin</label>
+              <input type="text" class="p-input" id="nb_kpi1_alt" placeholder="İstanbul genelinde..."/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">KPI 2 — Sayı</label>
+              <input type="text" class="p-input" id="nb_kpi2_sayi" placeholder="%98"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">KPI 2 — Başlık</label>
+              <input type="text" class="p-input" id="nb_kpi2_baslik" placeholder="Tavsiye Oranı"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">KPI 2 — Alt Metin</label>
+              <input type="text" class="p-input" id="nb_kpi2_alt" placeholder="Müşterilerin önerme oranı"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ürün & Türban -->
+        <div class="section-card" style="margin-bottom:20px;">
+          <div class="section-card-header">
+            <div class="section-card-title">💄 Ürün & Türban Kartları</div>
+          </div>
+          <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div class="p-field">
+              <label class="p-label">Ürün Kartı Başlığı</label>
+              <input type="text" class="p-input" id="nb_urun_baslik" placeholder="Sadece En İyi Markalar"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">Ürün Kartı Açıklaması</label>
+              <textarea class="p-input" id="nb_urun_aciklama" rows="2" placeholder="Kalıcı ve cilde dost ürünler..."></textarea>
+            </div>
+            <div class="p-field" style="grid-column:1/-1;">
+              <label class="p-label">Markalar (virgülle ayırın)</label>
+              <input type="text" class="p-input" id="nb_markalar_str" placeholder="Charlotte Tilbury, MAC, Armani, NARS, Huda Beauty, Lancôme"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">Türban Kartı Başlığı</label>
+              <input type="text" class="p-input" id="nb_turban_baslik" placeholder="Her Yüze Özel Tasarım"/>
+            </div>
+            <div class="p-field">
+              <label class="p-label">Türban Kartı Açıklaması</label>
+              <textarea class="p-input" id="nb_turban_aciklama" rows="2" placeholder="Yüz şeklinize göre..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Müşteri Yorumları -->
+        <div class="section-card" style="margin-bottom:20px;">
+          <div class="section-card-header">
+            <div class="section-card-title">⭐ Müşteri Yorumları</div>
+          </div>
+          <div style="padding:24px; display:flex; flex-direction:column; gap:16px;">
+            <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px;">
+              <div class="p-field"><label class="p-label">Yorum 1</label><textarea class="p-input" id="nb_yorum1" rows="2" placeholder="Düğün günüm için..."></textarea></div>
+              <div class="p-field"><label class="p-label">Kişi & Organizasyon</label><input type="text" class="p-input" id="nb_yorum1_kisi" placeholder="Ayşe K., Düğün Gelini"/></div>
+            </div>
+            <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px;">
+              <div class="p-field"><label class="p-label">Yorum 2</label><textarea class="p-input" id="nb_yorum2" rows="2" placeholder="Eve geldi..."></textarea></div>
+              <div class="p-field"><label class="p-label">Kişi & Organizasyon</label><input type="text" class="p-input" id="nb_yorum2_kisi" placeholder="Fatma S., Nişan"/></div>
+            </div>
+            <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px;">
+              <div class="p-field"><label class="p-label">Yorum 3</label><textarea class="p-input" id="nb_yorum3" rows="2" placeholder="Makyajım bozulmadı..."></textarea></div>
+              <div class="p-field"><label class="p-label">Kişi & Organizasyon</label><input type="text" class="p-input" id="nb_yorum3_kisi" placeholder="Merve T., Mezuniyet"/></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
       <div id="tab-fiyatlar" class="tab-content">
         <div class="topbar">
           <h1 class="page-title"><em>Fiyatlar</em></h1>
@@ -788,6 +903,26 @@
           <h1 class="page-title"><em>Ayarlar</em></h1>
           <div class="topbar-right">
             <button class="p-btn" onclick="ayarlariKaydet()">💾 Kaydet</button>
+          </div>
+        </div>
+
+        <!-- Tema Rengi -->
+        <div class="section-card" style="margin-bottom:20px;">
+          <div class="section-card-header">
+            <div class="section-card-title">🎨 Site Tema Rengi</div>
+            <span class="badge badge-pink" id="aktifTemaBadge">Aktif: Pembe</span>
+          </div>
+          <div style="padding:24px;">
+            <p style="font-size:13px; color:var(--muted); margin-bottom:20px; line-height:1.6;">Seçtiğiniz renk sitenin tüm vurgu renklerini (butonlar, linkler, başlıklar) değiştirir. Kaydet'e bastığınızda canlı siteye yansır.</p>
+            <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:20px;" id="temaGrid">
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; background:var(--soft); border-radius:10px; padding:14px 18px;">
+              <span style="font-size:13px; color:var(--muted); font-weight:600;">Önizleme:</span>
+              <button id="temaOnizleme" style="padding:8px 20px; border-radius:8px; border:none; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:#fff; cursor:default;">Randevu Al</button>
+              <span id="temaOnizlemeLink" style="font-size:13px; font-weight:600; text-decoration:underline; cursor:default;">Hizmetler →</span>
+              <span id="temaOnizlemeBadge" style="font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px;">Aktif Renk</span>
+            </div>
+            <button class="p-btn" style="margin-top:16px;" onclick="temaKaydet()">💾 Tema Rengini Kaydet</button>
           </div>
         </div>
 
@@ -997,6 +1132,8 @@
     reelListeGuncelle();
     ayarlariYukle();
     ziyaretAnalizYukle();
+    hizmetlerYukle();
+    temaYukle();
     galeriYukle();
     istatistikGuncelle();
   }
@@ -1544,6 +1681,126 @@
     document.getElementById('eskiSifre').value = '';
     document.getElementById('yeniSifre').value = '';
     document.getElementById('yeniSifreTekrar').value = '';
+  }
+
+  // ── HİZMETLER (NEDEN BEN) ────────────────────────────
+  const HZ_FIELDS = [
+    'nb_aciklama','nb_alinti_alt',
+    'nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt',
+    'nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt',
+    'nb_urun_baslik','nb_urun_aciklama','nb_markalar_str',
+    'nb_turban_baslik','nb_turban_aciklama',
+    'nb_yorum1','nb_yorum1_kisi',
+    'nb_yorum2','nb_yorum2_kisi',
+    'nb_yorum3','nb_yorum3_kisi'
+  ];
+
+  async function hizmetlerYukle() {
+    try {
+      const data = await sbFetch('ayarlar');
+      if (!Array.isArray(data)) return;
+      const a = {};
+      data.forEach(r => a[r.anahtar] = r.deger);
+      HZ_FIELDS.forEach(k => {
+        const el = document.getElementById(k);
+        if (el && a[k]) el.value = a[k];
+      });
+    } catch(e) { console.log('Hizmetler yüklenemedi:', e); }
+  }
+
+  async function hizmetlerKaydet() {
+    try {
+      for (const k of HZ_FIELDS) {
+        const el = document.getElementById(k);
+        if (!el) continue;
+        const deger = el.value.trim();
+        if (!deger) continue;
+        const check = await sbFetch('ayarlar?anahtar=eq.' + k);
+        if (Array.isArray(check) && check.length > 0) {
+          await sbFetch('ayarlar?anahtar=eq.' + k, 'PATCH', { deger });
+        } else {
+          await sbFetch('ayarlar', 'POST', { anahtar: k, deger });
+        }
+      }
+      bildirim('💾 Hizmetler güncellendi!');
+    } catch(e) { bildirim('❌ Kaydedilemedi!', 'error'); }
+  }
+
+  // ── TEMA RENGİ ────────────────────────────────────────
+  const TEMALAR = [
+    { ad: 'Pembe',       deep: '#e06878', dark: '#b84a5a', light: '#fce8e8', soft: '#fdf8f8', border: '#f0e0e0' },
+    { ad: 'Gül',         deep: '#c0436a', dark: '#8f2e4e', light: '#fce8f0', soft: '#fdf5f8', border: '#f0d8e4' },
+    { ad: 'Mor',         deep: '#7c5cbf', dark: '#5a3d9e', light: '#ede8f8', soft: '#f8f6fd', border: '#e0d8f4' },
+    { ad: 'Lacivert',    deep: '#3a6ebf', dark: '#2a509e', light: '#e8eef8', soft: '#f5f7fd', border: '#d8e4f4' },
+    { ad: 'Teal',        deep: '#2a9d8f', dark: '#1d7a6e', light: '#e8f6f4', soft: '#f4fdfc', border: '#d0ece9' },
+    { ad: 'Zeytin',      deep: '#6b8f3a', dark: '#4e6e22', light: '#eef4e6', soft: '#f6faf0', border: '#d8eccc' },
+    { ad: 'Turuncu',     deep: '#e07830', dark: '#b85a18', light: '#fef0e6', soft: '#fdf8f4', border: '#f4e0cc' },
+    { ad: 'Kırmızı',     deep: '#d94040', dark: '#a82828', light: '#fdeaea', soft: '#fdf5f5', border: '#f4d4d4' },
+    { ad: 'Kahve',       deep: '#8b6040', dark: '#6a4428', light: '#f4ece4', soft: '#fdf9f6', border: '#e8d8cc' },
+    { ad: 'Gri-Siyah',   deep: '#444444', dark: '#222222', light: '#eeeeee', soft: '#f8f8f8', border: '#e0e0e0' },
+  ];
+
+  let secilenTema = 0;
+
+  function temaGridOlustur() {
+    const grid = document.getElementById('temaGrid');
+    if (!grid) return;
+    grid.innerHTML = TEMALAR.map((t, i) => `
+      <div onclick="temaSeç(${i})" id="temaKart_${i}" style="
+        border-radius:12px; padding:14px; cursor:pointer; text-align:center;
+        border:2px solid ${i === secilenTema ? t.deep : '#f0e4e9'};
+        background:${i === secilenTema ? t.light : '#fff'};
+        transition:all 0.2s;
+      ">
+        <div style="display:flex; gap:5px; justify-content:center; margin-bottom:8px;">
+          <div style="width:18px; height:18px; border-radius:50%; background:${t.deep};"></div>
+          <div style="width:18px; height:18px; border-radius:50%; background:${t.dark};"></div>
+          <div style="width:18px; height:18px; border-radius:50%; background:${t.light}; border:1px solid ${t.border};"></div>
+        </div>
+        <div style="font-size:12px; font-weight:700; color:${i === secilenTema ? t.deep : '#666'};">${t.ad}</div>
+      </div>
+    `).join('');
+  }
+
+  function temaSeç(i) {
+    secilenTema = i;
+    const t = TEMALAR[i];
+    temaGridOlustur();
+    // Önizleme güncelle
+    const btn = document.getElementById('temaOnizleme');
+    const link = document.getElementById('temaOnizlemeLink');
+    const badge = document.getElementById('temaOnizlemeBadge');
+    const badgeEl = document.getElementById('aktifTemaBadge');
+    if (btn) { btn.style.background = t.deep; }
+    if (link) { link.style.color = t.deep; }
+    if (badge) { badge.style.background = t.light; badge.style.color = t.deep; badge.textContent = t.ad; }
+    if (badgeEl) badgeEl.textContent = 'Aktif: ' + t.ad;
+  }
+
+  async function temaKaydet() {
+    const t = TEMALAR[secilenTema];
+    const temaVeri = JSON.stringify({ index: secilenTema, ...t });
+    try {
+      const check = await sbFetch('ayarlar?anahtar=eq.tema_rengi');
+      if (Array.isArray(check) && check.length > 0) {
+        await sbFetch('ayarlar?anahtar=eq.tema_rengi', 'PATCH', { deger: temaVeri });
+      } else {
+        await sbFetch('ayarlar', 'POST', { anahtar: 'tema_rengi', deger: temaVeri });
+      }
+      bildirim('🎨 Tema kaydedildi! Site rengi güncellendi.');
+    } catch(e) { bildirim('❌ Tema kaydedilemedi!', 'error'); }
+  }
+
+  async function temaYukle() {
+    try {
+      const data = await sbFetch('ayarlar?anahtar=eq.tema_rengi');
+      if (Array.isArray(data) && data.length > 0) {
+        const t = JSON.parse(data[0].deger);
+        if (t.index !== undefined) { secilenTema = t.index; }
+      }
+    } catch(e) {}
+    temaGridOlustur();
+    temaSeç(secilenTema);
   }
 
   // ── İSTATİSTİK ───────────────────────────────────────
