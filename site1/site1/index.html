@@ -1677,8 +1677,8 @@
         headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
       });
       const ayarlar = await aRes.json();
+      const a = {};
       if (Array.isArray(ayarlar) && ayarlar.length > 0) {
-        const a = {};
         ayarlar.forEach(row => a[row.anahtar] = row.deger);
 
         // Site başlığı
@@ -1727,7 +1727,7 @@
 
         // Dinamik kartlar
         if (a.hizmet_kartlar) {
-        try {
+          try {
           const kartlar = JSON.parse(a.hizmet_kartlar);
           const kolon = parseInt(a.kart_kolon) || 3;
           const container = document.getElementById('hizmetKartContainer');
@@ -1767,7 +1767,8 @@
             }
             container.innerHTML = html;
           }
-        } catch(e) { console.log('Kart render:', e); }
+          } catch(e) { console.log('Kart render:', e); }
+        } // hizmet_kartlar if
 
         if (a.nb_markalar_str) {
           const mEl = document.getElementById('nb_markalar');
