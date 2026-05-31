@@ -1599,12 +1599,14 @@
           document.querySelectorAll('.nav-logo, .footer-logo').forEach(el => el.textContent = a.site_baslik);
         }
         // İstatistik sayıları
-        if (a.stat1_sayi) { const el = document.getElementById('heroStat1'); if(el) el.textContent = a.stat1_sayi; }
+        // İstatistik etiketleri
         if (a.stat1_label) { const el = document.getElementById('heroStatLabel1'); if(el) el.textContent = a.stat1_label; }
-        if (a.stat2_sayi) { const el = document.getElementById('heroStat2'); if(el) el.textContent = a.stat2_sayi; }
         if (a.stat2_label) { const el = document.getElementById('heroStatLabel2'); if(el) el.textContent = a.stat2_label; }
-        if (a.stat3_sayi) { const el = document.getElementById('heroStat3'); if(el) el.textContent = a.stat3_sayi; }
         if (a.stat3_label) { const el = document.getElementById('heroStatLabel3'); if(el) el.textContent = a.stat3_label; }
+        // Sayıları sessizce yerleştir (animasyon IntersectionObserver ile çalışacak)
+        if (a.stat1_sayi) { const el = document.getElementById('heroStat1'); if(el) el.setAttribute('data-hedef', a.stat1_sayi); el.textContent = a.stat1_sayi; }
+        if (a.stat2_sayi) { const el = document.getElementById('heroStat2'); if(el) el.setAttribute('data-hedef', a.stat2_sayi); el.textContent = a.stat2_sayi; }
+        if (a.stat3_sayi) { const el = document.getElementById('heroStat3'); if(el) el.setAttribute('data-hedef', a.stat3_sayi); el.textContent = a.stat3_sayi; }
         // Hero metinleri
         if (a.hero_baslik1) {
           const h1 = document.querySelector('.hero-h1');
@@ -1679,6 +1681,75 @@
         }
       }
     } catch(e) { console.log('SSS yuklenemedi:', e); }
+  }
+
+  // ── SAYAÇ ANİMASYONU ─────────────────────────────────
+  function sayiParse(deger) {
+    // "11+", "%100", "3" gibi değerleri parse et
+    if (!deger) return { sayi: 0, prefix: '', suffix: '' };
+    const str = String(deger).trim();
+    let prefix = '';
+    let suffix = '';
+    let sayi = 0;
+    // % başta mı?
+    if (str.startsWith('%')) {
+      prefix = '%';
+      sayi = parseInt(str.slice(1)) || 0;
+    } else {
+      // Sondaki + veya diğer suffix
+      const match = str.match(/^(\d+)(.*)$/);
+      if (match) {
+        sayi = parseInt(match[1]) || 0;
+        suffix = match[2] || '';
+      } else {
+        sayi = 0;
+        suffix = str;
+      }
+    }
+    return { sayi, prefix, suffix };
+  }
+
+  function animateSayac(el, hedef, prefix, suffix, sure) {
+    if (!el) return;
+    const baslangic = 0;
+    const startTime = performance.now();
+    function guncelle(now) {
+      const gecen = now - startTime;
+      const ilerleme = Math.min(gecen / sure, 1);
+      // easeOutExpo
+      const ease = ilerleme === 1 ? 1 : 1 - Math.pow(2, -10 * ilerleme);
+      const anlikDeger = Math.floor(ease * hedef);
+      el.textContent = prefix + anlikDeger + suffix;
+      if (ilerleme < 1) requestAnimationFrame(guncelle);
+      else el.textContent = prefix + hedef + suffix;
+    }
+    requestAnimationFrame(guncelle);
+  }
+
+  function sayaclariBaslat() {
+    const ids = ['heroStat1', 'heroStat2', 'heroStat3'];
+    ids.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const parsed = sayiParse(el.textContent);
+      if (parsed.sayi > 0) {
+        setTimeout(() => animateSayac(el, parsed.sayi, parsed.prefix, parsed.suffix, 1800), i * 200);
+      }
+    });
+  }
+
+  // Sayaçlar ekrana girince çalışsın (IntersectionObserver)
+  const statEl = document.querySelector('.hero-stats');
+  if (statEl) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sayaclariBaslat();
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    obs.observe(statEl);
   }
 
   sayfaVerileriniYukle();
