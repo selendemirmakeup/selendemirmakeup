@@ -852,6 +852,7 @@
         <div class="topbar">
           <h1 class="page-title" style="cursor:pointer;" onclick="onizlemeScrollTo('hizmetler')" title="Önizlemede göster"><em>Hizmetler</em> Editörü</h1>
           <div class="topbar-right" style="display:flex;gap:10px;">
+            <button onclick="onizlemeScrollTo('hizmetler')" title="Önizlemede göster" style="background:#f0f4ff;border:1.5px solid #dce4ff;border-radius:9px;padding:9px 14px;cursor:pointer;font-size:14px;font-weight:600;color:#4a6cf7;font-family:'DM Sans',sans-serif;">👁 Önizle</button>
             <button class="p-btn" style="background:#fff;color:var(--pink-dark);border:1.5px solid var(--pink);" onclick="kartEkle()">➕ Yeni Kart</button>
             <button class="p-btn" onclick="hizmetlerTamKaydet()">💾 Kaydet & Yayınla</button>
           </div>
@@ -932,6 +933,7 @@
         <div class="topbar">
           <h1 class="page-title" style="cursor:pointer;" onclick="onizlemeScrollTo('fiyatlar')" title="Önizlemede göster"><em>Fiyatlar</em></h1>
           <div class="topbar-right">
+            <button onclick="onizlemeScrollTo('fiyatlar')" title="Önizlemede göster" style="background:#f0f4ff;border:1.5px solid #dce4ff;border-radius:9px;padding:9px 14px;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;color:#4a6cf7;">👁 Önizle</button>
             <button class="p-btn" onclick="fiyatlariKaydet()">💾 Kaydet & Uygula</button>
           </div>
         </div>
@@ -1062,7 +1064,7 @@
       <div id="tab-reels" class="tab-content">
         <div class="topbar">
           <h1 class="page-title"><em>Reels</em> Yönetimi</h1>
-          <div class="topbar-right">
+          <div class="topbar-right"><button onclick="onizlemeScrollTo('reels')" title="Önizlemede göster" style="background:#f0f4ff;border:1.5px solid #dce4ff;border-radius:9px;padding:9px 14px;cursor:pointer;font-size:14px;font-weight:600;color:#4a6cf7;font-family:'DM Sans',sans-serif;">👁 Önizle</button>
             <button class="p-btn" onclick="reelEkle()">➕ Reel Ekle</button>
           </div>
         </div>
@@ -1686,6 +1688,7 @@
           <div style="font-size:13px; color:var(--muted); line-height:1.55;">${s.cevap}</div>
         </div>
         <div style="display:flex; gap:6px; flex-shrink:0; margin-top:2px;">
+          <button onclick="onizlemeScrollTo('sss')" title="Önizlemede göster" style="background:#f0f4ff;border:none;border-radius:7px;width:30px;height:30px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='#c0436a';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='inherit'">👁</button>
           <button class="act-btn act-btn-pink" onclick="sssDuzenle(${s.id})">✏️ Düzenle</button>
           <button class="act-btn act-btn-red" onclick="sssSil(${s.id})">🗑 Sil</button>
         </div>
@@ -2001,6 +2004,10 @@
               style="width:100%;font-size:11px;font-weight:700;border:none;background:transparent;color:var(--pink-dark);font-family:'DM Sans',sans-serif;padding:0;outline:none;text-transform:uppercase;letter-spacing:0.08em;"
               placeholder="ETİKET"/>
           </div>
+          <button onclick="onizlemeScrollTo('hizmetler')" title="Önizlemede göster"
+            style="background:#f0f4ff;border:none;border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;"
+            onmouseover="this.style.background='#c0436a';this.style.color='#fff'"
+            onmouseout="this.style.background='#f0f4ff';this.style.color='inherit'">👁</button>
           <!-- Renk seçici -->
           <div style="display:flex;gap:4px;align-items:center;">
             ${RENKLER.map(r => `<button onclick="kartGuncelle(${i},'renk','${r.key}')" title="${r.ad}" style="width:20px;height:20px;border-radius:50%;background:${r.bg};border:2px solid ${kart.renk===r.key?'var(--pink-dark)':r.border};cursor:pointer;"></button>`).join('')}
