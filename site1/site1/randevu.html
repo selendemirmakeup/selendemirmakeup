@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Randevu Al | Selen Demir Makeup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --white: #ffffff;
+      --soft: #fdf8f8;
+      --pink-light: #fce8e8;
+      --pink: #f0a0a8;
+      --pink-deep: #e06878;
+      --pink-dark: #b84a5a;
+      --text: #1a1a1a;
+      --muted: #888;
+      --border: #f0e0e0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--soft);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: rgba(255,255,255,0.97);
+      border-bottom: 3px solid var(--pink);
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(240,160,168,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--pink-dark);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--pink-deep); }
+
+    /* HERO BANNER */
+    .form-hero {
+      background: linear-gradient(135deg, #fdf8f8 0%, #fce8e8 100%);
+      padding: 60px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--pink-deep);
+      background: white;
+      padding: 7px 16px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .form-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .form-hero h1 em {
+      font-style: italic;
+      color: var(--pink-deep);
+    }
+
+    .form-hero p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* FORM WRAPPER */
+    .form-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* SECTION */
+    .form-section {
+      background: white;
+      border-radius: 20px;
+      padding: 36px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 24px rgba(240,160,168,0.06);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--pink-dark);
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--pink-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      background: var(--pink-light);
+      color: var(--pink-deep);
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    /* GRID */
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field-full { grid-column: 1 / -1; }
+
+    /* FIELD */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+
+    label .req { color: var(--pink-deep); margin-left: 2px; }
+
+    input, textarea, select {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--soft);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+      appearance: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(240,160,168,0.15);
+      background: white;
+    }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    /* RADIO / CHECKBOX */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+      background: var(--soft);
+    }
+
+    .option-label:hover {
+      border-color: var(--pink);
+      background: var(--pink-light);
+    }
+
+    .option-label input[type="radio"],
+    .option-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      accent-color: var(--pink-deep);
+      border: none;
+      padding: 0;
+      background: none;
+    }
+
+    input[type="radio"]:checked + span,
+    input[type="checkbox"]:checked + span {
+      color: var(--pink-dark);
+      font-weight: 500;
+    }
+
+    .option-label:has(input:checked) {
+      border-color: var(--pink-deep);
+      background: var(--pink-light);
+    }
+
+    /* DATE TIME */
+    .datetime-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* UPLOAD */
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--soft);
+      position: relative;
+    }
+
+    .upload-area:hover {
+      border-color: var(--pink);
+      background: var(--pink-light);
+    }
+
+    .upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: none;
+      background: none;
+    }
+
+    .upload-icon { font-size: 32px; margin-bottom: 8px; }
+    .upload-text { font-size: 14px; color: var(--muted); }
+    .upload-text strong { color: var(--pink-deep); }
+    .upload-preview { margin-top: 12px; display: none; }
+    .upload-preview img { max-width: 200px; border-radius: 8px; }
+
+    /* SUBMIT */
+    .submit-section {
+      text-align: center;
+      padding: 0 0 0;
+    }
+
+    .submit-btn {
+      background: var(--pink-deep);
+      color: white;
+      border: none;
+      padding: 18px 56px;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      box-shadow: 0 8px 24px rgba(224,104,120,0.3);
+    }
+
+    .submit-btn:hover {
+      background: var(--pink-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(224,104,120,0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    /* SUCCESS */
+    .success-box {
+      display: none;
+      background: white;
+      border: 1.5px solid #c8e6c9;
+      border-radius: 20px;
+      padding: 48px 36px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+
+    .success-icon { font-size: 56px; margin-bottom: 16px; }
+
+    .success-box h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .success-box p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* ERROR */
+    .error-msg {
+      font-size: 12px;
+      color: #e06878;
+      margin-top: 4px;
+      display: none;
+    }
+
+    input.error, textarea.error, select.error {
+      border-color: #e06878;
+    }
+
+    /* LOADING */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .form-hero { padding: 40px 20px 30px; }
+      .form-section { padding: 24px 20px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .datetime-row { grid-template-columns: 1fr; }
+      .options-grid { grid-template-columns: 1fr 1fr; }
+      .submit-btn { padding: 16px 40px; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Selen Demir</a>
+  <a href="index.html" class="nav-back">← Ana Sayfaya Dön</a>
+</nav>
+
+<div class="form-hero">
+  <div class="form-hero-tag">✦ Randevu</div>
+  <h1>Gelin Hazırlığı<br><em>Randevu Formu</em></h1>
+  <p>Özel gününüzde size en iyi hizmeti sunabilmem için lütfen formu eksiksiz doldurunuz. Randevunuz, form sonrası sizinle iletişime geçilerek kesinleştirilecektir.</p>
+</div>
+
+<div class="form-wrap">
+
+  <form id="randevuForm">
+
+    <!-- KİŞİSEL BİLGİLER -->
+    <div class="form-section">
+      <div class="section-title">
+        Kişisel Bilgiler <span>1 / 4</span>
+      </div>
+      <div class="field-grid">
+        <div class="field">
+          <label>Ad <span class="req">*</span></label>
+          <input type="text" name="ad" placeholder="Adınız" required/>
+        </div>
+        <div class="field">
+          <label>Soyad <span class="req">*</span></label>
+          <input type="text" name="soyad" placeholder="Soyadınız" required/>
+        </div>
+        <div class="field">
+          <label>Telefon <span class="req">*</span></label>
+          <input type="tel" name="telefon" placeholder="0 (5__) ___ __ __" required/>
+        </div>
+        <div class="field">
+          <label>Ekstra Telefon</label>
+          <input type="tel" name="telefon2" placeholder="0 (5__) ___ __ __"/>
+        </div>
+        <div class="field field-full">
+          <label>E-posta <span class="req">*</span></label>
+          <input type="email" name="eposta" placeholder="ornek@gmail.com" required/>
+        </div>
+        <div class="field field-full">
+          <label>Adres <span class="req">*</span></label>
+          <input type="text" name="adres" placeholder="Mahalle, sokak, bina no" required/>
+        </div>
+        <div class="field">
+          <label>İlçe</label>
+          <input type="text" name="ilce" placeholder="İlçe"/>
+        </div>
+        <div class="field">
+          <label>Şehir</label>
+          <input type="text" name="sehir" placeholder="İstanbul"/>
+        </div>
+        <div class="field field-full">
+          <label>Instagram Adınız</label>
+          <input type="text" name="instagram" placeholder="@kullaniciadiniz"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYLAŞIM İZNİ -->
+    <div class="form-section">
+      <div class="section-title">
+        Paylaşım İzni <span>2 / 4</span>
+      </div>
+      <div class="options-grid">
+        <label class="option-label">
+          <input type="radio" name="paylasim" value="Paylaşım istemiyorum"/>
+          <span>Paylaşım istemiyorum</span>
+        </label>
+        <label class="option-label">
+          <input type="radio" name="paylasim" value="Paylaşım yapılabilir"/>
+          <span>Paylaşım yapılabilir</span>
+        </label>
+        <label class="option-label">
+          <input type="radio" name="paylasim" value="Sadece story paylaşım yapılabilir"/>
+          <span>Sadece story için paylaşım yapılabilir</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- RANDEVU DETAYLARI -->
+    <div class="form-section">
+      <div class="section-title">
+        Randevu Detayları <span>3 / 4</span>
+      </div>
+      <div class="field-grid">
+        <div class="field field-full">
+          <label>Randevu Tarihi ve Saati <span class="req">*</span></label>
+          <div class="datetime-row">
+            <input type="date" name="tarih" required/>
+            <input type="time" name="saat" required/>
+          </div>
+        </div>
+
+        <div class="field field-full">
+          <label>Hizmet Seçimi <span class="req">*</span></label>
+          <div class="options-grid">
+            <label class="option-label">
+              <input type="radio" name="hizmet" value="Sadece Makyaj" required/>
+              <span>Sadece Makyaj</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="hizmet" value="Sadece Türban"/>
+              <span>Sadece Türban</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="hizmet" value="Makyaj + Türban Tasarımı"/>
+              <span>Makyaj + Türban Tasarımı</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field field-full">
+          <label>Organizasyon Türü <span class="req">*</span></label>
+          <div class="options-grid">
+            <label class="option-label">
+              <input type="checkbox" name="organizasyon" value="Düğün"/>
+              <span>Düğün</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="organizasyon" value="Nişan"/>
+              <span>Nişan</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="organizasyon" value="Kına"/>
+              <span>Kına</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="organizasyon" value="Söz"/>
+              <span>Söz</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="organizasyon" value="Davet"/>
+              <span>Davet</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="organizasyon" value="Diğer"/>
+              <span>Diğer</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field field-full">
+          <label>Ek Notlar veya Özel Talepler</label>
+          <textarea name="notlar" placeholder="Özel isteklerinizi, sorularınızı buraya yazabilirsiniz..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEKONT -->
+    <div class="form-section">
+      <div class="section-title">
+        Dekont Görseli <span>4 / 4</span>
+      </div>
+      <div class="upload-area" id="uploadArea">
+        <input type="file" name="dekont" accept="image/*,.pdf" id="fileInput"/>
+        <div class="upload-icon">📎</div>
+        <div class="upload-text">
+          <strong>Dosya seçin</strong> veya buraya sürükleyin<br>
+          <span style="font-size:12px;margin-top:4px;display:block;">JPG, PNG veya PDF • Maks 10MB</span>
+        </div>
+        <div class="upload-preview" id="uploadPreview">
+          <img id="previewImg" src="" alt=""/>
+          <p id="previewName" style="font-size:13px;color:var(--muted);margin-top:6px;"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-section">
+      <button type="submit" class="submit-btn" id="submitBtn">
+        Randevu Talebini Gönder 💌
+      </button>
+      <p class="submit-note">Form gönderildikten sonra 24 saat içinde sizinle iletişime geçeceğim.</p>
+    </div>
+
+  </form>
+
+  <!-- BAŞARI MESAJI -->
+  <div class="success-box" id="successBox">
+    <div class="success-icon">💌</div>
+    <h2>Talebiniz Alındı!</h2>
+    <p>Randevu talebiniz başarıyla iletildi. En kısa sürede sizinle iletişime geçeceğim. Güzel gününüzde yanınızda olmaktan mutluluk duyacağım 🌸</p>
+    <br>
+    <a href="index.html" style="color: var(--pink-deep); font-size: 14px; text-decoration: none;">← Ana Sayfaya Dön</a>
+  </div>
+
+</div>
+
+<script>
+  // GOOGLE APPS SCRIPT URL - buraya kendi script URL'ini gireceğiz
+  const SCRIPT_URL = 'BURAYA_GOOGLE_APPS_SCRIPT_URL_GELECEK';
+
+  // Dosya önizleme
+  const fileInput = document.getElementById('fileInput');
+  const uploadPreview = document.getElementById('uploadPreview');
+  const previewImg = document.getElementById('previewImg');
+  const previewName = document.getElementById('previewName');
+
+  fileInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (!file) return;
+    previewName.textContent = file.name;
+    uploadPreview.style.display = 'block';
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = e => { previewImg.src = e.target.result; previewImg.style.display = 'block'; };
+      reader.readAsDataURL(file);
+    } else {
+      previewImg.style.display = 'none';
+    }
+  });
+
+  // Form gönder
+  document.getElementById('randevuForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Gönderiliyor...';
+
+    const fd = new FormData(this);
+
+    // Organizasyon checkboxlarını topla
+    const orglar = [...document.querySelectorAll('input[name="organizasyon"]:checked')].map(c => c.value);
+
+    const data = {
+      ad: fd.get('ad'),
+      soyad: fd.get('soyad'),
+      adSoyad: fd.get('ad') + ' ' + fd.get('soyad'),
+      telefon: fd.get('telefon'),
+      telefon2: fd.get('telefon2') || '-',
+      eposta: fd.get('eposta'),
+      adres: [fd.get('adres'), fd.get('ilce'), fd.get('sehir')].filter(Boolean).join(', '),
+      instagram: fd.get('instagram') || '-',
+      paylasim: fd.get('paylasim') || '-',
+      tarih: fd.get('tarih'),
+      saat: fd.get('saat'),
+      hizmet: fd.get('hizmet'),
+      organizasyon: orglar.join(', ') || '-',
+      notlar: fd.get('notlar') || '-',
+      gonderimZamani: new Date().toLocaleString('tr-TR')
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      // Başarı
+      document.getElementById('randevuForm').style.display = 'none';
+      document.getElementById('successBox').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = 'Randevu Talebini Gönder 💌';
+      alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+    }
+  });
+</script>
+
+</body>
+</html>
