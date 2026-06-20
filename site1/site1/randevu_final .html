@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Randevu Al | Selen Demir Makeup</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--soft:#fdf8f8;--pl:#fce8e8;--pp:#f0a0a8;--pd:#e06878;--pk:#b84a5a;--t:#1a1a1a;--m:#888;--b:#f0e0e0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--soft);color:var(--t);min-height:100vh}
+.top{background:rgba(255,255,255,0.97);border-bottom:3px solid var(--pp);padding:16px 32px;text-align:center;box-shadow:0 2px 20px rgba(240,160,168,0.1)}
+.logo{font-family:'Playfair Display',serif;font-size:20px;color:var(--pk)}
+.logo em{font-style:italic}.logo b{font-style:normal;font-weight:500}
+.hero{background:linear-gradient(135deg,#fdf8f8 0%,#fce8e8 100%);padding:52px 24px 40px;text-align:center;border-bottom:1px solid var(--b)}
+.htag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--pd);background:white;padding:7px 18px;border-radius:50px;margin-bottom:22px;border:1px solid var(--b)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,44px);font-weight:400;color:var(--t);margin-bottom:14px;line-height:1.2}
+.hero h1 em{font-style:italic;color:var(--pd)}
+.hero p{font-size:14px;color:var(--m);max-width:460px;margin:0 auto;line-height:1.8}
+.wrap{max-width:660px;margin:0 auto;padding:36px 20px 80px}
+.card{background:white;border-radius:20px;padding:32px;margin-bottom:18px;border:1px solid var(--b);box-shadow:0 4px 24px rgba(240,160,168,0.06)}
+.ctitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--pl)}
+.ctitle span:first-child{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--pk)}
+.badge{font-size:10px;background:var(--pl);color:var(--pd);padding:3px 10px;border-radius:50px;font-weight:500;letter-spacing:1px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-size:11px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;color:var(--t)}
+.req{color:var(--pd);margin-left:2px}
+input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],textarea{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--t);background:var(--soft);border:1.5px solid var(--b);border-radius:10px;padding:12px 16px;transition:border-color 0.2s,box-shadow 0.2s;outline:none;width:100%}
+input:focus,textarea:focus{border-color:var(--pp);box-shadow:0 0 0 3px rgba(240,160,168,0.15);background:white}
+input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:0.5;filter:invert(40%) sepia(50%) saturate(500%) hue-rotate(300deg)}
+textarea{resize:vertical;min-height:90px}
+.dt-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dt-sub{font-size:10px;color:var(--m);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;margin-bottom:5px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px;margin-top:3px}
+.opt{display:flex;align-items:center;gap:9px;padding:12px 14px;border:1.5px solid var(--b);border-radius:10px;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--soft);transition:all 0.15s}
+.opt:hover{border-color:var(--pp);background:var(--pl)}
+.opt input{width:15px;height:15px;min-width:15px;accent-color:var(--pd);flex-shrink:0}
+.opt:has(input:checked){border-color:var(--pd);background:var(--pl);color:var(--pk);font-weight:500}
+.upload-area{border:2px dashed var(--b);border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--soft);position:relative}
+.upload-area:hover{border-color:var(--pp);background:var(--pl)}
+.upload-area.has-file{border-color:var(--pd);border-style:solid;background:var(--pl)}
+.upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:28px;margin-bottom:8px}
+.upload-text{font-size:13px;color:var(--m)}
+.upload-text strong{color:var(--pd)}
+.fname{font-size:12px;color:var(--pk);margin-top:8px;font-weight:500;display:none}
+.sub-wrap{text-align:center;padding-top:8px}
+.btn{background:var(--pd);color:white;border:none;padding:17px 52px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s;box-shadow:0 8px 24px rgba(224,104,120,0.3)}
+.btn:hover{background:var(--pk);transform:translateY(-2px)}
+.btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.note{font-size:12px;color:var(--m);margin-top:12px}
+.success{display:none}
+.s-hero{background:linear-gradient(135deg,#fdf8f8,#fce8e8);padding:56px 24px 48px;text-align:center;border-bottom:1px solid var(--b)}
+.s-ring{width:88px;height:88px;border-radius:50%;background:white;border:2px solid var(--pp);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;box-shadow:0 8px 32px rgba(240,160,168,0.2)}
+.s-hero h2{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,32px);font-weight:400;color:var(--t);margin-bottom:12px}
+.s-hero h2 em{font-style:italic;color:var(--pd)}
+.s-hero p{font-size:14px;color:var(--m);max-width:400px;margin:0 auto;line-height:1.8}
+.s-body{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+.s-card{background:white;border-radius:20px;padding:28px 32px;border:1px solid var(--b);box-shadow:0 4px 24px rgba(240,160,168,0.06);margin-bottom:16px}
+.s-card-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--pk);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--pl)}
+.s-row{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--soft)}
+.s-row:last-child{border-bottom:none}
+.s-key{font-size:11px;color:var(--m);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;flex-shrink:0;margin-right:12px}
+.s-val{font-size:13px;color:var(--t);font-weight:500;text-align:right}
+.s-flowers{text-align:center;padding:10px 0;letter-spacing:8px;font-size:22px}
+.s-wp{background:white;border-radius:16px;padding:18px 24px;border:1px solid var(--b);display:flex;align-items:center;gap:14px}
+.s-wp-icon{font-size:28px;flex-shrink:0}
+.s-wp p:first-child{font-size:13px;font-weight:500;color:var(--t);margin-bottom:3px}
+.s-wp p:last-child{font-size:12px;color:var(--m)}
+.s-wp strong{color:var(--pk)}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;margin-right:7px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err-box{display:none;background:#fff3f3;border:1px solid #ffc9c9;border-radius:12px;padding:16px 20px;margin-bottom:18px;font-size:13px;color:#b84a5a}
+@media(max-width:768px){.wrap{padding:20px 16px 60px}.card{padding:22px 18px}.s-card{padding:20px 18px}.s-body{padding:24px 16px 50px}}
+@media(max-width:480px){.top{padding:14px 16px}.hero{padding:28px 16px 24px}.hero h1{font-size:24px}.wrap{padding:14px 12px 50px}.card{padding:18px 14px;border-radius:12px;margin-bottom:12px}.g2{grid-template-columns:1fr}.dt-wrap{grid-template-columns:1fr}.opts{grid-template-columns:1fr 1fr}.opt{padding:10px;font-size:12px}.btn{width:100%;padding:15px}.s-row{flex-direction:column;gap:2px}.s-val{text-align:left}}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo"><em>Selen Demir</em> <b>Makeup</b></div></div>
+
+<div id="formSection">
+<div class="hero">
+  <div class="htag">✦ Randevu</div>
+  <h1>Gelin Hazırlığı<br><em>Randevu Formu</em></h1>
+  <p>Özel gününüzde size en iyi hizmeti sunabilmem için lütfen formu eksiksiz doldurunuz. Randevunuz, form sonrası sizinle iletişime geçilerek kesinleştirilecektir.</p>
+</div>
+<div class="wrap">
+  <div class="err-box" id="errBox"></div>
+  <form id="form">
+    <div class="card">
+      <div class="ctitle"><span>Kişisel Bilgiler</span><span class="badge">1 / 4</span></div>
+      <div class="g2">
+        <div class="field"><label class="lbl">Ad <span class="req">*</span></label><input type="text" name="ad" placeholder="Adınız" required/></div>
+        <div class="field"><label class="lbl">Soyad <span class="req">*</span></label><input type="text" name="soyad" placeholder="Soyadınız" required/></div>
+        <div class="field"><label class="lbl">Telefon <span class="req">*</span></label><input type="tel" name="telefon" placeholder="05__ ___ __ __" required/></div>
+        <div class="field"><label class="lbl">Ekstra Telefon</label><input type="tel" name="telefon2" placeholder="05__ ___ __ __"/></div>
+        <div class="field full"><label class="lbl">E-posta <span class="req">*</span></label><input type="email" name="eposta" placeholder="ornek@gmail.com" required/></div>
+        <div class="field full"><label class="lbl">Adres <span class="req">*</span></label><input type="text" name="adres" placeholder="Mahalle, sokak, bina no" required/></div>
+        <div class="field"><label class="lbl">İlçe <span class="req">*</span></label><input type="text" name="ilce" placeholder="İlçe" required/></div>
+        <div class="field"><label class="lbl">Şehir <span class="req">*</span></label><input type="text" name="sehir" placeholder="İstanbul" required/></div>
+        <div class="field full"><label class="lbl">Instagram</label><input type="text" name="instagram" placeholder="@kullaniciadiniz"/></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle"><span>Paylaşım İzni</span><span class="badge">2 / 4</span></div>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="paylasim" value="Paylaşım istemiyorum"/><span>Paylaşım istemiyorum</span></label>
+        <label class="opt"><input type="radio" name="paylasim" value="Paylaşım yapılabilir"/><span>Paylaşım yapılabilir</span></label>
+        <label class="opt"><input type="radio" name="paylasim" value="Sadece story"/><span>Sadece story için</span></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle"><span>Randevu Detayları</span><span class="badge">3 / 4</span></div>
+      <div class="g2">
+        <div class="field full">
+          <label class="lbl">Başlangıç Tarihi ve Saati <span class="req">*</span></label>
+          <div class="dt-wrap">
+            <div><div class="dt-sub">📅 Tarih</div><input type="date" name="tarih" id="tarihInput" required onkeydown="return false" onpaste="return false"/></div>
+            <div><div class="dt-sub">🕐 Başlangıç Saati</div><input type="time" name="saat" required/></div>
+          </div>
+        </div>
+        <div class="field full">
+          <label class="lbl">Hizmet Seçimi <span class="req">*</span></label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="hizmet" value="Sadece Makyaj" required/><span>💄 Sadece Makyaj</span></label>
+            <label class="opt"><input type="radio" name="hizmet" value="Sadece Türban"/><span>🌿 Sadece Türban</span></label>
+            <label class="opt"><input type="radio" name="hizmet" value="Makyaj + Türban Tasarımı"/><span>✨ Makyaj + Türban</span></label>
+          </div>
+        </div>
+        <div class="field full">
+          <label class="lbl">Organizasyon Türü <span class="req">*</span></label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="organizasyon" value="Düğün" required/><span>💍 Düğün</span></label>
+            <label class="opt"><input type="radio" name="organizasyon" value="Nişan"/><span>💎 Nişan</span></label>
+            <label class="opt"><input type="radio" name="organizasyon" value="Kına"/><span>🌿 Kına</span></label>
+            <label class="opt"><input type="radio" name="organizasyon" value="Söz"/><span>🌹 Söz</span></label>
+            <label class="opt"><input type="radio" name="organizasyon" value="Davet"/><span>✨ Davet</span></label>
+            <label class="opt"><input type="radio" name="organizasyon" value="Diğer"/><span>🌸 Diğer</span></label>
+          </div>
+        </div>
+        <div class="field full"><label class="lbl">Ek Notlar</label><textarea name="notlar" placeholder="Özel isteklerinizi buraya yazabilirsiniz..."></textarea></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle"><span>Dekont Görseli</span><span class="badge">4 / 4</span></div>
+      <div class="upload-area" id="uploadArea">
+        <input type="file" accept="image/*,.pdf" id="fileInput" onchange="onFile(this)"/>
+        <div class="upload-icon">📎</div>
+        <div class="upload-text"><strong>Dosya seçin</strong> veya buraya sürükleyin<br><span style="font-size:11px;margin-top:4px;display:block">JPG, PNG veya PDF</span></div>
+        <div class="fname" id="fname"></div>
+      </div>
+    </div>
+
+    <div class="sub-wrap">
+      <button type="submit" class="btn" id="btn">Randevu Talebini Gönder 💌</button>
+      <p class="note">Form gönderildikten sonra 24 saat içinde sizinle iletişime geçeceğim.</p>
+    </div>
+  </form>
+</div>
+</div>
+
+<div class="success" id="success">
+  <div class="s-hero">
+    <div class="s-ring">💌</div>
+    <h2>Talebiniz <em>Alındı!</em></h2>
+    <p>Randevu talebiniz başarıyla iletildi. En kısa sürede sizinle iletişime geçeceğim. Güzel gününüzde yanınızda olmaktan mutluluk duyacağım.</p>
+  </div>
+  <div class="s-body">
+    <div class="s-card">
+      <div class="s-card-title">Randevu Özeti</div>
+      <div id="sRows"></div>
+    </div>
+    <div class="s-flowers">🌸 🌷 🌸</div>
+    <div class="s-wp">
+      <div class="s-wp-icon">📎</div>
+      <div>
+        <p>Dekontu unutmayın!</p>
+        <p>Dekontu <strong>+90 533 270 75 09</strong> numarasına WhatsApp ile gönderin.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Geçmiş tarih seçilemesin
+document.getElementById('tarihInput').min = new Date().toISOString().split('T')[0];
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyu2OSxhx8Q8aW9GBu9MWTAaIJMx7wBDQHJwIb8E19VgqMzO_DuQzpaR6JOkqMEcoZg/exec';
+
+function onFile(input) {
+  if (!input.files[0]) return;
+  var area = document.getElementById('uploadArea');
+  var fname = document.getElementById('fname');
+  area.classList.add('has-file');
+  fname.textContent = '✓ ' + input.files[0].name;
+  fname.style.display = 'block';
+}
+
+document.getElementById('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var btn = document.getElementById('btn');
+  var errBox = document.getElementById('errBox');
+  errBox.style.display = 'none';
+
+  var fd = new FormData(this);
+  var tarihRaw = fd.get('tarih') || '';
+
+  // Tarih doğrulama
+  var tarihObj = new Date(tarihRaw);
+  var bugun = new Date();
+  bugun.setHours(0,0,0,0);
+  var maxTarih = new Date();
+  maxTarih.setFullYear(maxTarih.getFullYear() + 2);
+
+  if (!tarihRaw || isNaN(tarihObj.getTime()) || tarihObj < bugun || tarihObj > maxTarih) {
+    errBox.textContent = 'Lütfen geçerli bir tarih seçin (bugünden itibaren).';
+    errBox.style.display = 'block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>Gönderiliyor...';
+
+  var tarihStr = tarihRaw;
+  if (tarihRaw) {
+    var p = tarihRaw.split('-');
+    tarihStr = p[2] + '.' + p[1] + '.' + p[0];
+  }
+
+  var params = new URLSearchParams();
+  params.append('ad', fd.get('ad') || '');
+  params.append('soyad', fd.get('soyad') || '');
+  params.append('telefon', fd.get('telefon') || '');
+  params.append('telefon2', fd.get('telefon2') || '-');
+  params.append('eposta', fd.get('eposta') || '');
+  params.append('adres', fd.get('adres') || '');
+  params.append('ilce', fd.get('ilce') || '');
+  params.append('sehir', fd.get('sehir') || '');
+  params.append('instagram', fd.get('instagram') || '-');
+  params.append('paylasim', fd.get('paylasim') || '-');
+  params.append('tarih', tarihStr);
+  params.append('saat', fd.get('saat') || '');
+  params.append('hizmet', fd.get('hizmet') || '');
+  params.append('organizasyon', fd.get('organizasyon') || '-');
+  params.append('notlar', fd.get('notlar') || '-');
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: params.toString()
+  }).then(function() {
+    var adSoyad = (fd.get('ad')||'') + ' ' + (fd.get('soyad')||'');
+    var rows = [
+      ['Ad Soyad', adSoyad],
+      ['Telefon', fd.get('telefon')],
+      ['E-posta', fd.get('eposta')],
+      ['Randevu Tarihi', tarihStr + ' — Saat: ' + fd.get('saat')],
+      ['Hizmet', fd.get('hizmet')],
+      ['Organizasyon', fd.get('organizasyon')]
+    ];
+    document.getElementById('sRows').innerHTML = rows.map(function(r) {
+      return '<div class="s-row"><span class="s-key">' + r[0] + '</span><span class="s-val">' + r[1] + '</span></div>';
+    }).join('');
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }).catch(function(err) {
+    btn.disabled = false;
+    btn.innerHTML = 'Randevu Talebini Gönder 💌';
+    errBox.textContent = 'Bir hata oluştu: ' + err.message;
+    errBox.style.display = 'block';
+  });
+});
+</script>
+</body>
+</html>
