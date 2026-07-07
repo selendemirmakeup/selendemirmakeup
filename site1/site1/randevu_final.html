@@ -74,7 +74,7 @@ textarea{resize:vertical;min-height:90px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .err-box{display:none;background:#fff3f3;border:1px solid #ffc9c9;border-radius:12px;padding:16px 20px;margin-bottom:18px;font-size:13px;color:#b84a5a}
 @media(max-width:768px){.wrap{padding:20px 16px 60px}.card{padding:22px 18px}.s-card{padding:20px 18px}.s-body{padding:24px 16px 50px}}
-@media(max-width:480px){.top{padding:14px 16px}.hero{padding:28px 16px 24px}.hero h1{font-size:24px}.wrap{padding:14px 12px 50px}.card{padding:18px 14px;border-radius:12px;margin-bottom:12px}.g2{grid-template-columns:1fr}.dt-wrap{grid-template-columns:1fr}.opts{grid-template-columns:1fr 1fr}.opt{padding:10px;font-size:12px}.btn{width:100%;padding:15px}.s-row{flex-direction:column;gap:2px}.s-val{text-align:left}}
+@media(max-width:480px){.top{padding:14px 16px}.hero{padding:28px 16px 24px}.hero h1{font-size:24px}.wrap{padding:14px 12px 50px}.card{padding:18px 14px;border-radius:12px;margin-bottom:12px}.g2{grid-template-columns:1fr}.dt-wrap{grid-template-columns:1fr!important}.opts{grid-template-columns:1fr 1fr}.opt{padding:10px;font-size:12px}.btn{width:100%;padding:15px}.s-row{flex-direction:column;gap:2px}.s-val{text-align:left}}
 </style>
 </head>
 <body>
@@ -154,9 +154,9 @@ textarea{resize:vertical;min-height:90px}
       <div class="g2">
         <div class="field full">
           <label class="lbl">Başlangıç Tarihi ve Saati <span class="req">*</span></label>
-          <div class="dt-wrap">
-            <div><div class="dt-sub">📅 Tarih</div><input type="date" name="tarih" id="tarihInput" required onkeydown="return false" onpaste="return false" oninput="validateDateInput(this)"/></div>
-            <div><div class="dt-sub">🕐 Başlangıç Saati</div><input type="time" name="saat" required/></div>
+          <div style="display:grid;grid-template-columns:1fr;gap:12px;width:100%">
+            <div><div class="dt-sub">📅 Tarih</div><input type="date" name="tarih" id="tarihInput" required onkeydown="return false" onpaste="return false" oninput="validateDateInput(this)" style="width:100%;max-width:100%;box-sizing:border-box"/></div>
+            <div><div class="dt-sub">🕐 Başlangıç Saati</div><input type="time" name="saat" required style="width:100%;max-width:100%;box-sizing:border-box"/></div>
           </div>
         </div>
         <div class="field full">
