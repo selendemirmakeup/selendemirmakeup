@@ -18,7 +18,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--soft);color:var(--t);min-
 .hero h1 em{font-style:italic;color:var(--pd)}
 .hero p{font-size:14px;color:var(--m);max-width:460px;margin:0 auto;line-height:1.8}
 .wrap{max-width:660px;margin:0 auto;padding:36px 20px 80px}
-.card{background:white;border-radius:20px;padding:32px;margin-bottom:18px;border:1px solid var(--b);box-shadow:0 4px 24px rgba(240,160,168,0.06)}
+.card{background:white;border-radius:20px;padding:32px;margin-bottom:18px;border:1px solid var(--b);box-shadow:0 4px 24px rgba(240,160,168,0.06);overflow:hidden}
 .ctitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--pl)}
 .ctitle span:first-child{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--pk)}
 .badge{font-size:10px;background:var(--pl);color:var(--pd);padding:3px 10px;border-radius:50px;font-weight:500;letter-spacing:1px}
@@ -27,7 +27,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--soft);color:var(--t);min-
 .field{display:flex;flex-direction:column;gap:6px}
 .lbl{font-size:11px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;color:var(--t)}
 .req{color:var(--pd);margin-left:2px}
-input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],textarea{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--t);background:var(--soft);border:1.5px solid var(--b);border-radius:10px;padding:12px 16px;transition:border-color 0.2s,box-shadow 0.2s;outline:none;width:100%}
+input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],textarea{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--t);background:var(--soft);border:1.5px solid var(--b);border-radius:10px;padding:12px 16px;transition:border-color 0.2s,box-shadow 0.2s;outline:none;width:100%;max-width:100%;box-sizing:border-box;-webkit-appearance:none;appearance:none}
 input:focus,textarea:focus{border-color:var(--pp);box-shadow:0 0 0 3px rgba(240,160,168,0.15);background:white}
 input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:0.5;filter:invert(40%) sepia(50%) saturate(500%) hue-rotate(300deg)}
 textarea{resize:vertical;min-height:90px}
@@ -154,9 +154,19 @@ textarea{resize:vertical;min-height:90px}
       <div class="g2">
         <div class="field full">
           <label class="lbl">Başlangıç Tarihi ve Saati <span class="req">*</span></label>
-          <div class="dt-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-            <div><div class="dt-sub">📅 Tarih</div><input type="date" name="tarih" id="tarihInput" required onkeydown="return false" onpaste="return false" oninput="validateDateInput(this)" style="width:100%"/></div>
-            <div><div class="dt-sub">🕐 Başlangıç Saati</div><input type="time" name="saat" required style="width:100%"/></div>
+          <div style="display:grid;grid-template-columns:1fr;gap:12px;width:100%;overflow:hidden">
+            <div style="overflow:hidden">
+              <div class="dt-sub">📅 Tarih</div>
+              <div style="overflow:hidden;width:100%">
+                <input type="date" name="tarih" id="tarihInput" required onkeydown="return false" onpaste="return false" oninput="validateDateInput(this)" style="width:100%;max-width:100%;box-sizing:border-box;display:block"/>
+              </div>
+            </div>
+            <div style="overflow:hidden">
+              <div class="dt-sub">🕐 Başlangıç Saati</div>
+              <div style="overflow:hidden;width:100%">
+                <input type="time" name="saat" required style="width:100%;max-width:100%;box-sizing:border-box;display:block"/>
+              </div>
+            </div>
           </div>
         </div>
         <div class="field full">
