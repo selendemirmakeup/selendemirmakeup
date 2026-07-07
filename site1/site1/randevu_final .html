@@ -97,9 +97,45 @@ textarea{resize:vertical;min-height:90px}
         <div class="field"><label class="lbl">Telefon <span class="req">*</span></label><input type="tel" name="telefon" placeholder="05__ ___ __ __" required/></div>
         <div class="field"><label class="lbl">Ekstra Telefon</label><input type="tel" name="telefon2" placeholder="05__ ___ __ __"/></div>
         <div class="field full"><label class="lbl">E-posta <span class="req">*</span></label><input type="email" name="eposta" placeholder="ornek@gmail.com" required/></div>
-        <div class="field full"><label class="lbl">Adres <span class="req">*</span></label><input type="text" name="adres" placeholder="Mahalle, sokak, bina no" required/></div>
-        <div class="field"><label class="lbl">İlçe <span class="req">*</span></label><input type="text" name="ilce" placeholder="İlçe" required/></div>
-        <div class="field"><label class="lbl">Şehir <span class="req">*</span></label><input type="text" name="sehir" placeholder="İstanbul" required/></div>
+
+        <!-- HİZMET YERİ SEÇİMİ -->
+        <div class="field full">
+          <label class="lbl">Hizmet Yeri <span class="req">*</span></label>
+          <div class="opts" style="justify-content:center;display:flex;gap:12px;flex-wrap:wrap">
+            <label class="opt" style="flex:0 0 auto;min-width:160px;justify-content:center" onclick="hizmetYeriSec('studyo')">
+              <input type="radio" name="hizmetYeri" value="Stüdyoda" required/>
+              <span>🏢 Stüdyoda</span>
+            </label>
+            <label class="opt" style="flex:0 0 auto;min-width:160px;justify-content:center" onclick="hizmetYeriSec('freelance')">
+              <input type="radio" name="hizmetYeri" value="Evde / Freelance"/>
+              <span>🏠 Evde / Freelance</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- STÜDYO BİLGİSİ (stüdyo seçilince görünür) -->
+        <div class="field full" id="studyoInfo" style="display:none">
+          <div style="background:var(--pl);border:1.5px solid var(--pp);border-radius:10px;padding:16px 18px;">
+            <div style="font-size:12px;font-weight:500;color:var(--pk);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">📍 Stüdyo Adresimiz</div>
+            <div style="font-size:14px;color:var(--t);line-height:1.7">
+              <strong>Alize Tower</strong><br>
+              Finanskent, Yahya Kemal Cd. No: 36/A, Daire: 90<br>
+              34760 Ümraniye / İstanbul
+            </div>
+            <a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x14cac97a6ad67b17:0xb9afca02584d91bd" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:13px;color:var(--pd);text-decoration:none;font-weight:500">
+              🗺️ Google Maps'te Aç
+            </a>
+          </div>
+        </div>
+
+        <!-- ADRES ALANLARI (freelance seçilince görünür) -->
+        <div id="adresAlanlari" style="display:none;grid-column:1/-1;display:none">
+          <div class="g2" style="margin-top:0">
+            <div class="field full"><label class="lbl">Adres <span class="req">*</span></label><input type="text" name="adres" id="adresInput" placeholder="Mahalle, sokak, bina no"/></div>
+            <div class="field"><label class="lbl">İlçe <span class="req">*</span></label><input type="text" name="ilce" id="ilceInput" placeholder="İlçe"/></div>
+            <div class="field"><label class="lbl">Şehir <span class="req">*</span></label><input type="text" name="sehir" id="sehirInput" placeholder="İstanbul"/></div>
+          </div>
+        </div>
         <div class="field full"><label class="lbl">Instagram</label><input type="text" name="instagram" placeholder="@kullaniciadiniz"/></div>
       </div>
     </div>
@@ -119,16 +155,18 @@ textarea{resize:vertical;min-height:90px}
         <div class="field full">
           <label class="lbl">Başlangıç Tarihi ve Saati <span class="req">*</span></label>
           <div class="dt-wrap">
-            <div><div class="dt-sub">📅 Tarih</div><input type="date" name="tarih" id="tarihInput" required onkeydown="return false" onpaste="return false"/></div>
+            <div><div class="dt-sub">📅 Tarih</div><input type="date" name="tarih" id="tarihInput" required onkeydown="return false" onpaste="return false" oninput="validateDateInput(this)"/></div>
             <div><div class="dt-sub">🕐 Başlangıç Saati</div><input type="time" name="saat" required/></div>
           </div>
         </div>
         <div class="field full">
           <label class="lbl">Hizmet Seçimi <span class="req">*</span></label>
-          <div class="opts">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:3px">
             <label class="opt"><input type="radio" name="hizmet" value="Sadece Makyaj" required/><span>💄 Sadece Makyaj</span></label>
             <label class="opt"><input type="radio" name="hizmet" value="Sadece Türban"/><span>🌿 Sadece Türban</span></label>
+            <label class="opt"><input type="radio" name="hizmet" value="Sadece Saç Tasarımı"/><span>💇 Sadece Saç Tasarımı</span></label>
             <label class="opt"><input type="radio" name="hizmet" value="Makyaj + Türban Tasarımı"/><span>✨ Makyaj + Türban</span></label>
+            <label class="opt" style="grid-column:1/-1;justify-content:center"><input type="radio" name="hizmet" value="Makyaj + Saç Tasarımı"/><span>💎 Makyaj + Saç Tasarımı</span></label>
           </div>
         </div>
         <div class="field full">
@@ -187,8 +225,49 @@ textarea{resize:vertical;min-height:90px}
 </div>
 
 <script>
-// Geçmiş tarih seçilemesin
-document.getElementById('tarihInput').min = new Date().toISOString().split('T')[0];
+// Geçmiş tarih seçilemesin - sayfa yüklenir yüklenmez ayarla
+(function() {
+  var todayStr = new Date().toISOString().split('T')[0];
+  var tarihEl = document.getElementById('tarihInput');
+  tarihEl.setAttribute('min', todayStr);
+  tarihEl.min = todayStr;
+})();
+
+function hizmetYeriSec(tur) {
+  var studyoInfo = document.getElementById('studyoInfo');
+  var adresAlanlari = document.getElementById('adresAlanlari');
+  var adresInput = document.getElementById('adresInput');
+  var ilceInput = document.getElementById('ilceInput');
+  var sehirInput = document.getElementById('sehirInput');
+
+  if (tur === 'studyo') {
+    studyoInfo.style.display = 'block';
+    adresAlanlari.style.display = 'none';
+    adresInput.removeAttribute('required');
+    ilceInput.removeAttribute('required');
+    sehirInput.removeAttribute('required');
+    adresInput.value = 'Stüdyo - Alize Tower, Finanskent, Yahya Kemal Cd. No:36/A, Daire:90, Ümraniye';
+    ilceInput.value = 'Ümraniye';
+    sehirInput.value = 'İstanbul';
+  } else {
+    studyoInfo.style.display = 'none';
+    adresAlanlari.style.display = 'block';
+    adresInput.setAttribute('required', 'required');
+    ilceInput.setAttribute('required', 'required');
+    sehirInput.setAttribute('required', 'required');
+    adresInput.value = '';
+    ilceInput.value = '';
+    sehirInput.value = '';
+  }
+}
+
+function validateDateInput(el) {
+  var todayStr = new Date().toISOString().split('T')[0];
+  if (el.value && el.value < todayStr) {
+    el.value = '';
+    alert('Geçmiş bir tarih seçemezsiniz. Lütfen bugün veya sonraki bir tarih seçin.');
+  }
+}
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyu2OSxhx8Q8aW9GBu9MWTAaIJMx7wBDQHJwIb8E19VgqMzO_DuQzpaR6JOkqMEcoZg/exec';
 
