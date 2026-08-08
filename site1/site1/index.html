@@ -290,16 +290,18 @@
 
     /* ── HERO ── */
     #hero {
-      min-height: 560px;
+      min-height: 460px;
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
+
+    .hero-right { display: flex; }
 
     .hero-left {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 80px 64px 80px 80px;
+      padding: 60px 64px 60px 80px;
       position: relative;
     }
 
@@ -377,11 +379,10 @@
 
     .hero-right {
       position: relative;
-      background: linear-gradient(135deg, var(--pink-light) 0%, #f0ece0 100%);
-      display: flex; align-items: center; justify-content: center;
+      background: var(--soft);
+      display: flex;
       overflow: hidden;
       animation: fadeIn 1s ease 0.2s both;
-      padding: 24px;
     }
 
     .hero-right::before {
@@ -1073,7 +1074,7 @@
     @media (max-width: 768px) {
       #hero { grid-template-columns: 1fr !important; min-height: auto !important; }
       .hero-left { padding: 100px 24px 40px !important; }
-      .hero-right { display: block !important; height: auto !important; aspect-ratio: 507/752; padding: 14px !important; }
+      .hero-right { display: flex !important; height: auto !important; aspect-ratio: 4/3; padding: 0 !important; }
       .hero-stats { gap: 20px !important; flex-wrap: wrap; }
       .hero-h1 { font-size: clamp(26px, 8vw, 38px) !important; }
 
@@ -1298,7 +1299,7 @@
     </div>
   </div>
   <div class="hero-right">
-    <!-- Buraya gerçek bir fotoğraf eklenecek. Görseli /mnt gibi bir yere yükleyip
+    <!-- Buraya gerçek bir fotoğraf eklenecek. Görseli yükleyip
          aşağıdaki img src="..." kısmına dosya adını yazman yeterli. -->
     <img src="hero-foto.jpg" alt="Selen Demir - Makyaj Sanatçısı" class="hero-photo" onerror="this.style.display='none'"/>
   </div>
