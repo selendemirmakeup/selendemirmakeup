@@ -5,32 +5,32 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon"/>
   <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Freelance Makyaj Sanatçısı İstanbul | Selen Demir Makeup – Gelin & Türban</title>
+  <title>Freelance Makyaj Sanatçısı İstanbul | Selen Demir Studio – Gelin & Türban</title>
   <meta name="description" content="İstanbul freelance makyaj sanatçısı Selen Demir. Gelin makyajı, türban tasarımı, düğün, nişan, kına, mezuniyet ve özel gün makyajı. Eve gelen makyaj hizmeti. Hemen randevu alın."/>
   <meta name="keywords" content="
     freelance makyaj, freelance makeup artist, freelance makyaj sanatçısı, freelance makyaj istanbul,
     gelin makyajı, profesyonel makyaj, eve gelen makyaj, eve gelen makyaj istanbul,
     düğün makyajı, nişan makyajı, kına makyajı, mezuniyet makyajı, davet makyajı, özel gün makyajı,
     türban tasarımı, türban gelin, türbanlı gelin makyajı, tesettür gelin makyajı, gelin türbanı, türban modelleri,
-    selen demir makeup, selen demir makyaj, selendemirmakeup, makeup artist istanbul,
+    selen demir studio, selen demir makyaj, selendemirstudio, makeup artist istanbul,
     istanbul gelin makyajı, makyaj sanatçısı istanbul, gelin saçı istanbul, islami gelin makyajı,
     gelin hazırlığı istanbul, düğün hazırlığı, nikah makyajı, kokteyl makyajı, abiye makyajı,
     doğal gelin makyajı, profesyonel gelin makyajı, airbrush makyaj, hd makyaj
   "/>
   <meta name="author" content="Selen Demir"/>
   <meta name="robots" content="index, follow"/>
-  <link rel="canonical" href="https://selendemirmakeup.com/"/>
+  <link rel="canonical" href="https://selendemirstudio.com/"/>
 
   <!-- Google Search Console Doğrulama -->
   <meta name="google-site-verification" content="_XM6UNTmm-oQfMmikI1qmUXypDFpP9CGTrJOhcpyKl8" />
 
   <!-- Open Graph (sosyal medya paylaşımı) -->
-  <meta property="og:title" content="Freelance Makyaj Sanatçısı İstanbul | Selen Demir Makeup"/>
+  <meta property="og:title" content="Freelance Makyaj Sanatçısı İstanbul | Selen Demir Studio"/>
   <meta property="og:description" content="İstanbul freelance makyaj sanatçısı Selen Demir. Gelin makyajı, türban tasarımı, nişan, kına, mezuniyet ve özel gün makyajı. Eve gelen hizmet."/>
   <meta property="og:image" content="https://fkhkdutdmieuppryetvb.supabase.co/storage/v1/object/public/galeri/a111111.PNG"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:image" content="https://fkhkdutdmieuppryetvb.supabase.co/storage/v1/object/public/galeri/a111111.PNG"/>
-  <meta property="og:url" content="https://selendemirmakeup.com/"/>
+  <meta property="og:url" content="https://selendemirstudio.com/"/>
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="tr_TR"/>
 
@@ -39,11 +39,11 @@
   {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
-    "name": "Selen Demir Makeup",
-    "alternateName": ["selendemirmakeup", "Selen Demir Makyaj", "Freelance Makyaj İstanbul"],
-    "url": "https://selendemirmakeup.com",
+    "name": "Selen Demir Studio",
+    "alternateName": ["selendemirstudio", "Selen Demir Makyaj", "Freelance Makyaj İstanbul"],
+    "url": "https://selendemirstudio.com",
     "telephone": "+905332707509",
-    "image": "https://selendemirmakeup.com/og-image.jpg",
+    "image": "https://selendemirstudio.com/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "İstanbul",
@@ -77,9 +77,9 @@
     "jobTitle": "Freelance Makyaj Sanatçısı",
     "worksFor": {
       "@type": "Organization",
-      "name": "Selen Demir Makeup"
+      "name": "Selen Demir Studio"
     },
-    "url": "https://selendemirmakeup.com",
+    "url": "https://selendemirstudio.com",
     "sameAs": ["https://instagram.com/selendmiiir"],
     "address": {
       "@type": "PostalAddress",
@@ -97,18 +97,33 @@
   <style>
     :root {
       --white: #ffffff;
-      --soft: #fdf8f8;
-      --pink-light: #fce8e8;
-      --pink: #f0a0a8;
-      --pink-deep: #e06878;
-      --pink-dark: #b84a5a;
+      --soft: #faf7f2;
+      --pink-light: #f0ece0;
+      --pink: #c9b896;
+      --pink-deep: #1a1a1a;
+      --pink-dark: #000000;
       --text: #1a1a1a;
       --muted: #888;
-      --border: #f0e0e0;
+      --border: #e8e0d0;
       --card: #ffffff;
+      --gold: #ab8654;
+      --gold-soft: rgba(171,134,84,0.35);
+    }
+
+    /* ── DOKU (kağıt/keten hissi) ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.035;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
+    section[id] { scroll-margin-top: 90px; }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -118,72 +133,116 @@
     }
 
     /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 48px;
-      background: rgba(255,255,255,0.97);
+    header.site-header {
+      position: sticky; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.98);
       backdrop-filter: blur(12px);
-      border-bottom: 3px solid var(--pink);
-      transition: padding 0.3s;
-      box-shadow: 0 2px 20px rgba(240,160,168,0.1);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(201,184,150,0.08);
+    }
+
+    .header-top {
+      text-align: center;
+      padding: 20px 24px 16px;
+    }
+
+
+    .logo-badge-link { display: inline-block; line-height: 0; text-decoration: none; }
+    .logo-badge { width: 96px; height: 96px; display: block; }
+    @media (max-width: 768px) { .logo-badge { width: 76px; height: 76px; } }
+
+    .logo-wrap {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-monogram {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: var(--gold);
     }
 
     .nav-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
+      font-size: 30px;
       font-style: italic;
-      color: var(--pink-dark);
+      color: var(--text);
       letter-spacing: 0.5px;
       text-decoration: none;
       font-weight: 400;
+      display: inline-block;
+    }
+
+    .nav-logo-sub {
+      display: block;
+      font-size: 11px;
+      font-style: normal;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .header-tabs {
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px;
+      background: var(--pink-light);
+      border-top: 1px solid var(--gold-soft);
+      padding: 14px 24px;
+      position: relative;
     }
 
     .nav-links {
-      display: flex; gap: 36px; list-style: none;
+      display: flex; gap: 40px; list-style: none;
     }
 
     .nav-links a {
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--text);
       text-decoration: none;
       transition: color 0.2s;
       position: relative;
+      padding-bottom: 6px;
+      display: inline-block;
     }
 
     .nav-links a::after {
       content: '';
-      position: absolute; bottom: -4px; left: 0; right: 0;
-      height: 2px; background: var(--pink);
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 2px; background: var(--gold);
       transform: scaleX(0); transform-origin: center;
       transition: transform 0.2s;
     }
 
-    .nav-links a:hover { color: var(--pink-deep); }
+    .nav-links a:hover { color: var(--gold); }
     .nav-links a:hover::after { transform: scaleX(1); }
 
-    .nav-cta {
-      background: var(--pink-deep);
-      color: white !important;
-      padding: 10px 24px;
-      border-radius: 50px;
-      transition: background 0.2s, transform 0.2s !important;
+    .nav-links a.active { color: var(--text); font-weight: 700; }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    .hamburger {
+      display: none; cursor: pointer; flex-direction: column; gap: 5px;
+      position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
     }
-
-    .nav-cta:hover { background: var(--pink-dark) !important; transform: translateY(-1px); }
-
-    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
     .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
 
     @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
+      .header-top { padding: 18px 24px 14px; }
+      .nav-logo { font-size: 24px; }
+      .header-tabs { padding: 12px 24px; justify-content: flex-start; }
       .nav-links {
         display: none;
         position: absolute;
-        top: 60px; left: 0; right: 0;
+        top: 100%; left: 0; right: 0;
         background: white;
         padding: 16px 24px 20px;
         box-shadow: 0 8px 24px rgba(0,0,0,0.08);
@@ -203,7 +262,6 @@
         background: none !important;
       }
       .nav-links li:last-child a { border-bottom: none; }
-      .nav-cta { margin-top: 8px; }
       .hamburger { display: flex; }
     }
 
@@ -212,7 +270,6 @@
       min-height: 100vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      padding-top: 80px;
     }
 
     .hero-left {
@@ -224,17 +281,13 @@
     }
 
     .hero-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--pink-deep);
-      background: var(--pink-light);
-      padding: 8px 16px; border-radius: 50px;
-      margin-bottom: 28px;
+      display: block;
+      font-size: 11px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
       width: fit-content;
       animation: fadeUp 0.8s ease both;
     }
-
-    .hero-tag::before { content: '✦'; font-size: 10px; }
 
     .hero-h1 {
       font-family: 'Playfair Display', serif;
@@ -253,7 +306,7 @@
 
     .hero-p {
       font-size: 16px; color: var(--muted); line-height: 1.8; font-weight: 300;
-      max-width: 400px; margin-bottom: 40px;
+      max-width: 460px; margin-bottom: 40px;
       animation: fadeUp 0.8s ease 0.2s both;
     }
 
@@ -263,28 +316,27 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
-      color: white; border: none; border-radius: 50px;
+      background: var(--pink-light);
+      color: var(--text); border: 1.5px solid var(--pink-dark); border-radius: 6px;
       padding: 16px 36px; font-family: 'DM Sans', sans-serif;
       font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
       cursor: pointer; text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 24px rgba(224,104,120,0.35);
-      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
     }
 
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(224,104,120,0.45); }
+    .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
 
     .btn-secondary {
-      background: transparent; color: var(--text);
-      border: 1.5px solid var(--border); border-radius: 50px;
+      background: var(--white); color: var(--text);
+      border: 1.5px solid var(--pink-dark); border-radius: 6px;
       padding: 16px 36px; font-family: 'DM Sans', sans-serif;
       font-size: 14px; font-weight: 500; cursor: pointer;
-      text-decoration: none; display: inline-block;
-      transition: border-color 0.2s, color 0.2s;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.2s;
     }
 
-    .btn-secondary:hover { border-color: var(--pink-deep); color: var(--pink-deep); }
+    .btn-secondary:hover { background: var(--pink-light); }
 
     .hero-stats {
       display: flex; gap: 40px; margin-top: 56px;
@@ -294,7 +346,7 @@
 
     .stat-num {
       font-family: 'Playfair Display', serif;
-      font-size: 36px; font-weight: 700; color: var(--pink-deep);
+      font-size: 36px; font-weight: 700; color: var(--gold);
       line-height: 1;
     }
 
@@ -302,7 +354,7 @@
 
     .hero-right {
       position: relative;
-      background: linear-gradient(135deg, var(--pink-light) 0%, #fce0e4 100%);
+      background: linear-gradient(135deg, var(--pink-light) 0%, #f0ece0 100%);
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
       animation: fadeIn 1s ease 0.2s both;
@@ -312,7 +364,7 @@
       content: '';
       position: absolute; inset: 0;
       background: 
-        radial-gradient(circle at 30% 70%, rgba(240,160,168,0.4) 0%, transparent 50%),
+        radial-gradient(circle at 30% 70%, rgba(201,184,150,0.4) 0%, transparent 50%),
         radial-gradient(circle at 70% 20%, rgba(255,255,255,0.6) 0%, transparent 40%);
     }
 
@@ -321,10 +373,17 @@
       text-align: center;
     }
 
+    .hero-photo {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      position: relative; z-index: 1;
+    }
+
     .hero-monogram {
       font-family: 'Playfair Display', serif;
       font-size: 120px; font-style: italic; font-weight: 700;
-      color: rgba(224,104,120,0.15);
+      color: rgba(26,26,26,0.15);
       line-height: 1;
       user-select: none;
     }
@@ -394,11 +453,11 @@
       content: '';
       position: absolute; inset: 0;
       background: linear-gradient(135deg, 
-        #fce8e8 0%, 
-        #fad0d8 25%, 
-        #f8c0cc 50%, 
-        #fad0d8 75%, 
-        #fce8e8 100%);
+        #f0ece0 0%, 
+        #e3dcc8 25%, 
+        #e3dcc8 50%, 
+        #e3dcc8 75%, 
+        #f0ece0 100%);
       background-size: 400% 400%;
       animation: gradientShift 8s ease infinite;
     }
@@ -462,7 +521,7 @@
       display: flex; align-items: center; gap: 8px;
     }
 
-    .section-label::before { content: '—'; }
+    .section-label::before { content: '—'; color: var(--gold); }
 
     .section-h2 {
       font-family: 'Playfair Display', serif;
@@ -509,7 +568,7 @@
       transition: transform 0.3s;
     }
 
-    .hizmet-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(224,104,120,0.12); }
+    .hizmet-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(26,26,26,0.12); }
     .hizmet-card:hover::before { transform: scaleX(1); }
 
     .hizmet-card.featured {
@@ -562,55 +621,140 @@
     .hizmet-cta::after { content: ' →'; transition: margin 0.2s; }
     .hizmet-cta:hover::after { margin-left: 4px; }
 
-    /* ── HAKKIMDA ── */
-    #hakkimda {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      align-items: center;
+    /* ── HİZMETLERİMİZ (v2 kartlar) ── */
+    .hizmet-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
     }
 
-    @media (max-width: 900px) { #hakkimda { grid-template-columns: 1fr; gap: 40px; } }
+    @media (max-width: 1000px) { .hizmet-cards-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .hizmet-cards-grid { grid-template-columns: 1fr; } }
 
-    .about-visual {
+    .hizmet-card-v2 {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 32px 26px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hizmet-card-v2:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,26,26,0.08); }
+
+    .hizmet-card-v2.featured {
+      background: var(--pink-light);
+      border-color: var(--gold-soft);
+    }
+
+    .hcard-num {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+
+    .hizmet-card-v2.featured .hcard-num { color: var(--gold); }
+
+    .hcard-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px; font-weight: 500; margin-bottom: 12px; color: var(--text);
+    }
+
+    .hcard-desc {
+      font-size: 13.5px; color: var(--muted); line-height: 1.75; font-weight: 300; margin-bottom: 22px;
+      flex: 1;
+    }
+
+    .hcard-link {
+      font-size: 13px; font-weight: 500; color: var(--text); text-decoration: none;
+      border-bottom: 1px solid var(--gold); padding-bottom: 2px; transition: color 0.2s;
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
+    .hcard-link:hover { color: var(--gold); }
+
+    /* ── SÜREÇ ── */
+    .surec-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
       position: relative;
-      aspect-ratio: 4/5;
-      border-radius: 32px;
-      background: linear-gradient(135deg, var(--pink-light), #fce0e4);
+    }
+
+    @media (max-width: 900px) { .surec-grid { grid-template-columns: repeat(2, 1fr); gap: 48px 32px; } }
+    @media (max-width: 560px) { .surec-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+    .surec-step { text-align: center; position: relative; }
+
+    .surec-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 1px solid var(--gold);
       display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-style: italic; font-size: 22px;
+      color: var(--gold); margin: 0 auto 20px; background: var(--white);
+      position: relative; z-index: 1;
+    }
+
+    .surec-step:not(:last-child)::after {
+      content: '';
+      position: absolute; top: 32px; left: calc(50% + 42px); right: calc(-50% + 42px);
+      height: 1px; background: var(--gold-soft);
+    }
+
+    @media (max-width: 900px) { .surec-step:not(:last-child)::after { display: none; } }
+
+    .surec-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 500; margin-bottom: 10px; }
+    .surec-desc { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; max-width: 240px; margin: 0 auto; }
+
+    /* ── GALERİ ÖNİZLEME ── */
+    .galeri-onizleme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 700px) { .galeri-onizleme-grid { grid-template-columns: 1fr; max-width: 380px; gap: 24px; } }
+
+    .galeri-onizleme-item {
+      background: var(--white);
+      padding: 14px 14px 20px;
+      border: 1px solid var(--gold-soft);
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(26,26,26,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .galeri-onizleme-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 44px rgba(26,26,26,0.1);
+    }
+
+    .galeri-onizleme-item .goi-frame {
+      aspect-ratio: 1/1;
       overflow: hidden;
+      background: var(--pink-light);
     }
 
-    .about-monogram {
-      font-family: 'Playfair Display', serif;
-      font-size: 160px; font-style: italic; font-weight: 700;
-      color: rgba(224,104,120,0.12);
-      user-select: none;
+    .goi-empty {
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--pink-light), var(--white));
+      color: var(--gold);
+      font-size: 26px;
     }
 
-    .about-badge {
-      position: absolute; bottom: 32px; right: -16px;
-      background: white; border-radius: 16px;
-      padding: 20px 24px; text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    .goi-empty::before { content: '✦'; opacity: 0.5; }
+
+    .galeri-onizleme-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s;
     }
 
-    .about-badge-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 40px; font-weight: 700; color: var(--pink-deep); line-height: 1;
-    }
-
-    .about-badge-text { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-    .about-content .section-h2 { margin-bottom: 24px; }
-
-    .about-text { font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300; margin-bottom: 16px; }
-
-    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-
-    .about-tag {
-      font-size: 12px; font-weight: 500;
-      background: var(--pink-light); color: var(--pink-dark);
-      padding: 6px 16px; border-radius: 50px;
-    }
+    .galeri-onizleme-item:hover img { transform: scale(1.05); }
 
     /* ── GALERİ ── */
     #galeri { background: var(--soft); }
@@ -635,7 +779,7 @@
 
     .galeri-item {
       border-radius: 16px; overflow: hidden;
-      background: linear-gradient(135deg, var(--pink-light), #fce0e4);
+      background: linear-gradient(135deg, var(--pink-light), #f0ece0);
       aspect-ratio: 1;
       position: relative; cursor: pointer;
       transition: transform 0.3s;
@@ -650,12 +794,12 @@
       width: 100%; height: 100%; min-height: 180px;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 48px; font-style: italic; color: rgba(224,104,120,0.25);
+      font-size: 48px; font-style: italic; color: rgba(26,26,26,0.25);
     }
 
     .galeri-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(184,74,90,0.6) 0%, transparent 50%);
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
       opacity: 0; transition: opacity 0.3s;
       display: flex; align-items: flex-end; padding: 20px;
     }
@@ -685,7 +829,7 @@
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .fiyat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(224,104,120,0.1); }
+    .fiyat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(26,26,26,0.1); }
 
     .fiyat-card.popular {
       background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
@@ -754,7 +898,7 @@
 
     /* ── RANDEVU ── */
     #randevu {
-      background: linear-gradient(135deg, var(--pink-light) 0%, #fdf0f2 100%);
+      background: linear-gradient(135deg, var(--pink-light) 0%, #f7f4ee 100%);
     }
 
     .randevu-inner {
@@ -775,17 +919,59 @@
       width: 44px; height: 44px; border-radius: 12px;
       background: white; display: flex; align-items: center; justify-content: center;
       font-size: 20px; flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(224,104,120,0.1);
+      box-shadow: 0 4px 12px rgba(26,26,26,0.1);
+      border: 1px solid var(--gold-soft);
     }
 
     .rf-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
     .rf-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
+    .randevu-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--white), var(--pink-light));
+      border: 1px solid var(--gold-soft);
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .randevu-visual-monogram {
+      font-family: 'Playfair Display', serif;
+      font-size: 140px; font-style: italic; font-weight: 700;
+      color: rgba(171,134,84,0.18);
+      user-select: none;
+    }
+
+    .randevu-visual-badge {
+      position: absolute; bottom: 28px; left: 28px;
+      background: white; border-radius: 14px;
+      padding: 16px 22px; text-align: center;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+      border: 1px solid var(--gold-soft);
+    }
+
+    .rvb-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; font-weight: 700; color: var(--gold); line-height: 1;
+    }
+
+    .rvb-text { font-size: 10px; color: var(--muted); margin-top: 4px; letter-spacing: 0.5px; }
+
+    .randevu-photo {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute; inset: 0;
+    }
+
+    @media (max-width: 900px) { .randevu-visual { aspect-ratio: 16/10; } }
+
     /* Form embed area */
     .form-embed-area {
       background: white; border-radius: 24px;
       padding: 40px 32px;
-      box-shadow: 0 20px 60px rgba(224,104,120,0.1);
+      box-shadow: 0 20px 60px rgba(26,26,26,0.1);
     }
 
     .form-embed-title {
@@ -820,7 +1006,7 @@
     .mini-form select:focus,
     .mini-form textarea:focus {
       border-color: var(--pink-deep);
-      box-shadow: 0 0 0 3px rgba(224,104,120,0.1);
+      box-shadow: 0 0 0 3px rgba(26,26,26,0.1);
       background: white;
     }
 
@@ -835,10 +1021,10 @@
       font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
       cursor: pointer; margin-top: 8px;
       transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 24px rgba(224,104,120,0.3);
+      box-shadow: 0 8px 24px rgba(26,26,26,0.3);
     }
 
-    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(224,104,120,0.4); }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(26,26,26,0.4); }
 
     .form-privacy { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; }
 
@@ -877,7 +1063,6 @@
       #hizmetKartContainer [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
       #hizmetSabitSatir { grid-template-columns: 1fr !important; }
 
-      #hakkimda { grid-template-columns: 1fr !important; padding: 60px 20px !important; }
       #fiyatlar { padding: 60px 20px !important; }
       .fiyat-grid { grid-template-columns: 1fr !important; max-width: 100% !important; }
       #sss { padding: 60px 20px !important; }
@@ -951,7 +1136,7 @@
     .footer-contact-text { font-size: 13px; color: var(--text); line-height: 1.5; }
 
     .footer-bottom {
-      border-top: 1px solid rgba(180,74,90,0.15);
+      border-top: 1px solid rgba(0,0,0,0.15);
       padding-top: 24px;
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
     }
@@ -968,7 +1153,7 @@
       border: 1px solid var(--border); overflow: hidden; cursor: pointer;
       transition: box-shadow 0.2s;
     }
-    .sss-item:hover { box-shadow: 0 4px 20px rgba(224,104,120,0.1); }
+    .sss-item:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.1); }
     .sss-q {
       padding: 20px 24px; font-size: 15px; font-weight: 500;
       display: flex; justify-content: space-between; align-items: center;
@@ -1041,219 +1226,92 @@
 
 <!-- NAV -->
 
-<!-- PAGE LOADER -->
-<div id="pageLoader">
-  <div class="loader-logo">selendemirmakeup</div>
-  <div class="loader-sub">makeup artist</div>
-  <div class="loader-bar-wrap">
-    <div class="loader-bar"></div>
+<header class="site-header">
+  <div class="header-top">
+    <a href="#hero" class="logo-wrap">
+      <span class="nav-logo">Selen Demir<span class="nav-logo-sub">Studio</span></span>
+    </a>
   </div>
-</div>
-
-<nav>
-  <a href="#hero" class="nav-logo">selendemirmakeup</a>
-  <ul class="nav-links">
-    <li><a href="#hizmetler">Hizmetler</a></li>
-    <li><a href="#hakkimda">Hakkımda</a></li>
-    <li><a href="yorumlar.html">Yorumlar</a></li>
-    <li><a href="#fiyatlar">Fiyatlar</a></li>
-        <li><a href="galeri.html">Galeri</a></li>
-        <li><a href="reels.html">Reels</a></li>
-    <li><a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="nav-cta">Randevu Al</a></li>
-  </ul>
-  <div class="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
+  <div class="header-tabs">
+    <ul class="nav-links">
+      <li><a href="#hero" class="active">Ana Sayfa</a></li>
+      <li><a href="#hizmetler">Hizmetler</a></li>
+      <li><a href="hakkimda.html">Hakkımızda</a></li>
+      <li><a href="yorumlar.html">Yorumlar</a></li>
+      <li><a href="galeri.html">Galeri</a></li>
+      <li><a href="reels.html">Reels</a></li>
+      <li><a href="sss.html">SSS</a></li>
+      <li><a href="iletisim.html">İletişim</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
   </div>
-</nav>
+</header>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-left">
-    <div class="hero-tag">İstanbul & Çevresi</div>
+    <div class="hero-tag">İstanbul'da Kişiye Özel Gelin Makyajı, Türban ve Saç Tasarımı</div>
     <h1 class="hero-h1">
       Özel Gününüzde<br/>
       <em>Kusursuz Görünün</em>
     </h1>
     <p class="hero-p">
-      Gelin makyajı ve türban tasarımında uzman. Her kadının güzelliğini keşfedip özel gününde en iyi versiyonunu ortaya çıkarıyorum.
+      İstanbul Ümraniye'de; kişiye özel türban tasarımı, profesyonel saç tasarımı ve lüks gelin makyajı hizmetleriyle, düğün gününüzde size eşsiz ve kusursuz bir görünüm kazandırıyoruz. Her detay, yalnızca sizin için özenle tasarlanır.
     </p>
     <div class="hero-btns">
-      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="btn-primary">Randevu Al</a>
-      <a href="galeri.html" class="btn-secondary">Çalışmalarımı Gör</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num" id="heroStat1">11+</div>
-        <div class="stat-label" id="heroStatLabel1">Mutlu Gelin</div>
-      </div>
-      <div>
-        <div class="stat-num" id="heroStat2">3</div>
-        <div class="stat-label" id="heroStatLabel2">Hizmet Paketi</div>
-      </div>
-      <div>
-        <div class="stat-num" id="heroStat3">%100</div>
-        <div class="stat-label" id="heroStatLabel3">Müşteri Memnuniyeti</div>
-      </div>
+      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="btn-primary">💬 Randevu Al</a>
+      <a href="galeri.html" class="btn-secondary">Çalışmalarımı Gör →</a>
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-canvas" id="heroCanvas"></div>
-    <div class="hero-img-placeholder">
-      <div class="hero-brand-logo">
-        <div class="hero-brand-name">SELEN DEMİR</div>
-        <div class="hero-brand-sub">makeup artist</div>
-      </div>
-    </div>
-    <div class="hero-float-card">
-      <div class="float-icon">💄</div>
-      <div>
-        <div class="float-text">Profesyonel Makyaj</div>
-        <div class="float-sub">Kalıcı & Işıltılı</div>
-      </div>
-    </div>
-    <div class="hero-float-card2">
-      <div class="float-icon">🌸</div>
-      <div>
-        <div class="float-text">Türban Tasarımı</div>
-        <div class="float-sub">Şık & Özgün</div>
-      </div>
-    </div>
-    <div class="hero-float-card3">
-      <div class="float-icon">✨</div>
-      <div>
-        <div class="float-text">Gelin Hazırlığı</div>
-        <div class="float-sub">Özel & Şık</div>
-      </div>
-    </div>
+    <!-- Buraya gerçek bir fotoğraf eklenecek. Görseli /mnt gibi bir yere yükleyip
+         aşağıdaki img src="..." kısmına dosya adını yazman yeterli. -->
+    <img src="hero-foto.jpg" alt="Selen Demir - Makyaj Sanatçısı" class="hero-photo" onerror="this.style.display='none'"/>
   </div>
 </section>
 
 <!-- HİZMETLER -->
 <section id="hizmetler" style="background:#fff; padding:100px 80px;">
-  <div class="hizmet-header reveal" style="margin-bottom:3rem;">
-    <div class="section-label">Neden Ben</div>
-    <h2 class="section-h2">Sizin İçin <em>Özel</em> Hizmetler</h2>
-    <p class="section-p" id="nb_aciklama">Makyaj sadece görünüş değil, o gün kendinizi nasıl hissettirdiğinizdir. Benim işim sizi en güzel, en özgüvenli halinize taşımak.</p>
+  <div class="reveal" style="margin-bottom:48px;">
+    <div class="section-label">Hizmetlerimiz</div>
+    <h2 class="section-h2">Hayatınızdaki Özel Anlar İçin <em>Kusursuz</em> Bir Hazırlık Süreci</h2>
+    <p class="section-p" style="max-width:640px;">Hayatınızın en özel anlarında size eşlik etmek için buradayız. Düğün, söz, nişan, kına gecesi ve mezuniyet gibi özel günleriniz için türban tasarımı, saç tasarımı ve profesyonel makyaj hizmetlerimizi; butik stüdyomuzda ya da freelance hizmetimizle dilediğiniz lokasyonda, aynı özenle sunuyoruz.</p>
   </div>
 
-  <!-- KPI Satırı -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;" class="reveal">
-    <div style="display:flex;align-items:center;gap:16px;background:var(--soft);border-radius:14px;padding:16px 20px;">
-      <div style="font-family:Playfair Display,serif;font-size:32px;font-weight:700;color:var(--pink-deep);line-height:1;min-width:64px;" id="nb_kpi1_sayi">150+</div>
-      <div>
-        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;" id="nb_kpi1_baslik">Mutlu Gelin & Davetli</div>
-        <div style="font-size:11px;color:var(--muted);line-height:1.4;" id="nb_kpi1_alt">İstanbul genelinde gerçekleştirilen çalışmalar</div>
-      </div>
+  <div class="hizmet-cards-grid reveal">
+    <div class="hizmet-card-v2 featured">
+      <h3 class="hcard-title">Türban Tasarımı</h3>
+      <p class="hcard-desc">Modern zarafeti yansıtan, hayalinizdeki türban tasarımını birlikte oluşturuyoruz. Yüz hatlarınızı, gelinliğinizi ve düğününüzün konseptini birlikte değerlendirerek size en çok yakışacak tasarımı özenle şekillendiriyoruz. Randevunuz öncesinde beğendiğiniz örnekleri birlikte inceliyor, isteklerinizi dinliyor ve deneyimimizle size en uygun tasarıma birlikte karar veriyoruz. Böylece ortaya, hem tarzınızı yansıtan hem de düğün gününüzde kendinizi en güzel hissedeceğiniz, tamamen size özel bir görünüm çıkıyor.</p>
+      <a href="#hizmetler" class="hcard-link">Detaylar →</a>
     </div>
-    <div style="display:flex;align-items:center;gap:16px;background:var(--soft);border-radius:14px;padding:16px 20px;">
-      <div style="font-family:Playfair Display,serif;font-size:32px;font-weight:700;color:var(--pink-deep);line-height:1;min-width:64px;" id="nb_kpi2_sayi">%98</div>
-      <div>
-        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;" id="nb_kpi2_baslik">Tavsiye Oranı</div>
-        <div style="font-size:11px;color:var(--muted);line-height:1.4;" id="nb_kpi2_alt">Müşterilerin arkadaşlarına önerme oranı</div>
-      </div>
+    <div class="hizmet-card-v2">
+      <h3 class="hcard-title">Makyaj</h3>
+      <p class="hcard-desc">Doğal güzelliğinizi en zarif haliyle ortaya çıkaran profesyonel gelin makyajı hizmeti sunuyoruz. Cilt yapınıza, yüz hatlarınıza ve tarzınıza uygun uygulamalarla, sizi olduğunuzdan farklı göstermeden en güzel halinizi yansıtmayı hedefliyoruz. Kullandığımız premium ürünler ve kişiye özel dokunuşlarla, gün boyu kalıcılığını koruyan kusursuz bir görünüm oluşturuyoruz. Hazırlık süreci boyunca beklentilerinizi ve isteklerinizi dikkatle dinliyor, her detayı birlikte değerlendirerek içinize sinen kusursuz sonucu birlikte ortaya çıkarıyoruz.</p>
+      <a href="#hizmetler" class="hcard-link">Detaylar →</a>
+    </div>
+    <div class="hizmet-card-v2">
+      <h3 class="hcard-title">Saç Tasarımı</h3>
+      <p class="hcard-desc">Gelin saçından davet saçına kadar, yüz hatlarınıza, kıyafetinize ve günün konseptine uyum sağlayan, size özel saç tasarımları hazırlıyoruz. Doğallığını gün boyu koruyan, zarif ve kalıcı görünümler oluşturmayı hedefliyoruz. Hazırlık süreci boyunca beklentilerinizi ve isteklerinizi dikkatle dinliyor, her detayı birlikte değerlendirerek kendinizi en güzel hissedeceğiniz saç tasarımını özenle şekillendiriyoruz.</p>
+      <a href="#hizmetler" class="hcard-link">Detaylar →</a>
+    </div>
+    <div class="hizmet-card-v2">
+      <h3 class="hcard-title">Freelance Hizmet</h3>
+      <p class="hcard-desc">Hazırlık sürecinizi sizin için daha konforlu hale getirmek adına, dilediğiniz lokasyonda hizmet sunuyoruz. Evinizde, otelinizde veya organizasyon mekânınızda; türban tasarımı, saç tasarımı ve gelin makyajı uygulamalarımızı aynı özen, kalite ve profesyonellikle gerçekleştiriyoruz. Nerede olursanız olun, size özel deneyimi bulunduğunuz yere taşıyoruz.</p>
+      <a href="#hizmetler" class="hcard-link">Detaylar →</a>
     </div>
   </div>
 
   <!-- Sadece Admin'den Gelen Dinamik Kartlar -->
-  <div id="hizmetKartContainer" class="reveal"></div>
+  <div id="hizmetKartContainer" class="reveal" style="margin-top:14px;"></div>
 
   <!-- Yorumlar (Admin'den) -->
   <div id="nb_yorumlar_wrap" class="reveal" style="margin-top:14px;"></div>
 </section>
-<!-- HAKKIMDA -->
-<section id="hakkimda">
-  <div class="about-visual reveal">
-    <div class="about-monogram">S</div>
-    <div class="about-badge">
-      <div class="about-badge-num">11+</div>
-      <div class="about-badge-text">Mutlu Gelin</div>
-    </div>
-  </div>
-  <div class="about-content reveal">
-    <div class="section-label">Benim Hikayem</div>
-    <h2 class="section-h2">Güzelliği <em>Sanat</em> Olarak Görüyorum</h2>
-    <p class="about-text">
-      Makyaj ve türban tasarımı benim için yalnızca bir meslek değil, her kadının iç güzelliğini yüzeye taşıma sanatı.
-    </p>
-    <p class="about-text">
-      Özel günlerinizde kendinizi en iyi hissetmeniz için kişiye özel bir yaklaşım benimsiyorum. Her yüz farklı, her hikaye benzersiz.
-    </p>
-    <p class="about-text">
-      Düğün, kına, nişan, söz veya davet — hangi organizasyon olursa olsun, o özel anı unutulmaz kılmak için buradayım.
-    </p>
-    <div class="about-tags">
-      <span class="about-tag">Gelin Makyajı</span>
-      <span class="about-tag">Türban Tasarımı</span>
-      <span class="about-tag">Kına & Nişan</span>
-      <span class="about-tag">Düğün</span>
-      <span class="about-tag">Söz & Davet</span>
-    </div>
-  </div>
-</section>
 
 
 
-<!-- FİYATLAR -->
-<section id="fiyatlar" style="padding: 100px 80px;">
-  <div class="fiyat-header reveal">
-    <div class="section-label">Fiyatlandırma</div>
-    <h2 class="section-h2">Şeffaf <em>Fiyatlar</em></h2>
-    <p class="section-p">Sürpriz ücret yok. İhtiyacınıza en uygun paketi seçin.</p>
-  </div>
-  <div class="fiyat-grid reveal" id="fiyatGrid">
-    <div class="fiyat-card" id="fiyat-f1">
-      <div class="fiyat-name" id="f1-ad">Sadece Makyaj</div>
-      <p class="fiyat-desc" id="f1-aciklama">Profesyonel makyaj uygulaması</p>
-      <div class="fiyat-price">
-        <span class="fiyat-currency">₺</span>
-        <span id="f1-fiyat">—</span>
-      </div>
-      <p class="fiyat-note" id="f1-not">Fiyat bilgisi için iletişime geçin</p>
-      <ul class="fiyat-list" id="f1-liste">
-        <li class="fiyat-item">Cilt hazırlığı dahil</li>
-        <li class="fiyat-item">Kalıcı ürünler</li>
-        <li class="fiyat-item">Tüm organizasyonlar</li>
-      </ul>
-      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="fiyat-cta">Randevu Al</a>
-    </div>
-    <div class="fiyat-card popular" id="fiyat-f2">
-      <div class="popular-badge">En Popüler</div>
-      <div class="fiyat-name" id="f2-ad">Makyaj + Türban</div>
-      <p class="fiyat-desc" id="f2-aciklama">Komple gelin hazırlığı</p>
-      <div class="fiyat-price">
-        <span class="fiyat-currency">₺</span>
-        <span id="f2-fiyat">—</span>
-      </div>
-      <p class="fiyat-note" id="f2-not">Fiyat bilgisi için iletişime geçin</p>
-      <ul class="fiyat-list" id="f2-liste">
-        <li class="fiyat-item">Tüm makyaj hizmetleri</li>
-        <li class="fiyat-item">Kişiye özel türban</li>
-        <li class="fiyat-item">Aksesuvar uyumu</li>
-        <li class="fiyat-item">Fotoğraf hazırlığı</li>
-      </ul>
-      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="fiyat-cta">Randevu Al</a>
-    </div>
-    <div class="fiyat-card" id="fiyat-f3">
-      <div class="fiyat-name" id="f3-ad">Sadece Türban</div>
-      <p class="fiyat-desc" id="f3-aciklama">Özgün türban tasarımı</p>
-      <div class="fiyat-price">
-        <span class="fiyat-currency">₺</span>
-        <span id="f3-fiyat">—</span>
-      </div>
-      <p class="fiyat-note" id="f3-not">Fiyat bilgisi için iletişime geçin</p>
-      <ul class="fiyat-list" id="f3-liste">
-        <li class="fiyat-item">Yüz & kıyafet analizi</li>
-        <li class="fiyat-item">Özgün tasarım</li>
-        <li class="fiyat-item">Aksesuvar önerisi</li>
-      </ul>
-      <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="fiyat-cta">Randevu Al</a>
-    </div>
-  </div>
-  <p class="fiyat-note-bottom">
-    Fiyatlar organizasyon türüne ve lokasyona göre değişiklik gösterebilir.<br/>
-    <strong>Kesin fiyat için randevu formunu doldurun veya Instagram'dan ulaşın.</strong>
-  </p>
-</section>
 
 <!-- RANDEVU -->
 
@@ -1264,17 +1322,47 @@
 
 
 
-<!-- SSS -->
-<section id="sss" style="background:var(--soft);">
-  <div class="reveal" style="text-align:center; margin-bottom:56px;">
-    <div class="section-label" style="justify-content:center;">Merak Edilenler</div>
-    <h2 class="section-h2">Sık Sorulan <em>Sorular</em></h2>
+<!-- SÜREÇ -->
+<section id="surec" style="background:var(--soft); padding:100px 80px;">
+  <div class="reveal" style="text-align:center; margin-bottom:64px;">
+    <div class="section-label" style="justify-content:center;">Nasıl Çalışıyoruz</div>
+    <h2 class="section-h2">Randevudan Güne <em>Adım Adım</em></h2>
   </div>
-  <div style="max-width:720px; margin:0 auto;" class="reveal" id="sssContainer">
-    <div class="sss-item" onclick="toggleSSS(this)">
-      <div class="sss-q">Randevu ne kadar önceden alınmalı? <span class="sss-icon">+</span></div>
-      <div class="sss-a">Düğün ve özel organizasyonlar için en az 2-3 hafta öncesinden randevu almanızı öneririm.</div>
+  <div class="surec-grid reveal">
+    <div class="surec-step">
+      <div class="surec-num">01</div>
+      <h3 class="surec-title">İletişime Geçin</h3>
+      <p class="surec-desc">WhatsApp'tan yazın; tarihinizi, organizasyon türünüzü ve ihtiyacınızı bizimle paylaşın.</p>
     </div>
+    <div class="surec-step">
+      <div class="surec-num">02</div>
+      <h3 class="surec-title">Deneme & Planlama</h3>
+      <p class="surec-desc">Randevu öncesi beğendiğiniz örnekleri birlikte inceliyor, size en uygun tasarıma karar veriyoruz.</p>
+    </div>
+    <div class="surec-step">
+      <div class="surec-num">03</div>
+      <h3 class="surec-title">Hazırlık Günü</h3>
+      <p class="surec-desc">Stüdyomuzda ya da dilediğiniz lokasyonda, özenle ve telaşsız bir şekilde hazırlığınızı tamamlıyoruz.</p>
+    </div>
+    <div class="surec-step">
+      <div class="surec-num">04</div>
+      <h3 class="surec-title">Kusursuz Görünüm</h3>
+      <p class="surec-desc">Gününüzün tadını çıkarın; ışıltınız gün boyu, fotoğraflarda da aynı güzellikte kalsın.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALERİ ÖNİZLEME -->
+<section id="galeri-onizleme" style="background:#fff; padding:100px 80px;">
+  <div class="reveal" style="text-align:center; margin-bottom:48px;">
+    <div class="section-label" style="justify-content:center;">Çalışmalarımız</div>
+    <h2 class="section-h2">Gerçek Anlardan <em>Kareler</em></h2>
+  </div>
+  <div class="galeri-onizleme-grid reveal" id="galeriOnizlemeGrid">
+    <div style="grid-column:1/-1; text-align:center; padding:20px; color:var(--muted); font-size:13px;">Yükleniyor...</div>
+  </div>
+  <div style="text-align:center; margin-top:40px;" class="reveal">
+    <a href="galeri.html" class="btn-secondary">Tüm Galeriyi Gör →</a>
   </div>
 </section>
 
@@ -1283,7 +1371,7 @@
     <div class="randevu-info reveal">
       <div class="section-label" style="justify-content:center;">Randevu</div>
       <h2 class="section-h2">Özel Gününüzü<br/><em>Birlikte Planlayalım</em></h2>
-      <p class="section-p" style="margin:0 auto 40px;">WhatsApp'tan yazın, en kısa sürede size döneyim. Randevunuz kesinleşene kadar yanınızdayım. 🌸</p>
+      <p class="section-p" style="margin:0 auto 40px;">WhatsApp üzerinden bize ulaşın, beklentilerinizi ve özel gününüzle ilgili detayları birlikte değerlendirelim. Randevu süreciniz boyunca tüm sorularınızı yanıtlıyor, size özel hazırlık planınızı en ince ayrıntısına kadar birlikte oluşturuyoruz.</p>
       <a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;font-size:16px;padding:18px 48px;text-decoration:none;">
         💬 WhatsApp'tan Randevu Al
       </a>
@@ -1305,8 +1393,8 @@
         <div class="randevu-feature">
           <div class="rf-icon">📍</div>
           <div>
-            <div class="rf-title">Adresinize Geliyorum</div>
-            <div class="rf-desc">İstanbul ve çevresi için evde hizmet.</div>
+            <div class="rf-title">Stüdyo & Freelance</div>
+            <div class="rf-desc">İster butik stüdyomuzda, ister freelance hizmetimizle adresinize gelerek.</div>
           </div>
         </div>
       </div>
@@ -1324,8 +1412,8 @@
 <footer>
   <div class="footer-top">
     <div>
-      <div class="footer-logo">selendemirmakeup</div>
-      <p class="footer-desc">Gelin makyajı ve türban tasarımında profesyonel hizmet. Özel gününüzde en güzel halinizle parlayın.</p>
+      <div class="footer-logo"><span style="display:block;">Selen Demir</span><span style="display:block; font-size:11px; font-style:normal; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-top:2px;">Studio</span></div>
+      <p class="footer-desc">Ümraniye Alize Tower bölgesinde, Ataşehir'e yakın konumda bulunan butik stüdyomuzda; gelin makyajı, türban tasarımı ve saç tasarımı hizmetleriyle size özel, zarif ve zamansız görünümler tasarlıyoruz. Özel gününüzde kendinizi en güzel halinizle hissetmeniz için profesyonel dokunuşlarla yanınızdayız.</p>
 
     </div>
     <div>
@@ -1334,29 +1422,30 @@
         <li><a href="#hizmetler">Gelin Makyajı</a></li>
         <li><a href="#hizmetler">Türban Tasarımı</a></li>
         <li><a href="#hizmetler">Makyaj + Türban</a></li>
-        <li><a href="#fiyatlar">Fiyatlar</a></li>
         <li><a href="galeri.html">Galeri</a></li>
         <li><a href="reels.html">Reels</a></li>
+      <li><a href="sss.html">SSS</a></li>
+      <li><a href="iletisim.html">İletişim</a></li>
       </ul>
     </div>
     <div>
       <h4>İletişim</h4>
       <div class="footer-contact-item">
         <div class="footer-contact-icon">📍</div>
-        <div class="footer-contact-text">İstanbul, Türkiye</div>
+        <div class="footer-contact-text"><a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x8e2edbb7564f3d47:0x45d189969a464abd?sa=X&ved=1t:8290&ictx=111" target="_blank" style="color:var(--text);text-decoration:none;">Alize Tower, Finanskent, Yahya Kemal Cd. No: 36/A, 34760 Ümraniye/İstanbul</a></div>
       </div>
       <div class="footer-contact-item">
         <div class="footer-contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--pink-deep)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
-        <div class="footer-contact-text"><a href="https://instagram.com/selendmiiirr" target="_blank" style="color:var(--pink);text-decoration:none;">@selendmiiirr</a></div>
+        <div class="footer-contact-text"><a href="https://instagram.com/selendemirmakeup" target="_blank" style="color:var(--pink);text-decoration:none;">@selendemirmakeup</a></div>
       </div>
       <div class="footer-contact-item">
         <div class="footer-contact-icon">📅</div>
-        <div class="footer-contact-text">WhatsApp'tan randevu alın</div>
+        <div class="footer-contact-text"><a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" style="color:var(--text);text-decoration:none;">WhatsApp'tan randevu alın</a></div>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">© 2026 selendemirmakeup. Tüm hakları saklıdır.</p>
+    <p class="footer-copy">© 2026 selendemirstudio. Tüm hakları saklıdır.</p>
     <p class="footer-copy">Tasarlandı <span class="footer-heart">♥</span> ile</p>
   </div>
 </footer>
@@ -1373,10 +1462,10 @@
 
     const emojis = ['🌸', '✨', '💄', '🌺', '💫', '🌷', '✦', '❀'];
     const colors = [
-      'rgba(240,160,168,0.4)',
-      'rgba(224,104,120,0.3)',
-      'rgba(255,200,210,0.5)',
-      'rgba(248,180,190,0.35)',
+      'rgba(201,184,150,0.4)',
+      'rgba(26,26,26,0.3)',
+      'rgba(230,220,195,0.5)',
+      'rgba(235,225,200,0.35)',
     ];
 
     // Create particles
@@ -1412,15 +1501,6 @@
   })();
   // ─────────────────────────────────────────────────────
 
-  // ── PAGE LOADER ──────────────────────────────────────
-  document.body.classList.add('loading');
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      const loader = document.getElementById('pageLoader');
-      loader.classList.add('hidden');
-      document.body.classList.remove('loading');
-    }, 1400);
-  });
   // ─────────────────────────────────────────────────────
 
   // Scroll reveal
@@ -1696,18 +1776,18 @@
           const container = document.getElementById('hizmetKartContainer');
           if (container) {
             const aktif = kartlar.filter(k => k.aktif !== false);
-            const RENK = { white:'background:#fff;border:1px solid #f0e4e9;', blush:'background:#fff5f8;border:1px solid #f4c0d1;', dark:'background:#1e0f14;border:none;', soft:'background:#fdf8f6;border:1px solid #f0e4e9;' };
+            const RENK = { white:'background:#fff;border:1px solid #f0ece0;', blush:'background:#f7f4ee;border:1px solid #ded4bd;', dark:'background:#0d0d0d;border:none;', soft:'background:#faf7f2;border:1px solid #f0ece0;' };
             function ekstraRender(k) {
               if (!k.ekstra) return '';
               const t = k.ekstraTip || 'liste';
               const dk = k.renk === 'dark';
               const tc = dk ? 'rgba(255,255,255,0.75)' : 'var(--muted)';
-              const ac = dk ? '#f4a0bc' : 'var(--pink-deep)';
-              if (t === 'markalar') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('') + '</div>';
-              if (t === 'etiketler') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map((e,i) => '<span style="font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:' + (i===0?'var(--pink-deep)':'#fdf0f3') + ';color:' + (i===0?'#fff':'#993556') + ';">' + e.trim() + '</span>').join('') + '</div>';
+              const ac = dk ? '#c9b896' : 'var(--pink-deep)';
+              if (t === 'markalar') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0ece0;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('') + '</div>';
+              if (t === 'etiketler') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map((e,i) => '<span style="font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:' + (i===0?'var(--pink-deep)':'#f7f4ee') + ';color:' + (i===0?'#fff':'#1a1a1a') + ';">' + e.trim() + '</span>').join('') + '</div>';
               if (t === 'liste') return '<ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">' + k.ekstra.split('\n').filter(l=>l.trim()).map(l => '<li style="font-size:12.5px;color:' + tc + ';display:flex;gap:8px;line-height:1.5;"><span style="color:' + ac + ';font-size:10px;flex-shrink:0;margin-top:2px;">&#10022;</span>' + l.trim() + '</li>').join('') + '</ul>';
-              if (t === 'ikonlu-liste') return '<div>' + k.ekstra.split('\n').filter(l=>l.trim()).map((l,i,arr) => { const p=l.split('|'); const b=p[0]||''; const s=p[1]||''; return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;' + (i<arr.length-1?'border-bottom:1px solid rgba(0,0,0,0.06);':'') + '"><div style="font-size:16px;width:30px;height:30px;background:#fff0f4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + b.split(' ')[0] + '</div><div><div style="font-size:12px;font-weight:700;color:var(--text);">' + b.replace(/^\S+\s*/,'') + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>';
-              if (t === 'adimlar') { const rows=k.ekstra.split('\n').filter(l=>l.trim()); return '<div>' + rows.map((l,i) => { const p=l.split('|'); const b=p[0]||''; const s=p[1]||''; const last=i===rows.length-1; return '<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:24px;height:24px;border-radius:50%;background:#fff0f4;border:1.5px solid #e8c5d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">' + (last?'&#10003;':i+1) + '</div>' + (!last?'<div style="width:1px;flex:1;background:#f0d4dc;min-height:8px;"></div>':'') + '</div><div style="padding-bottom:' + (last?'0':'12px') + ';"><div style="font-size:12px;font-weight:700;color:var(--text);">' + b + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>'; }
+              if (t === 'ikonlu-liste') return '<div>' + k.ekstra.split('\n').filter(l=>l.trim()).map((l,i,arr) => { const p=l.split('|'); const b=p[0]||''; const s=p[1]||''; return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;' + (i<arr.length-1?'border-bottom:1px solid rgba(0,0,0,0.06);':'') + '"><div style="font-size:16px;width:30px;height:30px;background:#f7f4ee;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + b.split(' ')[0] + '</div><div><div style="font-size:12px;font-weight:700;color:var(--text);">' + b.replace(/^\S+\s*/,'') + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>';
+              if (t === 'adimlar') { const rows=k.ekstra.split('\n').filter(l=>l.trim()); return '<div>' + rows.map((l,i) => { const p=l.split('|'); const b=p[0]||''; const s=p[1]||''; const last=i===rows.length-1; return '<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:24px;height:24px;border-radius:50%;background:#f7f4ee;border:1.5px solid #ded4bd;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">' + (last?'&#10003;':i+1) + '</div>' + (!last?'<div style="width:1px;flex:1;background:#ded4bd;min-height:8px;"></div>':'') + '</div><div style="padding-bottom:' + (last?'0':'12px') + ';"><div style="font-size:12px;font-weight:700;color:var(--text);">' + b + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>'; }
               return '';
             }
             const rowCount = Math.ceil(aktif.length / kolon);
@@ -1735,7 +1815,7 @@
       // Markalar
       if (a.nb_markalar_str) {
         const mEl = document.getElementById('nb_markalar');
-        if (mEl) mEl.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0e4e9;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
+        if (mEl) mEl.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0ece0;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
       }
       // Yorumlar
       const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
@@ -1744,7 +1824,7 @@
         if (yEl) {
           const cols = yorumData.length >= 3 ? 3 : yorumData.length;
           yEl.innerHTML =
-            '<div style="background:#fff5f8;border:1px solid #f4c0d1;border-radius:18px;padding:24px;position:relative;overflow:hidden;">' +
+            '<div style="background:#f7f4ee;border:1px solid #ded4bd;border-radius:18px;padding:24px;position:relative;overflow:hidden;">' +
             '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>' +
             '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:6px;">Müşteri Yorumları</div>' +
             '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;font-family:Playfair Display,serif;">Onlar Anlatsın</div>' +
@@ -1900,6 +1980,34 @@
 
   sayfaVerileriniYukle();
   sssYukle();
+
+  // ── Galeri Önizleme (Ana Sayfa) ──────────────────────
+  const EMPTY_FRAMES = '<div class="galeri-onizleme-item"><div class="goi-frame goi-empty"></div></div>'.repeat(3);
+
+  async function galeriOnizlemeYukle() {
+    const grid = document.getElementById('galeriOnizlemeGrid');
+    if (!grid) return;
+    grid.innerHTML = EMPTY_FRAMES;
+    try {
+      const res = await fetch(SB_URL + '/storage/v1/object/list/galeri', {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ limit: 3, offset: 0, sortBy: { column: 'created_at', order: 'desc' } })
+      });
+      const files = await res.json();
+      const images = Array.isArray(files) ? files.filter(f => f.name && !f.name.endsWith('/')) : [];
+      if (images.length === 0) {
+        return;
+      }
+      grid.innerHTML = images.slice(0, 3).map(f => {
+        const url = SB_URL + '/storage/v1/object/public/galeri/' + f.name;
+        return '<div class="galeri-onizleme-item"><div class="goi-frame"><img src="' + url + '" alt="Selen Demir Studio" loading="lazy"/></div></div>';
+      }).join('');
+    } catch (e) {
+      console.log('Galeri onizleme yuklenemedi:', e);
+    }
+  }
+  galeriOnizlemeYukle();
 
   // ── Ziyaretçi sayacı ─────────────────────────────────
   async function ziyaretKaydet() {
