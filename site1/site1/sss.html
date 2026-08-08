@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sık Sorulan Sorular | Selen Demir Studio</title>
+  <meta name="description" content="Randevu, hizmet süreci ve fiyatlandırma hakkında sık sorulan sorular ve cevapları."/>
+  <meta name="keywords" content="selen demir sss, gelin makyajı sık sorulan sorular, türban tasarımı randevu, selen demir studio"/>
+  <meta name="author" content="Selen Demir"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://selendemirstudio.com/sss.html"/>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sık Sorulan Sorular | Selen Demir Studio"/>
+  <meta property="og:description" content="Randevu, hizmet süreci ve fiyatlandırma hakkında sık sorulan sorular ve cevapları."/>
+  <meta property="og:url" content="https://selendemirstudio.com/sss.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="tr_TR"/>
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Randevu ne kadar önceden alınmalı?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Düğün ve özel organizasyonlar için en az 2-3 hafta öncesinden randevu almanızı öneririz." }
+      }
+    ]
+  }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --white: #ffffff;
+      --soft: #faf7f2;
+      --pink-light: #f0ece0;
+      --pink: #c9b896;
+      --pink-deep: #1a1a1a;
+      --pink-dark: #000000;
+      --text: #1a1a1a;
+      --muted: #888;
+      --border: #e8e0d0;
+      --gold: #ab8654;
+      --gold-soft: rgba(171,134,84,0.35);
+    }
+
+    /* ── DOKU (kağıt/keten hissi) ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.035;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+        /* ── NAV ── */
+    header.site-header {
+      position: sticky; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(201,184,150,0.08);
+    }
+
+    .header-top {
+      text-align: center;
+      padding: 20px 24px 16px;
+    }
+
+
+    .logo-badge-link { display: inline-block; line-height: 0; text-decoration: none; }
+    .logo-badge { width: 96px; height: 96px; display: block; }
+    @media (max-width: 768px) { .logo-badge { width: 76px; height: 76px; } }
+
+    .logo-wrap {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-monogram {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: var(--gold);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-style: italic;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      font-weight: 400;
+      display: inline-block;
+    }
+
+    .nav-logo-sub {
+      display: block;
+      font-size: 11px;
+      font-style: normal;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .header-tabs {
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px;
+      background: var(--pink-light);
+      border-top: 1px solid var(--gold-soft);
+      padding: 14px 24px;
+      position: relative;
+    }
+
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 6px;
+      display: inline-block;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 2px; background: var(--gold);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-links a.active { color: var(--text); font-weight: 700; }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    .hamburger {
+      display: none; cursor: pointer; flex-direction: column; gap: 5px;
+      position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+    @media (max-width: 768px) {
+      .header-top { padding: 18px 24px 14px; }
+      .nav-logo { font-size: 24px; }
+      .header-tabs { padding: 12px 24px; justify-content: flex-start; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: white;
+        padding: 16px 24px 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        flex-direction: column;
+        gap: 4px;
+        border-top: 1px solid var(--border);
+        z-index: 99;
+      }
+      .nav-links.mobile-open { display: flex; }
+      .nav-links li { list-style: none; }
+      .nav-links a {
+        display: block;
+        padding: 12px 0;
+        font-size: 15px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text) !important;
+        background: none !important;
+      }
+      .nav-links li:last-child a { border-bottom: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* HEADER */
+    .page-header {
+      padding: 64px 40px 64px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--pink-light) 0%, #f0ece0 100%);
+    }
+
+    .page-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 12px; display: block;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 500; line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .page-title em { font-style: italic; color: var(--pink-deep); }
+
+    .page-sub {
+      font-size: 15px; color: var(--muted); font-weight: 300;
+    }
+
+    /* ── HAKKIMDA İÇERİK ── */
+    .about-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 88px 24px 100px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) { .about-wrap { grid-template-columns: 1fr; gap: 40px; padding: 56px 24px 72px; } }
+
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+      border-radius: 32px;
+      background: linear-gradient(135deg, var(--pink-light), #f0ece0);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .about-monogram {
+      font-family: 'Playfair Display', serif;
+      font-size: 160px; font-style: italic; font-weight: 700;
+      color: rgba(26,26,26,0.12);
+      user-select: none;
+    }
+
+    .about-badge {
+      position: absolute; bottom: 32px; right: -16px;
+      background: white; border-radius: 16px;
+      padding: 20px 24px; text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      border: 1px solid var(--gold-soft);
+    }
+
+    .about-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1;
+    }
+
+    .about-badge-text { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .section-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--pink-deep); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .section-label::before { content: '—'; color: var(--gold); }
+
+    .section-h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 500; line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .section-h2 em { font-style: italic; color: var(--pink-deep); }
+
+    .about-text { font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300; margin-bottom: 16px; }
+
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+
+    .about-tag {
+      font-size: 12px; font-weight: 500;
+      background: var(--pink-light); color: var(--pink-dark);
+      padding: 6px 16px; border-radius: 50px;
+      border: 1px solid var(--gold-soft);
+    }
+
+    /* DEĞERLER ŞERİDİ */
+    .values-strip {
+      background: var(--soft);
+      padding: 72px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .values-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) { .values-inner { grid-template-columns: 1fr; gap: 28px; } }
+
+    .value-icon { font-size: 28px; margin-bottom: 14px; }
+    .value-title { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 8px; }
+    .value-desc { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    .contact-card {
+      display: block; text-decoration: none; color: inherit;
+      padding: 24px 16px; border-radius: 10px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    a.contact-card:hover { background: var(--white); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,26,26,0.06); }
+
+    /* SSS Akordeon */
+    .sss-item {
+      background: white; border-radius: 14px; margin-bottom: 12px;
+      border: 1px solid var(--border); overflow: hidden; cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .sss-item:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.1); }
+    .sss-q {
+      padding: 20px 24px; font-size: 15px; font-weight: 500;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--text);
+    }
+    .sss-icon { font-size: 20px; color: var(--gold); transition: transform 0.3s; flex-shrink:0; }
+    .sss-a {
+      padding: 0 24px; max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s;
+      font-size: 14px; color: var(--muted); line-height: 1.8;
+    }
+    .sss-item.open .sss-a { max-height: 300px; padding: 0 24px 20px; }
+    .sss-item.open .sss-icon { transform: rotate(45deg); }
+
+    /* CTA */
+    .about-cta {
+      text-align: center; padding: 80px 24px;
+    }
+
+    .about-cta h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 34px);
+      margin-bottom: 16px;
+    }
+
+    .about-cta p { color: var(--muted); font-size: 14px; margin-bottom: 28px; font-weight: 300; }
+
+    .btn-primary {
+      background: var(--pink-light);
+      color: var(--text); border: 1.5px solid var(--pink-dark); border-radius: 6px;
+      padding: 16px 36px; font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+
+    .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index.html" class="logo-wrap">
+      <span class="nav-logo">Selen Demir<span class="nav-logo-sub">Studio</span></span>
+    </a>
+  </div>
+  <div class="header-tabs">
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="index.html#hizmetler">Hizmetler</a></li>
+      <li><a href="hakkimda.html">Hakkımızda</a></li>
+      <li><a href="yorumlar.html">Yorumlar</a></li>
+      <li><a href="galeri.html">Galeri</a></li>
+      <li><a href="reels.html">Reels</a></li>
+      <li><a href="sss.html" class="active">SSS</a></li>
+      <li><a href="iletisim.html">İletişim</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<script>
+  function toggleMenu() {
+    document.querySelector('.nav-links').classList.toggle('mobile-open');
+  }
+</script>
+
+
+<div class="page-header">
+  <span class="page-label">Merak Edilenler</span>
+  <h1 class="page-title">Sık Sorulan Sorular</h1>
+  <p class="page-sub">Aklınıza takılan bir şey varsa, yanıtı burada olabilir 🌸</p>
+</div>
+
+<div style="max-width:720px; margin:0 auto; padding:80px 24px 40px;" class="reveal" id="sssContainer">
+  <div class="sss-item" onclick="toggleSSS(this)">
+    <div class="sss-q">Randevu ne kadar önceden alınmalı? <span class="sss-icon">+</span></div>
+    <div class="sss-a">Düğün ve özel organizasyonlar için en az 2-3 hafta öncesinden randevu almanızı öneririz. Yoğun dönemlerde (sezon içi hafta sonları) bu süre daha da uzayabilir.</div>
+  </div>
+  <div class="sss-item" onclick="toggleSSS(this)">
+    <div class="sss-q">Stüdyoya mı geliyorsunuz, siz mi geliyorsunuz? <span class="sss-icon">+</span></div>
+    <div class="sss-a">Hem stüdyoda hem de adresinize/otelinize gelerek hizmet verebiliyoruz. Tercihinizi randevu sırasında birlikte netleştiriyoruz.</div>
+  </div>
+  <div class="sss-item" onclick="toggleSSS(this)">
+    <div class="sss-q">Fiyatlandırma nasıl belirleniyor? <span class="sss-icon">+</span></div>
+    <div class="sss-a">Fiyatlar; hizmet türüne (makyaj, türban, saç ya da kombinasyonları), lokasyona ve organizasyon türüne göre değişiklik gösterebilir. Net fiyat bilgisi için WhatsApp'tan yazabilirsiniz.</div>
+  </div>
+  <div class="sss-item" onclick="toggleSSS(this)">
+    <div class="sss-q">Deneme (prova) yapıyor musunuz? <span class="sss-icon">+</span></div>
+    <div class="sss-a">Özellikle gelin makyajı ve türban tasarımı için önceden bir deneme/prova randevusu almanızı öneriyoruz. Böylece asıl günden önce birlikte en uygun görünümü belirliyoruz.</div>
+  </div>
+  <div class="sss-item" onclick="toggleSSS(this)">
+    <div class="sss-q">Ürünler hassas ciltler için uygun mu? <span class="sss-icon">+</span></div>
+    <div class="sss-a">Cilt tipinize ve hassasiyetlerinize uygun, kaliteli ürünler kullanıyoruz. Alerjiniz ya da özel bir durumunuz varsa randevu öncesinde bizimle paylaşmanız yeterli.</div>
+  </div>
+  <div class="sss-item" onclick="toggleSSS(this)">
+    <div class="sss-q">Randevumu nasıl iptal edebilir veya değiştirebilirim? <span class="sss-icon">+</span></div>
+    <div class="sss-a">Randevu değişikliği veya iptali için mümkün olduğunca erken WhatsApp'tan bize ulaşmanız yeterli. Size en uygun yeni tarihi birlikte planlarız.</div>
+  </div>
+</div>
+
+<div class="about-cta reveal">
+  <h3>Sorunuz Listede Yok mu?</h3>
+  <p>Merak ettiğiniz başka bir şey varsa, doğrudan WhatsApp'tan sorabilirsiniz.</p>
+  <a href="https://wa.me/905332707509?text=Merhaba%2C%20bir%20sorum%20var%20%F0%9F%8C%B8" target="_blank" class="btn-primary">💬 WhatsApp'tan Sorun</a>
+</div>
+
+<script>
+  function toggleSSS(el) {
+    const wasOpen = el.classList.contains('open');
+    document.querySelectorAll('.sss-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) el.classList.add('open');
+  }
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry,i) => {
+      if(entry.isIntersecting){ setTimeout(()=>entry.target.classList.add('visible'),i*80); observer.unobserve(entry.target); }
+    });
+  },{threshold:0.1});
+  reveals.forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>

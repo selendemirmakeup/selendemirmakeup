@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Müşteri Yorumları | Selen Demir Makeup</title>
+  <title>Müşteri Yorumları | Selen Demir Studio</title>
   <meta name="description" content="Selen Demir'in mutlu gelinleri ve müşterilerinden gerçek yorumlar. İstanbul'un en iyi gelin makyajı için randevu alın."/>
-  <meta name="keywords" content="gelin makyajı, istanbul gelin makyajı, türban tasarımı, makyaj sanatçısı, düğün makyajı, kına makyajı, nişan makyajı, selen demir makeup"/>
+  <meta name="keywords" content="gelin makyajı, istanbul gelin makyajı, türban tasarımı, makyaj sanatçısı, düğün makyajı, kına makyajı, nişan makyajı, selen demir studio"/>
   <meta name="author" content="Selen Demir"/>
   <meta name="robots" content="index, follow"/>
-  <link rel="canonical" href="https://selendemirmakeup.com/yorumlar.html"/>
+  <link rel="canonical" href="https://selendemirstudio.com/yorumlar.html"/>
   <!-- Open Graph -->
-  <meta property="og:title" content="Müşteri Yorumları | Selen Demir Makeup"/>
+  <meta property="og:title" content="Müşteri Yorumları | Selen Demir Studio"/>
   <meta property="og:description" content="Selen Demir'in mutlu gelinleri ve müşterilerinden gerçek yorumlar. İstanbul'un en iyi gelin makyajı için randevu alın."/>
-  <meta property="og:url" content="https://selendemirmakeup.com/yorumlar.html"/>
+  <meta property="og:url" content="https://selendemirstudio.com/yorumlar.html"/>
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="tr_TR"/>
   <!-- Schema.org -->
@@ -20,8 +20,8 @@
   {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
-    "name": "Selen Demir Makeup",
-    "url": "https://selendemirmakeup.com",
+    "name": "Selen Demir Studio",
+    "url": "https://selendemirstudio.com",
     "telephone": "+905423365753",
     "address": {
       "@type": "PostalAddress",
@@ -37,30 +37,164 @@
   <style>
     :root {
       --white: #ffffff;
-      --soft: #fdf8f8;
-      --pink-light: #fce8e8;
-      --pink: #f0a0a8;
-      --pink-deep: #e06878;
-      --pink-dark: #b84a5a;
+      --soft: #faf7f2;
+      --pink-light: #f0ece0;
+      --pink: #c9b896;
+      --pink-deep: #1a1a1a;
+      --pink-dark: #000000;
       --text: #1a1a1a;
       --muted: #888;
-      --border: #f0e0e0;
+      --border: #e8e0d0;
+      --gold: #ab8654;
+      --gold-soft: rgba(171,134,84,0.35);
     }
+    
+    /* ── DOKU (kağıt/keten hissi) ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.035;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--soft); color: var(--text); min-height: 100vh; }
 
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 48px;
-      background: rgba(255,255,255,0.92);
+        /* ── NAV ── */
+    header.site-header {
+      position: sticky; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.98);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(201,184,150,0.08);
     }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: var(--pink-dark); text-decoration: none; }
-    .nav-back { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: white; text-decoration: none; transition: all 0.25s; background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark)); padding: 11px 22px; border-radius: 50px; box-shadow: 0 4px 16px rgba(224,104,120,0.35); letter-spacing: 0.3px; }
-    .nav-back:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,104,120,0.5); }
-    @media (max-width: 600px) { nav { padding: 16px 20px; } }
+
+    .header-top {
+      text-align: center;
+      padding: 20px 24px 16px;
+    }
+
+
+    .logo-badge-link { display: inline-block; line-height: 0; text-decoration: none; }
+    .logo-badge { width: 96px; height: 96px; display: block; }
+    @media (max-width: 768px) { .logo-badge { width: 76px; height: 76px; } }
+
+    .logo-wrap {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-monogram {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: var(--gold);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-style: italic;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      font-weight: 400;
+      display: inline-block;
+    }
+
+    .nav-logo-sub {
+      display: block;
+      font-size: 11px;
+      font-style: normal;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .header-tabs {
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px;
+      background: var(--pink-light);
+      border-top: 1px solid var(--gold-soft);
+      padding: 14px 24px;
+      position: relative;
+    }
+
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 6px;
+      display: inline-block;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 2px; background: var(--gold);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-links a.active { color: var(--text); font-weight: 700; }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    .hamburger {
+      display: none; cursor: pointer; flex-direction: column; gap: 5px;
+      position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+    @media (max-width: 768px) {
+      .header-top { padding: 18px 24px 14px; }
+      .nav-logo { font-size: 24px; }
+      .header-tabs { padding: 12px 24px; justify-content: flex-start; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: white;
+        padding: 16px 24px 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        flex-direction: column;
+        gap: 4px;
+        border-top: 1px solid var(--border);
+        z-index: 99;
+      }
+      .nav-links.mobile-open { display: flex; }
+      .nav-links li { list-style: none; }
+      .nav-links a {
+        display: block;
+        padding: 12px 0;
+        font-size: 15px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text) !important;
+        background: none !important;
+      }
+      .nav-links li:last-child a { border-bottom: none; }
+      .hamburger { display: flex; }
+    }
 
     section { padding: 100px 80px; }
     @media (max-width: 768px) { section { padding: 100px 24px 60px; } }
@@ -75,7 +209,7 @@
 
     /* Yorum kartları */
     .sss-item { background: white; border-radius: 14px; margin-bottom: 12px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
-    .sss-item:hover { box-shadow: 0 4px 20px rgba(224,104,120,0.1); }
+    .sss-item:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.1); }
     .sss-q { padding: 20px 24px; font-size: 15px; font-weight: 500; display: flex; justify-content: space-between; align-items: center; color: var(--text); }
     .sss-icon { font-size: 20px; color: var(--pink-deep); transition: transform 0.3s; flex-shrink:0; }
     .sss-a { padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; font-size: 14px; color: var(--muted); line-height: 1.8; }
@@ -97,11 +231,11 @@
     .opt-item { position: relative; }
     .opt-item input { position: absolute; opacity: 0; width: 0; height: 0; }
     .opt-item label { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1.5px solid var(--border); border-radius: 50px; cursor: pointer; font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--text); background: var(--soft); transition: all 0.15s; }
-    .opt-item input:checked + label { border-color: var(--pink-deep); background: rgba(224,104,120,0.07); color: var(--pink-dark); }
+    .opt-item input:checked + label { border-color: var(--pink-deep); background: rgba(26,26,26,0.07); color: var(--pink-dark); }
     .f-error { font-size: 11px; color: #c04040; margin-top: 4px; display: none; }
     .field.ferr input, .field.ferr textarea { border-color: #c04040; }
     .field.ferr .f-error { display: block; }
-    .form-submit { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark)); color: white; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 12px; transition: transform 0.2s; box-shadow: 0 8px 24px rgba(224,104,120,0.3); }
+    .form-submit { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark)); color: white; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 12px; transition: transform 0.2s; box-shadow: 0 8px 24px rgba(26,26,26,0.3); }
     .form-submit:hover { transform: translateY(-2px); }
     .form-privacy { font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px; }
     .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 6px; vertical-align: middle; }
@@ -110,12 +244,37 @@
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">selendemirmakeup</a>
-  <a href="index.html" class="nav-back">← Ana Sayfaya Dön</a>
-</nav>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index.html" class="logo-wrap">
+      <span class="nav-logo">Selen Demir<span class="nav-logo-sub">Studio</span></span>
+    </a>
+  </div>
+  <div class="header-tabs">
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="index.html#hizmetler">Hizmetler</a></li>
+      <li><a href="hakkimda.html">Hakkımızda</a></li>
+      <li><a href="yorumlar.html" class="active">Yorumlar</a></li>
+      <li><a href="galeri.html">Galeri</a></li>
+      <li><a href="reels.html">Reels</a></li>
+      <li><a href="sss.html">SSS</a></li>
+      <li><a href="iletisim.html">İletişim</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
 
-<section id="yorumlar" style="background:var(--soft); padding-top:120px;">
+<script>
+  function toggleMenu() {
+    document.querySelector('.nav-links').classList.toggle('mobile-open');
+  }
+</script>
+
+
+<section id="yorumlar" style="background:var(--soft); padding-top:64px;">
   <div class="reveal" style="text-align:center; margin-bottom:56px;">
     <div class="section-label" style="justify-content:center;">Mutlu Gelinler</div>
     <h2 class="section-h2" id="yorumlar-baslik">Müşteri <em>Yorumları</em></h2>
@@ -129,7 +288,7 @@
 
   <!-- Yorum yaz formu -->
   <div style="max-width:600px; margin:0 auto;" class="reveal">
-    <div style="background:white; border-radius:24px; padding:40px; border:1px solid var(--border); box-shadow:0 8px 32px rgba(224,104,120,0.08);">
+    <div style="background:white; border-radius:24px; padding:40px; border:1px solid var(--border); box-shadow:0 8px 32px rgba(26,26,26,0.08);">
       <h3 style="font-family:'Playfair Display',serif; font-size:22px; font-weight:500; margin-bottom:8px; color:var(--text);">Siz de Yorum Yapın <span style="font-size:18px;">🌸</span></h3>
       <p style="font-size:13px; color:var(--muted); margin-bottom:28px;">Deneyiminizi paylaşarak diğer gelinlere yardımcı olun.</p>
 
@@ -165,7 +324,7 @@
           <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Yorumunuz <span style="color:var(--pink-deep)">*</span></label>
           <textarea id="yorumMetin" placeholder="Deneyiminizi paylaşın..." style="width:100%; border:1.5px solid var(--border); border-radius:10px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); background:var(--soft); outline:none; min-height:100px; resize:vertical; line-height:1.6;" onfocus="this.style.borderColor='var(--pink-deep)'" onblur="this.style.borderColor='var(--border)'"></textarea>
         </div>
-        <button onclick="yorumGonder()" style="width:100%; padding:15px; background:linear-gradient(135deg,var(--pink-deep),var(--pink-dark)); color:white; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; box-shadow:0 8px 24px rgba(224,104,120,0.3); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+        <button onclick="yorumGonder()" style="width:100%; padding:15px; background:linear-gradient(135deg,var(--pink-deep),var(--pink-dark)); color:white; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; box-shadow:0 8px 24px rgba(26,26,26,0.3); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
           Yorum Gönder 🌸
         </button>
       </div>

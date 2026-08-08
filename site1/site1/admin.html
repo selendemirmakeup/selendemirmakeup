@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>selendemirmakeup — Yönetim Paneli</title>
+  <title>selendemirstudio — Yönetim Paneli</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -639,7 +639,7 @@
 <!-- GİRİŞ EKRANI -->
 <div id="loginScreen">
   <div class="login-card fade-in">
-    <div class="login-logo">selendemirmakeup</div>
+    <div class="login-logo">selendemirstudio</div>
     <div class="login-sub">Yönetim Paneli</div>
     <div class="login-field">
       <label>Şifre</label>
@@ -657,7 +657,7 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-logo">
-        <div class="sidebar-logo-text">selendemirmakeup</div>
+        <div class="sidebar-logo-text">selendemirstudio</div>
         <div class="sidebar-sub">Yönetim Paneli</div>
       </div>
       <nav class="sidebar-nav">
@@ -718,8 +718,8 @@
         <div class="onizleme-toolbar">
           <button class="onizleme-device-btn aktif" id="devBtnDesktop" onclick="onizlemeDevice('desktop')">🖥 Masaüstü</button>
           <button class="onizleme-device-btn" id="devBtnMobile" onclick="onizlemeDevice('mobile')">📱 Mobil</button>
-          <div class="onizleme-url-bar">selendemirmakeup.com</div>
-          <button class="onizleme-refresh-btn" onclick="window.open('https://selendemirmakeup.com','_blank')" title="Yeni sekmede aç" style="font-size:13px;">↗</button>
+          <div class="onizleme-url-bar">selendemirstudio.com</div>
+          <button class="onizleme-refresh-btn" onclick="window.open('https://selendemirstudio.com','_blank')" title="Yeni sekmede aç" style="font-size:13px;">↗</button>
         </div>
         <div class="onizleme-iframe-wrap" id="onizlemeWrap">
           <iframe id="onizlemeFrame" src="" title="Site önizleme"></iframe>
@@ -736,7 +736,7 @@
             <button class="onizleme-btn" onclick="onizlemeToggle()" id="onizlemeToggleBtn">
               👁️ <span id="onizlemeBtnText">Önizleme Aç</span>
             </button>
-            <div class="badge-btn" onclick="window.open('https://selendemirmakeup.com','_blank')">🌐 <span>Siteyi Görüntüle</span></div>
+            <div class="badge-btn" onclick="window.open('https://selendemirstudio.com','_blank')">🌐 <span>Siteyi Görüntüle</span></div>
           </div>
         </div>
         <div class="stats-grid">
@@ -1136,7 +1136,7 @@
           <div style="padding:24px; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
             <div class="p-field">
               <label class="p-label">Site Başlığı</label>
-              <input type="text" class="p-input" id="ayar_baslik" placeholder="selendemirmakeup"/>
+              <input type="text" class="p-input" id="ayar_baslik" placeholder="selendemirstudio"/>
             </div>
             <div class="p-field">
               <label class="p-label">Şehir</label>
@@ -1286,14 +1286,14 @@
 
   // Sekme → URL mapping
   const SEKME_URL = {
-    'dashboard':  'https://selendemirmakeup.com/',
-    'hizmetler':  'https://selendemirmakeup.com/#hizmetler',
-    'fiyatlar':   'https://selendemirmakeup.com/#fiyatlar',
-    'sss':        'https://selendemirmakeup.com/#sss',
-    'yorumlar':   'https://selendemirmakeup.com/#yorumlar',
-    'galeri':     'https://selendemirmakeup.com/galeri.html',
-    'reels':      'https://selendemirmakeup.com/reels.html',
-    'ayarlar':    'https://selendemirmakeup.com/',
+    'dashboard':  'https://selendemirstudio.com/',
+    'hizmetler':  'https://selendemirstudio.com/#hizmetler',
+    'fiyatlar':   'https://selendemirstudio.com/#fiyatlar',
+    'sss':        'https://selendemirstudio.com/#sss',
+    'yorumlar':   'https://selendemirstudio.com/#yorumlar',
+    'galeri':     'https://selendemirstudio.com/galeri.html',
+    'reels':      'https://selendemirstudio.com/reels.html',
+    'ayarlar':    'https://selendemirstudio.com/',
   };
 
   let suankiSekme = 'dashboard';
@@ -1320,7 +1320,7 @@
       }
     } catch(e) {
       // Cross-origin - iframe'i o anchor ile yükle
-      const base = 'https://selendemirmakeup.com/';
+      const base = 'https://selendemirstudio.com/';
       frame.src = base + '?_t=' + Date.now() + '#' + elementId;
     }
   }
@@ -1329,7 +1329,7 @@
     if (!onizlemeAcik) return;
     const frame = document.getElementById('onizlemeFrame');
     if (!frame) return;
-    const url = SEKME_URL[sekmeId] || 'https://selendemirmakeup.com/';
+    const url = SEKME_URL[sekmeId] || 'https://selendemirstudio.com/';
     // Cache bypass ile yükle
     const cacheBust = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
     frame.src = cacheBust;
@@ -1338,7 +1338,7 @@
   function onizlemeYenile() {
     const frame = document.getElementById('onizlemeFrame');
     if (!frame) return;
-    const url = SEKME_URL[suankiSekme] || 'https://selendemirmakeup.com/';
+    const url = SEKME_URL[suankiSekme] || 'https://selendemirstudio.com/';
     frame.src = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
   }
 

@@ -3,20 +3,34 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>selendemirmakeup — Galeri & Öncesi/Sonrası</title>
+  <title>selendemirstudio — Galeri & Öncesi/Sonrası</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
     <style>
     :root {
       --white: #ffffff;
-      --soft: #fdf8f8;
-      --pink-light: #fce8e8;
-      --pink: #f0a0a8;
-      --pink-deep: #e06878;
-      --pink-dark: #b84a5a;
+      --soft: #faf7f2;
+      --pink-light: #f0ece0;
+      --pink: #c9b896;
+      --pink-deep: #1a1a1a;
+      --pink-dark: #000000;
       --text: #1a1a1a;
       --muted: #888;
-      --border: #f0e0e0;
+      --border: #e8e0d0;
       --card: #ffffff;
+      --gold: #ab8654;
+      --gold-soft: rgba(171,134,84,0.35);
+    }
+
+    
+    /* ── DOKU (kağıt/keten hissi) ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.035;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
@@ -29,68 +43,135 @@
     }
 
     /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 48px;
-      background: rgba(255,255,255,0.92);
+    header.site-header {
+      position: sticky; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.98);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      transition: padding 0.3s;
+      box-shadow: 0 2px 20px rgba(201,184,150,0.08);
+    }
+
+    .header-top {
+      text-align: center;
+      padding: 20px 24px 16px;
+    }
+
+
+    .logo-badge-link { display: inline-block; line-height: 0; text-decoration: none; }
+    .logo-badge { width: 96px; height: 96px; display: block; }
+    @media (max-width: 768px) { .logo-badge { width: 76px; height: 76px; } }
+
+    .logo-wrap {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-monogram {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: var(--gold);
     }
 
     .nav-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 20px;
+      font-size: 30px;
       font-style: italic;
-      color: var(--pink-dark);
+      color: var(--text);
       letter-spacing: 0.5px;
       text-decoration: none;
+      font-weight: 400;
+      display: inline-block;
     }
 
-    .nav-back {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 13px; font-weight: 500; color: white;
-      text-decoration: none; transition: all 0.25s;
-      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
-      padding: 11px 22px; border-radius: 50px;
-      box-shadow: 0 4px 16px rgba(224,104,120,0.35);
-      letter-spacing: 0.3px;
+    .nav-logo-sub {
+      display: block;
+      font-size: 11px;
+      font-style: normal;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+      font-family: 'DM Sans', sans-serif;
     }
-    .nav-back:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,104,120,0.5); }
+
+    .header-tabs {
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px;
+      background: var(--pink-light);
+      border-top: 1px solid var(--gold-soft);
+      padding: 14px 24px;
+      position: relative;
+    }
 
     .nav-links {
-      display: flex; gap: 36px; list-style: none;
+      display: flex; gap: 40px; list-style: none;
     }
 
     .nav-links a {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--text);
       text-decoration: none;
       transition: color 0.2s;
+      position: relative;
+      padding-bottom: 6px;
+      display: inline-block;
     }
 
-    .nav-links a:hover { color: var(--pink-deep); }
-
-    .nav-cta {
-      background: var(--pink-deep);
-      color: white !important;
-      padding: 10px 24px;
-      border-radius: 50px;
-      transition: background 0.2s, transform 0.2s !important;
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 2px; background: var(--gold);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform 0.2s;
     }
 
-    .nav-cta:hover { background: var(--pink-dark) !important; transform: translateY(-1px); }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
 
-    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .nav-links a.active { color: var(--text); font-weight: 700; }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    .hamburger {
+      display: none; cursor: pointer; flex-direction: column; gap: 5px;
+      position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    }
     .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
 
     @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      .nav-links { display: none; }
+      .header-top { padding: 18px 24px 14px; }
+      .nav-logo { font-size: 24px; }
+      .header-tabs { padding: 12px 24px; justify-content: flex-start; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: white;
+        padding: 16px 24px 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        flex-direction: column;
+        gap: 4px;
+        border-top: 1px solid var(--border);
+        z-index: 99;
+      }
+      .nav-links.mobile-open { display: flex; }
+      .nav-links li { list-style: none; }
+      .nav-links a {
+        display: block;
+        padding: 12px 0;
+        font-size: 15px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text) !important;
+        background: none !important;
+      }
+      .nav-links li:last-child a { border-bottom: none; }
       .hamburger { display: flex; }
     }
 
@@ -150,28 +231,27 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
-      color: white; border: none; border-radius: 50px;
+      background: var(--pink-light);
+      color: var(--text); border: 1.5px solid var(--pink-dark); border-radius: 6px;
       padding: 16px 36px; font-family: 'DM Sans', sans-serif;
       font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
       cursor: pointer; text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 24px rgba(224,104,120,0.35);
-      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
     }
 
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(224,104,120,0.45); }
+    .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
 
     .btn-secondary {
-      background: transparent; color: var(--text);
-      border: 1.5px solid var(--border); border-radius: 50px;
+      background: var(--white); color: var(--text);
+      border: 1.5px solid var(--pink-dark); border-radius: 6px;
       padding: 16px 36px; font-family: 'DM Sans', sans-serif;
       font-size: 14px; font-weight: 500; cursor: pointer;
-      text-decoration: none; display: inline-block;
-      transition: border-color 0.2s, color 0.2s;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.2s;
     }
 
-    .btn-secondary:hover { border-color: var(--pink-deep); color: var(--pink-deep); }
+    .btn-secondary:hover { background: var(--pink-light); }
 
     .hero-stats {
       display: flex; gap: 40px; margin-top: 56px;
@@ -189,7 +269,7 @@
 
     .hero-right {
       position: relative;
-      background: linear-gradient(135deg, var(--pink-light) 0%, #fce0e4 100%);
+      background: linear-gradient(135deg, var(--pink-light) 0%, #f0ece0 100%);
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
       animation: fadeIn 1s ease 0.2s both;
@@ -199,7 +279,7 @@
       content: '';
       position: absolute; inset: 0;
       background: 
-        radial-gradient(circle at 30% 70%, rgba(240,160,168,0.4) 0%, transparent 50%),
+        radial-gradient(circle at 30% 70%, rgba(201,184,150,0.4) 0%, transparent 50%),
         radial-gradient(circle at 70% 20%, rgba(255,255,255,0.6) 0%, transparent 40%);
     }
 
@@ -211,7 +291,7 @@
     .hero-monogram {
       font-family: 'Playfair Display', serif;
       font-size: 120px; font-style: italic; font-weight: 700;
-      color: rgba(224,104,120,0.15);
+      color: rgba(26,26,26,0.15);
       line-height: 1;
       user-select: none;
     }
@@ -307,7 +387,7 @@
       transition: transform 0.3s;
     }
 
-    .hizmet-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(224,104,120,0.12); }
+    .hizmet-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(26,26,26,0.12); }
     .hizmet-card:hover::before { transform: scaleX(1); }
 
     .hizmet-card.featured {
@@ -372,7 +452,7 @@
       position: relative;
       aspect-ratio: 4/5;
       border-radius: 32px;
-      background: linear-gradient(135deg, var(--pink-light), #fce0e4);
+      background: linear-gradient(135deg, var(--pink-light), #f0ece0);
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
@@ -380,7 +460,7 @@
     .about-monogram {
       font-family: 'Playfair Display', serif;
       font-size: 160px; font-style: italic; font-weight: 700;
-      color: rgba(224,104,120,0.12);
+      color: rgba(26,26,26,0.12);
       user-select: none;
     }
 
@@ -433,7 +513,7 @@
 
     .galeri-item {
       border-radius: 16px; overflow: hidden;
-      background: linear-gradient(135deg, var(--pink-light), #fce0e4);
+      background: linear-gradient(135deg, var(--pink-light), #f0ece0);
       aspect-ratio: 1;
       position: relative; cursor: pointer;
       transition: transform 0.3s;
@@ -448,12 +528,12 @@
       width: 100%; height: 100%; min-height: 180px;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 48px; font-style: italic; color: rgba(224,104,120,0.25);
+      font-size: 48px; font-style: italic; color: rgba(26,26,26,0.25);
     }
 
     .galeri-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(184,74,90,0.6) 0%, transparent 50%);
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
       opacity: 0; transition: opacity 0.3s;
       display: flex; align-items: flex-end; padding: 20px;
     }
@@ -483,7 +563,7 @@
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .fiyat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(224,104,120,0.1); }
+    .fiyat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(26,26,26,0.1); }
 
     .fiyat-card.popular {
       background: linear-gradient(135deg, var(--pink-deep), var(--pink-dark));
@@ -552,7 +632,7 @@
 
     /* ── RANDEVU ── */
     #randevu {
-      background: linear-gradient(135deg, var(--pink-light) 0%, #fdf0f2 100%);
+      background: linear-gradient(135deg, var(--pink-light) 0%, #f7f4ee 100%);
     }
 
     .randevu-inner {
@@ -573,7 +653,7 @@
       width: 44px; height: 44px; border-radius: 12px;
       background: white; display: flex; align-items: center; justify-content: center;
       font-size: 20px; flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(224,104,120,0.1);
+      box-shadow: 0 4px 12px rgba(26,26,26,0.1);
     }
 
     .rf-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
@@ -583,7 +663,7 @@
     .form-embed-area {
       background: white; border-radius: 24px;
       padding: 40px 32px;
-      box-shadow: 0 20px 60px rgba(224,104,120,0.1);
+      box-shadow: 0 20px 60px rgba(26,26,26,0.1);
     }
 
     .form-embed-title {
@@ -618,7 +698,7 @@
     .mini-form select:focus,
     .mini-form textarea:focus {
       border-color: var(--pink-deep);
-      box-shadow: 0 0 0 3px rgba(224,104,120,0.1);
+      box-shadow: 0 0 0 3px rgba(26,26,26,0.1);
       background: white;
     }
 
@@ -633,16 +713,16 @@
       font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
       cursor: pointer; margin-top: 8px;
       transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 24px rgba(224,104,120,0.3);
+      box-shadow: 0 8px 24px rgba(26,26,26,0.3);
     }
 
-    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(224,104,120,0.4); }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(26,26,26,0.4); }
 
     .form-privacy { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; }
 
     /* ── FOOTER ── */
     footer {
-      background: linear-gradient(135deg, #fce8f0 0%, #f8d7e3 100%);
+      background: linear-gradient(135deg, #f0ece0 0%, #f0ece0 100%);
       color: var(--text);
       padding: 60px 80px 32px;
       border-top: 1px solid var(--border);
@@ -704,7 +784,7 @@
     .footer-contact-text { font-size: 13px; color: var(--text); line-height: 1.5; }
 
     .footer-bottom {
-      border-top: 1px solid rgba(180,74,90,0.15);
+      border-top: 1px solid rgba(0,0,0,0.15);
       padding-top: 24px;
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
     }
@@ -721,7 +801,7 @@
       border: 1px solid var(--border); overflow: hidden; cursor: pointer;
       transition: box-shadow 0.2s;
     }
-    .sss-item:hover { box-shadow: 0 4px 20px rgba(224,104,120,0.1); }
+    .sss-item:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.1); }
     .sss-q {
       padding: 20px 24px; font-size: 15px; font-weight: 500;
       display: flex; justify-content: space-between; align-items: center;
@@ -796,7 +876,7 @@
     }
     .lightbox-placeholder {
       width: 400px; height: 400px;
-      background: linear-gradient(135deg, var(--pink-light), #fce0e4);
+      background: linear-gradient(135deg, var(--pink-light), #f0ece0);
       border-radius: 20px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -828,12 +908,37 @@
   </style>
 </head>
 <body>
-<nav>
-  <a href="index.html" class="nav-logo">selendemirmakeup</a>
-  <a href="index.html" class="nav-back">← Ana Sayfaya Dön</a>
-</nav>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index.html" class="logo-wrap">
+      <span class="nav-logo">Selen Demir<span class="nav-logo-sub">Studio</span></span>
+    </a>
+  </div>
+  <div class="header-tabs">
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="index.html#hizmetler">Hizmetler</a></li>
+      <li><a href="hakkimda.html">Hakkımızda</a></li>
+      <li><a href="yorumlar.html">Yorumlar</a></li>
+      <li><a href="galeri.html" class="active">Galeri</a></li>
+      <li><a href="reels.html">Reels</a></li>
+      <li><a href="sss.html">SSS</a></li>
+      <li><a href="iletisim.html">İletişim</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<script>
+  function toggleMenu() {
+    document.querySelector('.nav-links').classList.toggle('mobile-open');
+  }
+</script>
+
 <!-- GALERİ -->
-<section id="galeri" style="padding-top:120px;">
+<section id="galeri" style="padding-top:64px;">
   <div class="galeri-header reveal">
     <div>
       <div class="section-label">Çalışmalarım</div>
@@ -848,64 +953,7 @@
     </div>
   </div>
 </section>
-<section id="oncesi-sonrasi" style="padding-top:120px;">
-  <div class="reveal" style="text-align:center; margin-bottom:56px;">
-    <div class="section-label" style="justify-content:center;">Dönüşüm</div>
-    <h2 class="section-h2">Öncesi & <em>Sonrası</em></h2>
-    <p class="section-p" style="margin:0 auto;">Her kadının içindeki güzelliği ortaya çıkarıyorum 🌸</p>
-  </div>
-  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;" class="reveal">
-    <div style="border-radius:20px; overflow:hidden; border:1px solid var(--border);">
-      <div style="display:grid; grid-template-columns:1fr 1fr; height:220px;">
-        <div style="background:linear-gradient(135deg,#f5e6e8,#ead5d8); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; border-right:2px solid white;">
-          <div style="font-size:28px; opacity:0.4;">👤</div>
-          <div style="font-size:11px; color:var(--muted); font-weight:500; letter-spacing:1px; text-transform:uppercase;">Öncesi</div>
-        </div>
-        <div style="background:linear-gradient(135deg,var(--pink-light),#fce0e4); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
-          <div style="font-size:28px;">💄</div>
-          <div style="font-size:11px; color:var(--pink-dark); font-weight:500; letter-spacing:1px; text-transform:uppercase;">Sonrası</div>
-        </div>
-      </div>
-      <div style="padding:16px; background:white;">
-        <div style="font-size:13px; font-weight:500; color:var(--text); margin-bottom:4px;">Gelin Makyajı</div>
-        <div style="font-size:12px; color:var(--muted);">Düğün • Doğal & Işıltılı Look</div>
-      </div>
-    </div>
-    <div style="border-radius:20px; overflow:hidden; border:1px solid var(--border);">
-      <div style="display:grid; grid-template-columns:1fr 1fr; height:220px;">
-        <div style="background:linear-gradient(135deg,#f5e6e8,#ead5d8); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; border-right:2px solid white;">
-          <div style="font-size:28px; opacity:0.4;">👤</div>
-          <div style="font-size:11px; color:var(--muted); font-weight:500; letter-spacing:1px; text-transform:uppercase;">Öncesi</div>
-        </div>
-        <div style="background:linear-gradient(135deg,var(--pink-light),#fce0e4); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
-          <div style="font-size:28px;">🧣</div>
-          <div style="font-size:11px; color:var(--pink-dark); font-weight:500; letter-spacing:1px; text-transform:uppercase;">Sonrası</div>
-        </div>
-      </div>
-      <div style="padding:16px; background:white;">
-        <div style="font-size:13px; font-weight:500; color:var(--text); margin-bottom:4px;">Türban Tasarımı</div>
-        <div style="font-size:12px; color:var(--muted);">Nişan • Şık & Özgün Tasarım</div>
-      </div>
-    </div>
-    <div style="border-radius:20px; overflow:hidden; border:1px solid var(--border);">
-      <div style="display:grid; grid-template-columns:1fr 1fr; height:220px;">
-        <div style="background:linear-gradient(135deg,#f5e6e8,#ead5d8); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; border-right:2px solid white;">
-          <div style="font-size:28px; opacity:0.4;">👤</div>
-          <div style="font-size:11px; color:var(--muted); font-weight:500; letter-spacing:1px; text-transform:uppercase;">Öncesi</div>
-        </div>
-        <div style="background:linear-gradient(135deg,var(--pink-light),#fce0e4); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
-          <div style="font-size:28px;">✨</div>
-          <div style="font-size:11px; color:var(--pink-dark); font-weight:500; letter-spacing:1px; text-transform:uppercase;">Sonrası</div>
-        </div>
-      </div>
-      <div style="padding:16px; background:white;">
-        <div style="font-size:13px; font-weight:500; color:var(--text); margin-bottom:4px;">Makyaj + Türban</div>
-        <div style="font-size:12px; color:var(--muted);">Kına • Komple Hazırlık</div>
-      </div>
-    </div>
-  </div>
-  <p style="text-align:center; margin-top:28px; font-size:13px; color:var(--muted);">📸 Gerçek öncesi/sonrası fotoğraflarınızı gönderin, hemen ekleyelim!</p>
-</section>
+
 
 <script>
   const reveals = document.querySelectorAll('.reveal');
@@ -978,8 +1026,8 @@
       grid.innerHTML = files.map(f => {
         const url = SB_URL + '/storage/v1/object/public/galeri/' + f.name;
         return `<div class="galeri-item" onclick="openLightboxImg('${url}', '${f.name}')">
-          <img src="${url}" alt="Selen Demir Makeup" style="width:100%;height:100%;object-fit:cover;"/>
-          <div class="galeri-overlay"><span class="galeri-overlay-text">Selen Demir Makeup</span></div>
+          <img src="${url}" alt="Selen Demir Studio" style="width:100%;height:100%;object-fit:cover;"/>
+          <div class="galeri-overlay"><span class="galeri-overlay-text">Selen Demir Studio</span></div>
         </div>`;
       }).join('');
     } catch(e) {
@@ -992,7 +1040,7 @@
     const content = document.getElementById('lightboxContent');
     const cap = document.getElementById('lightboxCaption');
     content.innerHTML = '<img src="' + src + '" alt="' + caption + '" style="max-width:90vw;max-height:85vh;border-radius:12px;object-fit:contain;"/>';
-    cap.textContent = 'Selen Demir Makeup';
+    cap.textContent = 'Selen Demir Studio';
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
   }

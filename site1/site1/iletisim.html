@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Reels | Selen Demir Studio - Instagram Videoları</title>
-  <meta name="description" content="Selen Demir'in Instagram Reels videoları. Gelin makyajı ve türban tasarımı çalışmalarını izleyin."/>
-  <meta name="keywords" content="gelin makyajı, istanbul gelin makyajı, türban tasarımı, makyaj sanatçısı, düğün makyajı, kına makyajı, nişan makyajı, selen demir studio"/>
+  <title>İletişim | Selen Demir Studio - Makyaj Sanatçısı İstanbul</title>
+  <meta name="description" content="Selen Demir Studio ile iletişime geçin. WhatsApp, Instagram ve stüdyo bilgileri için bu sayfayı ziyaret edin."/>
+  <meta name="keywords" content="selen demir iletişim, gelin makyajı randevu, istanbul türban tasarımı iletişim, selen demir studio"/>
   <meta name="author" content="Selen Demir"/>
   <meta name="robots" content="index, follow"/>
-  <link rel="canonical" href="https://selendemirstudio.com/reels.html"/>
+  <link rel="canonical" href="https://selendemirstudio.com/iletisim.html"/>
   <!-- Open Graph -->
-  <meta property="og:title" content="Reels | Selen Demir Studio - Instagram Videoları"/>
-  <meta property="og:description" content="Selen Demir'in Instagram Reels videoları. Gelin makyajı ve türban tasarımı çalışmalarını izleyin."/>
-  <meta property="og:url" content="https://selendemirstudio.com/reels.html"/>
+  <meta property="og:title" content="İletişim | Selen Demir Studio"/>
+  <meta property="og:description" content="Selen Demir Studio ile iletişime geçin. WhatsApp, Instagram ve stüdyo bilgileri için bu sayfayı ziyaret edin."/>
+  <meta property="og:url" content="https://selendemirstudio.com/iletisim.html"/>
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="tr_TR"/>
   <!-- Schema.org -->
@@ -22,14 +22,8 @@
     "@type": "BeautySalon",
     "name": "Selen Demir Studio",
     "url": "https://selendemirstudio.com",
-    "telephone": "+905423365753",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "İstanbul",
-      "addressCountry": "TR"
-    },
-    "description": "İstanbul'da profesyonel gelin makyajı ve türban tasarımı",
-    "priceRange": "₺₺",
+    "telephone": "+905332707509",
+    "address": { "@type": "PostalAddress", "addressLocality": "İstanbul", "addressRegion": "Ümraniye", "addressCountry": "TR" },
     "sameAs": ["https://instagram.com/selendmiiir"]
   }
   </script>
@@ -49,7 +43,6 @@
       --gold-soft: rgba(171,134,84,0.35);
     }
 
-    
     /* ── DOKU (kağıt/keten hissi) ── */
     body::before {
       content: '';
@@ -61,13 +54,13 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--soft);
+      background: var(--white);
       color: var(--text);
-      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* NAV */
@@ -206,14 +199,14 @@
 
     /* HEADER */
     .page-header {
-      padding: 64px 40px 48px;
+      padding: 64px 40px 64px;
       text-align: center;
       background: linear-gradient(135deg, var(--pink-light) 0%, #f0ece0 100%);
     }
 
     .page-label {
       font-size: 12px; font-weight: 500; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--pink-deep);
+      text-transform: uppercase; color: var(--gold);
       margin-bottom: 12px; display: block;
     }
 
@@ -230,108 +223,120 @@
       font-size: 15px; color: var(--muted); font-weight: 300;
     }
 
-    /* REELS GRID */
-    .reels-container {
+    /* ── HAKKIMDA İÇERİK ── */
+    .about-wrap {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 48px 24px 80px;
+      padding: 88px 24px 100px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center;
     }
 
-    .reels-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
+    @media (max-width: 900px) { .about-wrap { grid-template-columns: 1fr; gap: 40px; padding: 56px 24px 72px; } }
 
-    @media (max-width: 768px) {
-      .reels-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    }
-
-    @media (max-width: 480px) {
-      .reels-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-    }
-
-    .reel-card {
-      border-radius: 20px; overflow: hidden;
-      background: white; border: 1px solid var(--border);
-      box-shadow: 0 4px 20px rgba(26,26,26,0.08);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-
-    .reel-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 40px rgba(26,26,26,0.15);
-    }
-
-    .reel-video-wrap {
+    .about-visual {
       position: relative;
-      aspect-ratio: 9/16;
+      aspect-ratio: 4/5;
+      border-radius: 32px;
       background: linear-gradient(135deg, var(--pink-light), #f0ece0);
+      display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
 
-    .reel-video-wrap iframe {
-      width: 100%; height: 100%;
-      border: none; display: block;
+    .about-monogram {
+      font-family: 'Playfair Display', serif;
+      font-size: 160px; font-style: italic; font-weight: 700;
+      color: rgba(26,26,26,0.12);
+      user-select: none;
     }
 
-    .reel-placeholder {
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 12px;
+    .about-badge {
+      position: absolute; bottom: 32px; right: -16px;
+      background: white; border-radius: 16px;
+      padding: 20px 24px; text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      border: 1px solid var(--gold-soft);
     }
 
-    .reel-placeholder-icon { font-size: 48px; }
-    .reel-placeholder-text { font-size: 13px; color: var(--pink-dark); font-weight: 500; }
-
-    .reel-play-btn {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 56px; height: 56px; border-radius: 50%;
-      background: rgba(255,255,255,0.9);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      transition: transform 0.2s, background 0.2s;
+    .about-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1;
     }
 
-    .reel-card:hover .reel-play-btn {
-      transform: translate(-50%, -50%) scale(1.1);
-      background: white;
+    .about-badge-text { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .section-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--pink-deep); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
     }
 
-    .reel-info {
-      padding: 16px;
+    .section-label::before { content: '—'; color: var(--gold); }
+
+    .section-h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 500; line-height: 1.2;
+      margin-bottom: 24px;
     }
 
-    .reel-title {
-      font-size: 14px; font-weight: 500; color: var(--text);
-      margin-bottom: 4px;
+    .section-h2 em { font-style: italic; color: var(--pink-deep); }
+
+    .about-text { font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300; margin-bottom: 16px; }
+
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+
+    .about-tag {
+      font-size: 12px; font-weight: 500;
+      background: var(--pink-light); color: var(--pink-dark);
+      padding: 6px 16px; border-radius: 50px;
+      border: 1px solid var(--gold-soft);
     }
 
-    .reel-meta {
-      font-size: 12px; color: var(--muted);
-      display: flex; align-items: center; gap: 6px;
-    }
-
-    /* Instagram CTA */
-    .instagram-cta {
-      text-align: center;
-      padding: 48px 24px;
+    /* DEĞERLER ŞERİDİ */
+    .values-strip {
+      background: var(--soft);
+      padding: 72px 24px;
       border-top: 1px solid var(--border);
-      margin-top: 16px;
     }
 
-    .instagram-cta p {
-      font-size: 15px; color: var(--muted); margin-bottom: 20px;
+    .values-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      text-align: center;
     }
+
+    @media (max-width: 700px) { .values-inner { grid-template-columns: 1fr; gap: 28px; } }
+
+    .value-icon { font-size: 28px; margin-bottom: 14px; }
+    .value-title { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 8px; }
+    .value-desc { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    .contact-card {
+      display: block; text-decoration: none; color: inherit;
+      padding: 24px 16px; border-radius: 10px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    a.contact-card:hover { background: var(--white); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,26,26,0.06); }
+
+    /* CTA */
+    .about-cta {
+      text-align: center; padding: 80px 24px;
+    }
+
+    .about-cta h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 34px);
+      margin-bottom: 16px;
+    }
+
+    .about-cta p { color: var(--muted); font-size: 14px; margin-bottom: 28px; font-weight: 300; }
 
     .btn-primary {
       background: var(--pink-light);
       color: var(--text); border: 1.5px solid var(--pink-dark); border-radius: 6px;
       padding: 16px 36px; font-family: 'DM Sans', sans-serif;
-      font-size: 14px; font-weight: 500;
+      font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
       cursor: pointer; text-decoration: none;
       transition: background 0.2s, transform 0.2s;
       display: inline-flex; align-items: center; gap: 8px;
@@ -339,22 +344,12 @@
 
     .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .reel-card { animation: fadeUp 0.5s ease both; }
-    .reel-card:nth-child(2) { animation-delay: 0.1s; }
-    .reel-card:nth-child(3) { animation-delay: 0.2s; }
-    .reel-card:nth-child(4) { animation-delay: 0.3s; }
-    .reel-card:nth-child(5) { animation-delay: 0.4s; }
-    .reel-card:nth-child(6) { animation-delay: 0.5s; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <header class="site-header">
   <div class="header-top">
     <a href="index.html" class="logo-wrap">
@@ -368,9 +363,9 @@
       <li><a href="hakkimda.html">Hakkımızda</a></li>
       <li><a href="yorumlar.html">Yorumlar</a></li>
       <li><a href="galeri.html">Galeri</a></li>
-      <li><a href="reels.html" class="active">Reels</a></li>
+      <li><a href="reels.html">Reels</a></li>
       <li><a href="sss.html">SSS</a></li>
-      <li><a href="iletisim.html">İletişim</a></li>
+      <li><a href="iletisim.html" class="active">İletişim</a></li>
     </ul>
     <div class="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
@@ -385,69 +380,57 @@
 </script>
 
 
-<!-- HEADER -->
 <div class="page-header">
-  <span class="page-label">Instagram</span>
-  <h1 class="page-title">Son <em>Reelslerim</em></h1>
-  <p class="page-sub">Çalışmalarımı buradan izleyebilirsiniz 🌸</p>
+  <span class="page-label">Bize Ulaşın</span>
+  <h1 class="page-title">İletişim</h1>
+  <p class="page-sub">Sorularınız için buradayız 🌸</p>
 </div>
 
-<!-- REELS -->
-<div class="reels-container">
-  <div class="reels-grid" id="reelsGrid">
-    <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">Yükleniyor... 🌸</div>
+<div class="about-wrap" style="grid-template-columns: 1fr; max-width: 720px; text-align: center;">
+  <div class="about-content reveal" style="text-align:center;">
+    <div class="section-label" style="justify-content:center;">Randevu & Bilgi</div>
+    <h2 class="section-h2">Size En Uygun Kanaldan <em>Ulaşın</em></h2>
+    <p class="about-text" style="max-width:560px; margin-left:auto; margin-right:auto;">
+      Randevu almak, fiyat bilgisi almak ya da aklınıza takılan herhangi bir soru için aşağıdaki kanallardan bize ulaşabilirsiniz. En kısa sürede dönüş yapıyoruz.
+    </p>
   </div>
+</div>
 
-  <!-- Instagram CTA -->
-  <div class="instagram-cta">
-    <p>Daha fazla çalışma için Instagram'ı takip edin 🌸</p>
-    <a href="https://instagram.com/selendmiiir" target="_blank" class="btn-primary">
-      📸 @selendmiiir Takip Et
+<div class="values-strip">
+  <div class="values-inner">
+    <a href="https://wa.me/905332707509?text=Merhaba%2C%20bilgi%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="reveal contact-card">
+      <div class="value-icon">💬</div>
+      <div class="value-title">WhatsApp</div>
+      <div class="value-desc">En hızlı dönüş için WhatsApp'tan yazın. Randevu ve fiyat bilgisi için buradayız.</div>
     </a>
+    <a href="https://instagram.com/selendmiiir" target="_blank" class="reveal contact-card">
+      <div class="value-icon">📷</div>
+      <div class="value-title">Instagram</div>
+      <div class="value-desc">@selendmiiir — çalışmalarımızı takip edin, DM'den de ulaşabilirsiniz.</div>
+    </a>
+    <div class="reveal contact-card">
+      <div class="value-icon">📍</div>
+      <div class="value-title">Konum</div>
+      <div class="value-desc">Alize Tower, Finanskent — Ümraniye/İstanbul (Ataşehir'e yakın). Stüdyoda ya da adresinizde hizmet veriyoruz.</div>
+    </div>
   </div>
+</div>
+
+<div class="about-cta reveal">
+  <h3>Özel Gününüzü Konuşalım</h3>
+  <p>Sorularınız için WhatsApp'tan hemen ulaşabilirsiniz.</p>
+  <a href="https://wa.me/905332707509?text=Merhaba%2C%20bilgi%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" class="btn-primary">💬 WhatsApp'tan Ulaşın</a>
 </div>
 
 <script>
-  const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
-  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZraGtkdXRkbWlldXBwcnlldHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNDU4MjgsImV4cCI6MjA5NTYyMTgyOH0.UzndmLNMNlvH8_rks_OqoLsqiXbW2tmY_Y1_q2PEhps';
-
-  function embedUrl(link) {
-    const match = link.match(/instagram\.com\/reel\/([^/?]+)/);
-    if (match) return 'https://www.instagram.com/reel/' + match[1] + '/embed/';
-    if (link.includes('/embed/')) return link;
-    return link;
-  }
-
-  async function reelleriYukle() {
-    const grid = document.getElementById('reelsGrid');
-    try {
-      const res = await fetch(SB_URL + '/rest/v1/reeller?order=id.asc', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const data = await res.json();
-
-      if (!Array.isArray(data) || data.length === 0) {
-        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">Henüz reel eklenmemiş 🌸</div>';
-        return;
-      }
-
-      grid.innerHTML = data.map((r, i) => `
-        <div class="reel-card" style="animation-delay:${i * 0.1}s">
-          <div class="reel-video-wrap">
-            <iframe src="${embedUrl(r.link)}" allowfullscreen scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-          </div>
-          <div class="reel-info">
-            <div class="reel-title">${r.aciklama || 'Makyaj Çalışması'}</div>
-            <div class="reel-meta">📸 @selendmiiir</div>
-          </div>
-        </div>
-      `).join('');
-    } catch(e) {
-      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">Reeller yüklenemedi, lütfen sayfayı yenileyin.</div>';
-    }
-  }
-
-  reelleriYukle();
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry,i) => {
+      if(entry.isIntersecting){ setTimeout(()=>entry.target.classList.add('visible'),i*80); observer.unobserve(entry.target); }
+    });
+  },{threshold:0.1});
+  reveals.forEach(el=>observer.observe(el));
 </script>
+
 </body>
 </html>
