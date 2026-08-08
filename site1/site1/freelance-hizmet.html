@@ -368,6 +368,70 @@
 
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+  
+    /* ── FOOTER ── */
+    footer {
+      background: var(--white);
+      color: var(--text);
+      padding: 60px 80px 32px;
+      border-top: 3px solid var(--pink);
+    }
+
+    @media (max-width: 768px) { footer { padding: 48px 24px 24px; } }
+
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 60px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 768px) { .footer-top { grid-template-columns: 1fr; gap: 32px; } }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-style: italic;
+      color: var(--pink-dark);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-desc { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    footer h4 {
+      font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--pink-dark);
+      margin-bottom: 20px;
+    }
+
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 6px; }
+
+    .footer-links a {
+      font-size: 14px; color: var(--muted);
+      text-decoration: none; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+      padding: 4px 0;
+    }
+
+    .footer-links a::before { content: "✦"; font-size: 8px; color: var(--pink); }
+    .footer-links a:hover { color: var(--pink-deep); padding-left: 4px; }
+
+    .footer-contact-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .footer-contact-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+    .footer-contact-text { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(0,0,0,0.15);
+      padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+
+    .footer-copy { font-size: 12px; color: var(--muted); }
+    .footer-heart { color: var(--gold); }
+
   </style>
 </head>
 <body>
@@ -454,15 +518,6 @@
   </div>
 </div>
 
-
-<div style="text-align:center; padding:0 24px 60px;" class="reveal">
-  <div class="section-label" style="justify-content:center;">Diğer Hizmetlerimiz</div>
-  <div style="margin-top:16px;">
-      <a href="turban-tasarimi.html" style="display:inline-block; margin:0 10px; font-size:13px; color:var(--text); text-decoration:none; border-bottom:1px solid var(--gold);">Türban Tasarımı</a>
-      <a href="makyaj.html" style="display:inline-block; margin:0 10px; font-size:13px; color:var(--text); text-decoration:none; border-bottom:1px solid var(--gold);">Makyaj</a>
-      <a href="sac-tasarimi.html" style="display:inline-block; margin:0 10px; font-size:13px; color:var(--text); text-decoration:none; border-bottom:1px solid var(--gold);">Saç Tasarımı</a>
-  </div>
-</div>
 <div class="about-cta reveal">
   <h3>Freelance Hizmet Hakkında Konuşalım</h3>
   <p>Detaylı bilgi ve randevu için WhatsApp'tan hemen ulaşabilirsiniz.</p>
@@ -478,6 +533,45 @@
   },{threshold:0.1});
   reveals.forEach(el=>observer.observe(el));
 </script>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo"><span style="display:block;">Selen Demir</span><span style="display:block; font-size:11px; font-style:normal; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-top:2px;">Studio</span></div>
+      <p class="footer-desc">Ümraniye Alize Tower bölgesinde, Ataşehir'e yakın konumda bulunan butik stüdyomuzda; gelin makyajı, türban tasarımı ve saç tasarımı hizmetleriyle size özel, zarif ve zamansız görünümler tasarlıyoruz. Özel gününüzde kendinizi en güzel halinizle hissetmeniz için profesyonel dokunuşlarla yanınızdayız.</p>
+    </div>
+    <div>
+      <h4>Hizmetler</h4>
+      <ul class="footer-links">
+        <li><a href="turban-tasarimi.html">Türban Tasarımı</a></li>
+        <li><a href="makyaj.html">Makyaj</a></li>
+        <li><a href="sac-tasarimi.html">Saç Tasarımı</a></li>
+        <li><a href="freelance-hizmet.html">Freelance Hizmet</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="sss.html">SSS</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>İletişim</h4>
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon">📍</div>
+        <div class="footer-contact-text"><a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x8e2edbb7564f3d47:0x45d189969a464abd?sa=X&ved=1t:8290&ictx=111" target="_blank" style="color:var(--text);text-decoration:none;">Alize Tower, Finanskent, Yahya Kemal Cd. No: 36/A, 34760 Ümraniye/İstanbul</a></div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--pink-deep)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        <div class="footer-contact-text"><a href="https://instagram.com/selendemirmakeup" target="_blank" style="color:var(--pink);text-decoration:none;">@selendemirmakeup</a></div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon">📅</div>
+        <div class="footer-contact-text"><a href="https://wa.me/905332707509?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8" target="_blank" style="color:var(--text);text-decoration:none;">WhatsApp'tan randevu alın</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 selendemirstudio. Tüm hakları saklıdır.</p>
+    <p class="footer-copy">Tasarlandı <span class="footer-heart">♥</span> ile</p>
+  </div>
+</footer>
 
 </body>
 </html>
