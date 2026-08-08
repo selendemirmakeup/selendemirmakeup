@@ -1768,8 +1768,8 @@
       ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt'].forEach(k => {
         const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k];
       });
-      // Dinamik kartlar
-      if (a.hizmet_kartlar) {
+      // Dinamik kartlar - KAPATILDI: statik "Hizmetlerimiz" bölümü kullanılıyor artık
+      if (false && a.hizmet_kartlar) {
         try {
           const kartlar = JSON.parse(a.hizmet_kartlar);
           const kolon = parseInt(a.kart_kolon) || 3;
@@ -1958,23 +1958,9 @@
   }
 
   // ── TEMA RENGİ UYGULA ────────────────────────────────
+  // KAPATILDI: veritabanındaki eski tema rengi artık sitenin tasarımını ezmesin
   async function temaUygula() {
-    try {
-      const res = await fetch(SB_URL + '/rest/v1/ayarlar?anahtar=eq.tema_rengi', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        const t = JSON.parse(data[0].deger);
-        const root = document.documentElement;
-        if (t.deep)   root.style.setProperty('--pink-deep', t.deep);
-        if (t.dark)   root.style.setProperty('--pink-dark', t.dark);
-        if (t.light)  root.style.setProperty('--pink-light', t.light);
-        if (t.deep)   root.style.setProperty('--pink', t.deep);
-        if (t.soft)   root.style.setProperty('--soft', t.soft);
-        if (t.border) root.style.setProperty('--border', t.border);
-      }
-    } catch(e) {}
+    return; // yeni bej/altın tasarım her zaman sabit kalsın
   }
   temaUygula();
 
