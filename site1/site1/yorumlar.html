@@ -338,58 +338,45 @@
     .footer-social a:hover { background: var(--pink-light); border-color: var(--gold); }
 
     /* ── YORUM KATEGORİLERİ ── */
-    .yorum-kategori { max-width: 1100px; margin: 0 auto 56px; padding: 0 24px; }
-
-    .yorum-kategori-baslik {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px; font-weight: 500;
-      margin-bottom: 24px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--gold-soft);
+    .yorum-grid-flat {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      max-width: 1100px; margin: 0 auto; padding: 0 24px 80px;
     }
 
-    .yorum-kategori-baslik::before {
-      content: '— '; color: var(--gold); font-size: 18px;
-    }
-
-    .yorum-kategori-baslik em {
-      font-style: italic; color: var(--gold); font-weight: 400;
-    }
-
-    .yorum-grid-kategori {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-    }
-
-    @media (max-width: 900px) { .yorum-grid-kategori { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 560px) { .yorum-grid-kategori { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .yorum-grid-flat { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .yorum-grid-flat { grid-template-columns: 1fr; } }
 
     .yorum-card {
       background: #fff; border: 1px solid var(--border); border-radius: 4px;
-      padding: 20px; display: flex; flex-direction: column; min-height: 180px;
+      padding: 24px; display: flex; flex-direction: column; min-height: 200px;
     }
 
-    .yorum-card .yc-stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; margin-bottom: 12px; }
+    .yc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+
+    .yorum-card .yc-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; }
+
+    .yc-google { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--muted); }
 
     .yorum-card .yc-quote {
-      font-size: 13px; color: var(--muted); line-height: 1.7; font-style: italic;
-      flex: 1; margin-bottom: 16px;
+      font-size: 13.5px; color: var(--text); line-height: 1.7;
+      flex: 1; margin-bottom: 18px;
     }
 
     .yorum-card .yc-kisi { display: flex; align-items: center; gap: 10px; }
 
     .yc-avatar {
-      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
       background: var(--pink-light); display: flex; align-items: center; justify-content: center;
       font-size: 13px; font-weight: 600; color: var(--gold);
     }
 
-    .yc-isim { font-size: 12px; font-weight: 600; color: var(--text); }
+    .yc-isim { font-size: 12.5px; font-weight: 600; color: var(--text); }
     .yc-tur { font-size: 11px; color: var(--muted); }
 
     .yorum-card.yc-empty {
       align-items: center; justify-content: center;
       border-style: dashed; border-color: var(--gold-soft);
-      background: var(--soft); color: var(--gold); font-size: 22px; opacity: 0.55;
+      background: var(--white); color: var(--gold); font-size: 22px; opacity: 0.55;
     }
   </style>
 </head>
@@ -433,103 +420,26 @@
 </script>
 
 
-<section id="yorumlar" style="background:var(--soft); padding-top:64px;">
-  <div class="reveal" style="text-align:center; margin-bottom:56px;">
-    <div class="section-label" style="justify-content:center;">Mutlu Gelinler</div>
-    <h2 class="section-h2" id="yorumlar-baslik">Müşteri <em>Yorumları</em></h2>
-    <p class="section-p" id="yorumlar-alt" style="margin:0 auto;">Onların gözünden özel günleri</p>
-  </div>
-
-  <!-- Hizmet bazlı yorum kategorileri (statik) -->
-  <div class="yorum-kategori reveal">
-    <h3 class="yorum-kategori-baslik">Türban Tasarımı <em>Yorumları</em></h3>
-    <div class="yorum-grid-kategori" id="yorum-turban"></div>
-  </div>
-  <div class="yorum-kategori reveal">
-    <h3 class="yorum-kategori-baslik">Makyaj <em>Yorumları</em></h3>
-    <div class="yorum-grid-kategori" id="yorum-makyaj"></div>
-  </div>
-  <div class="yorum-kategori reveal">
-    <h3 class="yorum-kategori-baslik">Saç Tasarımı <em>Yorumları</em></h3>
-    <div class="yorum-grid-kategori" id="yorum-sac"></div>
-  </div>
-  <div class="yorum-kategori reveal">
-    <h3 class="yorum-kategori-baslik">Freelance Hizmet <em>Yorumları</em></h3>
-    <div class="yorum-grid-kategori" id="yorum-freelance"></div>
-  </div>
+<section id="yorumlar" style="background:var(--white); padding-top:64px;">
+  <div class="yorum-grid-flat reveal" id="yorumGridFlat"></div>
 </section>
 
 <script>
-  let seciliPuan = 0;
-
-  document.querySelectorAll('.yildiz').forEach(y => {
-    y.addEventListener('click', function() {
-      seciliPuan = parseInt(this.dataset.val);
-      document.getElementById('yorumPuan').value = seciliPuan;
-      document.querySelectorAll('.yildiz').forEach((s, i) => {
-        s.style.opacity = i < seciliPuan ? '1' : '0.3';
-      });
-    });
-    y.addEventListener('mouseover', function() {
-      const val = parseInt(this.dataset.val);
-      document.querySelectorAll('.yildiz').forEach((s, i) => {
-        s.style.opacity = i < val ? '0.7' : '0.3';
-      });
-    });
-    y.addEventListener('mouseout', function() {
-      document.querySelectorAll('.yildiz').forEach((s, i) => {
-        s.style.opacity = i < seciliPuan ? '1' : '0.3';
-      });
-    });
-  });
-
-  // Yorum formu artık WhatsApp'a yönlendiriyor (admin onay sistemi kaldırıldı).
-  function yorumGonder() {
-    const ad = document.getElementById('yorumAd').value.trim();
-    const metin = document.getElementById('yorumMetin').value.trim();
-    const puan = parseInt(document.getElementById('yorumPuan').value);
-    const org = document.getElementById('yorumOrg').value;
-    if (!ad) { alert('Lütfen adınızı girin.'); return; }
-    if (!metin) { alert('Lütfen yorumunuzu yazın.'); return; }
-    if (!puan) { alert('Lütfen puan verin.'); return; }
-
-    const yildizMetin = '⭐'.repeat(puan);
-    let mesaj = 'Merhaba, bir yorum bırakmak istiyorum\n\n';
-    mesaj += 'Ad: ' + ad + '\n';
-    if (org) mesaj += 'Organizasyon: ' + org + '\n';
-    mesaj += 'Puan: ' + yildizMetin + '\n';
-    mesaj += 'Yorum: ' + metin;
-
-    window.open('https://wa.me/905332707509?text=' + encodeURIComponent(mesaj), '_blank');
-
-    document.getElementById('yorumFormContent').style.display = 'none';
-    document.getElementById('yorumBasari').style.display = 'block';
-  }
-
-  // STATİK YORUMLAR — kategoriye göre ayrılmış. Yeni yorum eklemek için
-  // Claude'a metni ve hangi hizmet olduğunu söyle, ilgili diziye eklenecek.
-  // Her kategori en fazla 4 yorum gösterir.
-  const YORUMLAR = {
-    turban: [
-      // örnek: { ad: 'Ayşe T.', tur: 'Türban Tasarımı · Nişan', puan: 5, metin: 'Yüzüme bu kadar yakışan bir türban tasarımı görmemiştim...' },
-    ],
-    makyaj: [
-      // örnek: { ad: 'Selin K.', tur: 'Gelin Makyajı · Düğün', puan: 5, metin: 'Gün boyu hiç bozulmadı...' },
-    ],
-    sac: [
-      // örnek: { ad: 'Merve A.', tur: 'Saç Tasarımı · Davet', puan: 5, metin: '...' },
-    ],
-    freelance: [
-      // örnek: { ad: 'Beyza N.', tur: 'Freelance Hizmet · Düğün', puan: 5, metin: '...' },
-    ],
-  };
+  // STATİK YORUMLAR — düz liste, en fazla 9 kutucuk gösterilir.
+  // Yeni yorum eklemek için Claude'a metni gönder, bu diziye eklenecek.
+  const YORUMLAR_LISTESI = [
+    // örnek: { ad: 'Ayşe T.', tur: 'Türban Tasarımı · Nişan', puan: 5, metin: 'Yüzüme bu kadar yakışan bir türban tasarımı görmemiştim...' },
+  ];
 
   function yorumKartHtml(y) {
     if (!y) return '<div class="yorum-card yc-empty">✦</div>';
     const yildiz = '★'.repeat(y.puan) + '☆'.repeat(5 - y.puan);
     const harf = y.ad ? y.ad.charAt(0).toUpperCase() : '?';
     return `<div class="yorum-card">
-      <div class="yc-stars">${yildiz}</div>
+      <div class="yc-top">
+        <div class="yc-stars">${yildiz}</div>
+        <div class="yc-google">GOOGLE</div>
+      </div>
       <p class="yc-quote">"${y.metin}"</p>
       <div class="yc-kisi">
         <div class="yc-avatar">${harf}</div>
@@ -541,18 +451,11 @@
     </div>`;
   }
 
-  function kategoriRenderEt(elId, liste) {
-    const el = document.getElementById(elId);
-    if (!el) return;
-    const slots = [0, 1, 2, 3].map(i => yorumKartHtml(liste[i]));
-    el.innerHTML = slots.join('');
-  }
-
   function yorumlariYukle() {
-    kategoriRenderEt('yorum-turban', YORUMLAR.turban);
-    kategoriRenderEt('yorum-makyaj', YORUMLAR.makyaj);
-    kategoriRenderEt('yorum-sac', YORUMLAR.sac);
-    kategoriRenderEt('yorum-freelance', YORUMLAR.freelance);
+    const el = document.getElementById('yorumGridFlat');
+    if (!el) return;
+    const slots = Array.from({length: 9}, (_, i) => YORUMLAR_LISTESI[i]);
+    el.innerHTML = slots.map(y => yorumKartHtml(y)).join('');
   }
 
   yorumlariYukle();
