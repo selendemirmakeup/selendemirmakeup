@@ -27,9 +27,9 @@
   <!-- Open Graph (sosyal medya paylaşımı) -->
   <meta property="og:title" content="Freelance Makyaj Sanatçısı İstanbul | Selen Demir Studio"/>
   <meta property="og:description" content="İstanbul freelance makyaj sanatçısı Selen Demir. Gelin makyajı, türban tasarımı, nişan, kına, mezuniyet ve özel gün makyajı. Eve gelen hizmet."/>
-  <meta property="og:image" content="https://fkhkdutdmieuppryetvb.supabase.co/storage/v1/object/public/galeri/a111111.PNG"/>
+  <meta property="og:image" content="https://selendemirstudio.com/hero-foto.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:image" content="https://fkhkdutdmieuppryetvb.supabase.co/storage/v1/object/public/galeri/a111111.PNG"/>
+  <meta name="twitter:image" content="https://selendemirstudio.com/hero-foto.jpg"/>
   <meta property="og:url" content="https://selendemirstudio.com/"/>
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="tr_TR"/>
@@ -1718,175 +1718,36 @@
   // ─────────────────────────────────────────────────────
 
   // ── Supabase veri yükle ───────────────────────────────
-  async function sayfaVerileriniYukle() {
-    try {
-      // Ayarları yükle
-      const aRes = await fetch(SB_URL + '/rest/v1/ayarlar', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const ayarlar = await aRes.json();
-      const a = {};
-      if (Array.isArray(ayarlar) && ayarlar.length > 0) {
-        ayarlar.forEach(row => { a[row.anahtar] = row.deger; });
-      }
+  // KAPATILDI: site artık tamamen statik, veritabanındaki eski ayarlar
+  // (logo yazısı, hero metni, WhatsApp linki vb.) siteyi değiştirmesin.
+  async function sayfaVerileriniYukle() { return; }
 
-      // Site başlığı
-      if (a.site_baslik) {
-        document.querySelectorAll('.nav-logo, .footer-logo').forEach(el => el.textContent = a.site_baslik);
-      }
-      // Hero istatistik etiketleri
-      if (a.stat1_label) { const el = document.getElementById('heroStatLabel1'); if(el) el.textContent = a.stat1_label; }
-      if (a.stat2_label) { const el = document.getElementById('heroStatLabel2'); if(el) el.textContent = a.stat2_label; }
-      if (a.stat3_label) { const el = document.getElementById('heroStatLabel3'); if(el) el.textContent = a.stat3_label; }
-      if (a.stat1_sayi) { const el = document.getElementById('heroStat1'); if(el) { el.setAttribute('data-hedef', a.stat1_sayi); el.textContent = a.stat1_sayi; } }
-      if (a.stat2_sayi) { const el = document.getElementById('heroStat2'); if(el) { el.setAttribute('data-hedef', a.stat2_sayi); el.textContent = a.stat2_sayi; } }
-      if (a.stat3_sayi) { const el = document.getElementById('heroStat3'); if(el) { el.setAttribute('data-hedef', a.stat3_sayi); el.textContent = a.stat3_sayi; } }
-      // Hero metinleri
-      if (a.hero_baslik1) {
-        const h1 = document.querySelector('.hero-h1');
-        if (h1) {
-          const em = h1.querySelector('em');
-          const emText = em ? em.outerHTML.replace(em.textContent, a.hero_baslik2 || em.textContent) : '';
-          h1.innerHTML = a.hero_baslik1 + ' ' + emText;
-        }
-      }
-      if (a.hero_metin) {
-        const el = document.querySelector('.hero-p');
-        if (el) el.textContent = a.hero_metin;
-      }
-      if (a.whatsapp) {
-        document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
-          el.href = 'https://wa.me/' + a.whatsapp.replace(/\D/g,'') + '?text=Merhaba%2C%20randevu%20almak%20istiyorum%20%F0%9F%8C%B8';
-        });
-      }
-      if (a.instagram) {
-        document.querySelectorAll('a[href*="instagram.com"]').forEach(el => {
-          el.href = 'https://instagram.com/' + a.instagram.replace('@','');
-        });
-      }
-      // Neden Ben / Hizmetler metin alanları
-      ['nb_aciklama','nb_alinti_alt','nb_kpi1_sayi','nb_kpi1_baslik','nb_kpi1_alt','nb_kpi2_sayi','nb_kpi2_baslik','nb_kpi2_alt'].forEach(k => {
-        const el = document.getElementById(k); if(el && a[k]) el.textContent = a[k];
-      });
-      // Dinamik kartlar - KAPATILDI: statik "Hizmetlerimiz" bölümü kullanılıyor artık
-      if (false && a.hizmet_kartlar) {
-        try {
-          const kartlar = JSON.parse(a.hizmet_kartlar);
-          const kolon = parseInt(a.kart_kolon) || 3;
-          const container = document.getElementById('hizmetKartContainer');
-          if (container) {
-            const aktif = kartlar.filter(k => k.aktif !== false);
-            const RENK = { white:'background:#fff;border:1px solid #f0ece0;', blush:'background:#f7f4ee;border:1px solid #ded4bd;', dark:'background:#0d0d0d;border:none;', soft:'background:#faf7f2;border:1px solid #f0ece0;' };
-            function ekstraRender(k) {
-              if (!k.ekstra) return '';
-              const t = k.ekstraTip || 'liste';
-              const dk = k.renk === 'dark';
-              const tc = dk ? 'rgba(255,255,255,0.75)' : 'var(--muted)';
-              const ac = dk ? '#c9b896' : 'var(--pink-deep)';
-              if (t === 'markalar') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0ece0;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('') + '</div>';
-              if (t === 'etiketler') return '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">' + k.ekstra.split(',').map((e,i) => '<span style="font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:' + (i===0?'var(--pink-deep)':'#f7f4ee') + ';color:' + (i===0?'#fff':'#1a1a1a') + ';">' + e.trim() + '</span>').join('') + '</div>';
-              if (t === 'liste') return '<ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px;">' + k.ekstra.split('\n').filter(l=>l.trim()).map(l => '<li style="font-size:12.5px;color:' + tc + ';display:flex;gap:8px;line-height:1.5;"><span style="color:' + ac + ';font-size:10px;flex-shrink:0;margin-top:2px;">&#10022;</span>' + l.trim() + '</li>').join('') + '</ul>';
-              if (t === 'ikonlu-liste') return '<div>' + k.ekstra.split('\n').filter(l=>l.trim()).map((l,i,arr) => { const p=l.split('|'); const b=p[0]||''; const s=p[1]||''; return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;' + (i<arr.length-1?'border-bottom:1px solid rgba(0,0,0,0.06);':'') + '"><div style="font-size:16px;width:30px;height:30px;background:#f7f4ee;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + b.split(' ')[0] + '</div><div><div style="font-size:12px;font-weight:700;color:var(--text);">' + b.replace(/^\S+\s*/,'') + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>';
-              if (t === 'adimlar') { const rows=k.ekstra.split('\n').filter(l=>l.trim()); return '<div>' + rows.map((l,i) => { const p=l.split('|'); const b=p[0]||''; const s=p[1]||''; const last=i===rows.length-1; return '<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;"><div style="width:24px;height:24px;border-radius:50%;background:#f7f4ee;border:1.5px solid #ded4bd;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pink-deep);flex-shrink:0;">' + (last?'&#10003;':i+1) + '</div>' + (!last?'<div style="width:1px;flex:1;background:#ded4bd;min-height:8px;"></div>':'') + '</div><div style="padding-bottom:' + (last?'0':'12px') + ';"><div style="font-size:12px;font-weight:700;color:var(--text);">' + b + '</div>' + (s?'<div style="font-size:11px;color:var(--muted);">' + s + '</div>':'') + '</div></div>'; }).join('') + '</div>'; }
-              return '';
-            }
-            const rowCount = Math.ceil(aktif.length / kolon);
-            let html = '';
-            for (let r=0; r<rowCount; r++) {
-              const rowKartlar = aktif.slice(r*kolon, (r+1)*kolon);
-              html += '<div style="display:grid;grid-template-columns:repeat(' + kolon + ',1fr);gap:14px;margin-bottom:14px;">';
-              html += rowKartlar.map(k => {
-                const rs = RENK[k.renk] || RENK.white;
-                const dk = k.renk === 'dark';
-                return '<div style="' + rs + 'border-radius:18px;padding:22px;position:relative;overflow:hidden;">' +
-                  '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>' +
-                  '<div style="font-size:26px;margin-bottom:12px;">' + k.emoji + '</div>' +
-                  '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:' + (dk?'rgba(255,255,255,0.65)':'var(--pink-deep)') + ';font-weight:700;margin-bottom:5px;">' + (k.etiket||'') + '</div>' +
-                  '<div style="font-size:15px;font-weight:700;color:' + (dk?'#fff':'var(--text)') + ';margin-bottom:8px;font-family:Playfair Display,serif;">' + (k.baslik||'') + '</div>' +
-                  (k.aciklama ? '<div style="font-size:12.5px;color:' + (dk?'rgba(255,255,255,0.72)':'var(--muted)') + ';line-height:1.65;margin-bottom:10px;">' + k.aciklama + '</div>' : '') +
-                  ekstraRender(k) + '</div>';
-              }).join('');
-              html += '</div>';
-            }
-            container.innerHTML = html;
-          }
-        } catch(e) { console.log('Kart render hatasi:', e); }
-      }
-      // Markalar
-      if (a.nb_markalar_str) {
-        const mEl = document.getElementById('nb_markalar');
-        if (mEl) mEl.innerHTML = a.nb_markalar_str.split(',').map(m => '<span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--soft);border:1px solid #f0ece0;border-radius:7px;padding:4px 9px;">' + m.trim() + '</span>').join('');
-      }
-      // Yorumlar
-      const yorumData = [{y:a.nb_yorum1,k:a.nb_yorum1_kisi},{y:a.nb_yorum2,k:a.nb_yorum2_kisi},{y:a.nb_yorum3,k:a.nb_yorum3_kisi}].filter(x=>x.y);
-      if (yorumData.length > 0) {
-        const yEl = document.getElementById('nb_yorumlar_wrap');
-        if (yEl) {
-          const cols = yorumData.length >= 3 ? 3 : yorumData.length;
-          yEl.innerHTML =
-            '<div style="background:#f7f4ee;border:1px solid #ded4bd;border-radius:18px;padding:24px;position:relative;overflow:hidden;">' +
-            '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink-deep);border-radius:18px 18px 0 0;"></div>' +
-            '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;margin-bottom:6px;">Müşteri Yorumları</div>' +
-            '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;font-family:Playfair Display,serif;">Onlar Anlatsın</div>' +
-            '<div style="color:var(--pink-deep);font-size:14px;letter-spacing:2px;margin-bottom:14px;">★★★★★</div>' +
-            '<div style="display:grid;grid-template-columns:repeat(' + cols + ',1fr);gap:12px;">' +
-            yorumData.map(x =>
-              '<div style="background:var(--soft);border-radius:12px;padding:14px;">' +
-              '<div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:6px;">&ldquo;' + x.y + '&rdquo;</div>' +
-              '<div style="font-size:11px;font-weight:700;color:var(--pink-deep);">&#8212; ' + (x.k||'') + '</div>' +
-              '</div>'
-            ).join('') +
-            '</div></div>';
-        }
-      }
+  // STATİK YORUMLAR ÖNİZLEMESİ (Ana Sayfa) — yeni yorum eklemek için
+  // Claude'a metni gönder, bu diziye otomatik eklenecek.
+  const ANASAYFA_YORUMLAR = [
+    // örnek: { yorum: 'Harika bir deneyimdi...', kisi: 'Ayşe Y.' },
+  ];
 
-      const fRes = await fetch(SB_URL + '/rest/v1/fiyatlar?order=id.asc', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const fiyatlar = await fRes.json();
-      if (Array.isArray(fiyatlar) && fiyatlar.length > 0) {
-        fiyatlar.forEach(f => {
-          const k = f.not; // f1, f2, f3
-          if (!k) return;
-          const adEl = document.getElementById(k + '-ad');
-          const acEl = document.getElementById(k + '-aciklama');
-          const fyEl = document.getElementById(k + '-fiyat');
-          const ntEl = document.getElementById(k + '-not');
-          const lsEl = document.getElementById(k + '-liste');
-          if (adEl && f.ad) adEl.textContent = f.ad;
-          if (acEl && f.aciklama) acEl.textContent = f.aciklama;
-          if (fyEl && f.fiyat) fyEl.textContent = f.fiyat;
-          if (ntEl && f.not_metin) ntEl.textContent = f.not_metin;
-          if (lsEl && f.ozellikler) {
-            const items = f.ozellikler.split('\n').filter(x => x.trim());
-            lsEl.innerHTML = items.map(i => '<li class="fiyat-item">' + i.trim() + '</li>').join('');
-          }
-        });
-      }
-
-    } catch(e) { console.log('Veri yuklenemedi:', e); }
+  function anaSayfaYorumlariGoster() {
+    const yEl = document.getElementById('nb_yorumlar_wrap');
+    if (!yEl || ANASAYFA_YORUMLAR.length === 0) return;
+    const cols = ANASAYFA_YORUMLAR.length >= 3 ? 3 : ANASAYFA_YORUMLAR.length;
+    yEl.innerHTML =
+      '<div style="background:#f7f4ee;border:1px solid #ded4bd;border-radius:18px;padding:24px;position:relative;overflow:hidden;">' +
+      '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);border-radius:18px 18px 0 0;"></div>' +
+      '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px;">Müşteri Yorumları</div>' +
+      '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;font-family:Playfair Display,serif;">Onlar Anlatsın</div>' +
+      '<div style="color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:14px;">★★★★★</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(' + cols + ',1fr);gap:12px;">' +
+      ANASAYFA_YORUMLAR.map(x =>
+        '<div style="background:var(--soft);border-radius:12px;padding:14px;">' +
+        '<div style="font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:6px;">&ldquo;' + x.yorum + '&rdquo;</div>' +
+        '<div style="font-size:11px;font-weight:700;color:var(--gold);">&#8212; ' + (x.kisi||'') + '</div>' +
+        '</div>'
+      ).join('') +
+      '</div></div>';
   }
-
-  // SSS ayrı yükle - diğer hataların etkisinde kalmasın
-  async function sssYukle() {
-    try {
-      const sRes = await fetch(SB_URL + '/rest/v1/sss?order=id.asc', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const sssList = await sRes.json();
-      if (Array.isArray(sssList) && sssList.length > 0) {
-        const container = document.getElementById('sssContainer');
-        if (container) {
-          container.innerHTML = sssList.map(s =>
-            '<div class="sss-item" onclick="toggleSSS(this)">' +
-            '<div class="sss-q">' + s.soru + ' <span class="sss-icon">+</span></div>' +
-            '<div class="sss-a">' + s.cevap + '</div>' +
-            '</div>'
-          ).join('');
-        }
-      }
-    } catch(e) { console.log('SSS yuklenemedi:', e); }
-  }
+  anaSayfaYorumlariGoster();
 
   // ── SAYAÇ ANİMASYONU ─────────────────────────────────
   function sayiParse(deger) {
@@ -1965,33 +1826,25 @@
   temaUygula();
 
   sayfaVerileriniYukle();
-  sssYukle();
+
 
   // ── Galeri Önizleme (Ana Sayfa) ──────────────────────
+  // STATİK VERİ — yeni fotoğraf eklemek için Claude'a gönder, otomatik eklenecek.
+  const ANASAYFA_GALERI_FOTOLAR = [
+    // örnek: { url: 'galeri/foto1.jpg' },
+  ];
   const EMPTY_FRAMES = '<div class="galeri-onizleme-item"><div class="goi-frame goi-empty"></div></div>'.repeat(3);
 
-  async function galeriOnizlemeYukle() {
+  function galeriOnizlemeYukle() {
     const grid = document.getElementById('galeriOnizlemeGrid');
     if (!grid) return;
-    grid.innerHTML = EMPTY_FRAMES;
-    try {
-      const res = await fetch(SB_URL + '/storage/v1/object/list/galeri', {
-        method: 'POST',
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ limit: 3, offset: 0, sortBy: { column: 'created_at', order: 'desc' } })
-      });
-      const files = await res.json();
-      const images = Array.isArray(files) ? files.filter(f => f.name && !f.name.endsWith('/')) : [];
-      if (images.length === 0) {
-        return;
-      }
-      grid.innerHTML = images.slice(0, 3).map(f => {
-        const url = SB_URL + '/storage/v1/object/public/galeri/' + f.name;
-        return '<div class="galeri-onizleme-item"><div class="goi-frame"><img src="' + url + '" alt="Selen Demir Studio" loading="lazy"/></div></div>';
-      }).join('');
-    } catch (e) {
-      console.log('Galeri onizleme yuklenemedi:', e);
+    if (ANASAYFA_GALERI_FOTOLAR.length === 0) {
+      grid.innerHTML = EMPTY_FRAMES;
+      return;
     }
+    grid.innerHTML = ANASAYFA_GALERI_FOTOLAR.slice(0, 3).map(f => {
+      return '<div class="galeri-onizleme-item"><div class="goi-frame"><img src="' + f.url + '" alt="Selen Demir Studio" loading="lazy"/></div></div>';
+    }).join('');
   }
   galeriOnizlemeYukle();
 

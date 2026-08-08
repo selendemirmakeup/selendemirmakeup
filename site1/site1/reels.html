@@ -408,9 +408,6 @@
 </div>
 
 <script>
-  const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
-  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZraGtkdXRkbWlldXBwcnlldHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNDU4MjgsImV4cCI6MjA5NTYyMTgyOH0.UzndmLNMNlvH8_rks_OqoLsqiXbW2tmY_Y1_q2PEhps';
-
   function embedUrl(link) {
     const match = link.match(/instagram\.com\/reel\/([^/?]+)/);
     if (match) return 'https://www.instagram.com/reel/' + match[1] + '/embed/';
@@ -418,33 +415,29 @@
     return link;
   }
 
-  async function reelleriYukle() {
+  // STATİK REELS LİSTESİ — yeni reel eklemek için Claude'a Instagram
+  // linkini gönder, bu diziye otomatik olarak eklenecek.
+  const REELS_LISTESI = [
+    // örnek: { link: 'https://www.instagram.com/reel/XXXXXXXX/', aciklama: 'Gelin Makyajı' },
+  ];
+
+  function reelleriYukle() {
     const grid = document.getElementById('reelsGrid');
-    try {
-      const res = await fetch(SB_URL + '/rest/v1/reeller?order=id.asc', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const data = await res.json();
-
-      if (!Array.isArray(data) || data.length === 0) {
-        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">Henüz reel eklenmemiş 🌸</div>';
-        return;
-      }
-
-      grid.innerHTML = data.map((r, i) => `
-        <div class="reel-card" style="animation-delay:${i * 0.1}s">
-          <div class="reel-video-wrap">
-            <iframe src="${embedUrl(r.link)}" allowfullscreen scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-          </div>
-          <div class="reel-info">
-            <div class="reel-title">${r.aciklama || 'Makyaj Çalışması'}</div>
-            <div class="reel-meta">📸 @selendmiiir</div>
-          </div>
-        </div>
-      `).join('');
-    } catch(e) {
-      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">Reeller yüklenemedi, lütfen sayfayı yenileyin.</div>';
+    if (REELS_LISTESI.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">Henüz reel eklenmemiş 🌸</div>';
+      return;
     }
+    grid.innerHTML = REELS_LISTESI.map((r, i) => `
+      <div class="reel-card" style="animation-delay:${i * 0.1}s">
+        <div class="reel-video-wrap">
+          <iframe src="${embedUrl(r.link)}" allowfullscreen scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        </div>
+        <div class="reel-info">
+          <div class="reel-title">${r.aciklama || 'Makyaj Çalışması'}</div>
+          <div class="reel-meta">📸 @selendmiiir</div>
+        </div>
+      </div>
+    `).join('');
   }
 
   reelleriYukle();

@@ -338,8 +338,6 @@
 </section>
 
 <script>
-  const SB_URL = 'https://fkhkdutdmieuppryetvb.supabase.co';
-  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZraGtkdXRkbWlldXBwcnlldHZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNDU4MjgsImV4cCI6MjA5NTYyMTgyOH0.UzndmLNMNlvH8_rks_OqoLsqiXbW2tmY_Y1_q2PEhps';
   let seciliPuan = 0;
 
   document.querySelectorAll('.yildiz').forEach(y => {
@@ -363,7 +361,8 @@
     });
   });
 
-  async function yorumGonder() {
+  // Yorum formu artık WhatsApp'a yönlendiriyor (admin onay sistemi kaldırıldı).
+  function yorumGonder() {
     const ad = document.getElementById('yorumAd').value.trim();
     const metin = document.getElementById('yorumMetin').value.trim();
     const puan = parseInt(document.getElementById('yorumPuan').value);
@@ -372,91 +371,51 @@
     if (!metin) { alert('Lütfen yorumunuzu yazın.'); return; }
     if (!puan) { alert('Lütfen puan verin.'); return; }
 
-    const yeniYorum = {
-      id: Date.now(),
-      ad, metin, puan, org,
-      tarih: new Date().toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })
-    };
+    const yildizMetin = '⭐'.repeat(puan);
+    let mesaj = 'Merhaba, bir yorum bırakmak istiyorum 🌸\n\n';
+    mesaj += 'Ad: ' + ad + '\n';
+    if (org) mesaj += 'Organizasyon: ' + org + '\n';
+    mesaj += 'Puan: ' + yildizMetin + '\n';
+    mesaj += 'Yorum: ' + metin;
 
-    // Supabase'e kaydet
-    try {
-      await fetch(SB_URL + '/rest/v1/yorumlar', {
-        method: 'POST',
-        headers: {
-          'apikey': SB_KEY,
-          'Authorization': 'Bearer ' + SB_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
-        },
-        body: JSON.stringify({
-          ad: yeniYorum.ad,
-          metin: yeniYorum.metin,
-          puan: yeniYorum.puan,
-          org: yeniYorum.org,
-          onaylandi: false
-        })
-      });
-    } catch(e) { console.log('Supabase hata:', e); }
+    window.open('https://wa.me/905332707509?text=' + encodeURIComponent(mesaj), '_blank');
 
     document.getElementById('yorumFormContent').style.display = 'none';
     document.getElementById('yorumBasari').style.display = 'block';
-    yorumlariYukle();
   }
 
-  async function yorumlariYukle() {
-    try {
-      const res = await fetch(SB_URL + '/rest/v1/yorumlar?onaylandi=eq.true&order=created_at.desc', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const liste = await res.json();
-      const grid = document.getElementById('musteri-yorumlari');
-      grid.innerHTML = '';
-      if (!Array.isArray(liste) || liste.length === 0) {
-        grid.innerHTML = '<p style="text-align:center; color:var(--muted); padding:40px;">Henüz yorum yok 🌸</p>';
-        return;
-      }
-      liste.forEach(y => {
-        const yildiz = '⭐'.repeat(y.puan);
-        const tarih = new Date(y.created_at).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
-        grid.innerHTML += `
-          <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative; animation:fadeUp 0.5s ease both;">
-            <div style="position:absolute; top:20px; right:20px; font-size:12px;">${yildiz}</div>
-            <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
-            <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"${y.metin}"</p>
-            <div style="display:flex; align-items:center; gap:12px;">
-              <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
-              <div>
-                <div style="font-size:13px; font-weight:500;">${y.ad}</div>
-                <div style="font-size:11px; color:var(--muted);">${y.org ? y.org + ' — ' : ''}${tarih}</div>
-              </div>
+  // STATİK YORUMLAR — yeni yorum eklemek için Claude'a metni gönder,
+  // bu diziye otomatik olarak eklenecek.
+  const YORUMLAR_LISTESI = [
+    // örnek: { ad: 'Ayşe Y.', org: 'Düğün', puan: 5, metin: 'Harika bir deneyimdi...', tarih: 'Ocak 2026' },
+  ];
+
+  function yorumlariYukle() {
+    const grid = document.getElementById('musteri-yorumlari');
+    if (!grid) return;
+    grid.innerHTML = '';
+    if (YORUMLAR_LISTESI.length === 0) {
+      grid.innerHTML = '<p style="text-align:center; color:var(--muted); padding:40px;">Henüz yorum yok 🌸</p>';
+      return;
+    }
+    YORUMLAR_LISTESI.forEach(y => {
+      const yildiz = '⭐'.repeat(y.puan);
+      grid.innerHTML += `
+        <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative; animation:fadeUp 0.5s ease both;">
+          <div style="position:absolute; top:20px; right:20px; font-size:12px;">${yildiz}</div>
+          <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"${y.metin}"</p>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
+            <div>
+              <div style="font-size:13px; font-weight:500;">${y.ad}</div>
+              <div style="font-size:11px; color:var(--muted);">${y.org ? y.org + ' — ' : ''}${y.tarih}</div>
             </div>
-          </div>`;
-      });
-    } catch(e) { console.log('Yorumlar yuklenemedi:', e); }
+          </div>
+        </div>`;
+    });
   }
 
-  async function ayarlariYukle() {
-    try {
-      const res = await fetch(SB_URL + '/rest/v1/ayarlar', {
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
-      });
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        const a = {};
-        data.forEach(row => a[row.anahtar] = row.deger);
-        if (a.yorumlar_baslik) {
-          const el = document.getElementById('yorumlar-baslik');
-          if (el) el.innerHTML = a.yorumlar_baslik.replace(/\s(\S+)$/, ' <em>$1</em>');
-        }
-        if (a.yorumlar_alt) {
-          const el = document.getElementById('yorumlar-alt');
-          if (el) el.textContent = a.yorumlar_alt + ' 🌸';
-        }
-      }
-    } catch(e) {}
-  }
-
-  ayarlariYukle();
   yorumlariYukle();
 
   const reveals = document.querySelectorAll('.reveal');
