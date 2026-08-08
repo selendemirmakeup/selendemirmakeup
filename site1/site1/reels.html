@@ -65,7 +65,7 @@
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--soft);
+      background: var(--white);
       color: var(--text);
       min-height: 100vh;
     }
@@ -131,7 +131,7 @@
     .header-tabs {
       display: flex; align-items: center; justify-content: center;
       gap: 8px;
-      background: var(--white);
+      background: linear-gradient(135deg, var(--pink-light) 0%, var(--white) 100%);
       border-top: 1px solid var(--gold-soft);
       border-bottom: 1px solid var(--gold-soft);
       padding: 12px 24px;
@@ -228,9 +228,9 @@
 
     /* HEADER */
     .page-header {
-      padding: 64px 40px 48px;
+      padding: 24px 40px;
       text-align: center;
-      background: linear-gradient(135deg, var(--pink-light) 0%, #f0ece0 100%);
+      background: var(--white);
     }
 
     .page-label {
@@ -491,24 +491,13 @@
 
 
 <!-- HEADER -->
-<div class="page-header">
-  <span class="page-label">Instagram</span>
-  <h1 class="page-title">Son <em>Reelslerim</em></h1>
-  <p class="page-sub">Çalışmalarımı buradan izleyebilirsiniz 🌸</p>
-</div>
+<div class="page-header"></div>
 
 <!-- REELS -->
 <div class="reels-container">
-  <div class="reels-grid" id="reelsGrid">
-    <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">Yükleniyor... 🌸</div>
-  </div>
-
-  <!-- Instagram CTA -->
-  <div class="instagram-cta">
-    <p>Daha fazla çalışma için Instagram'ı takip edin 🌸</p>
-    <a href="https://instagram.com/selendmiiir" target="_blank" class="btn-primary">
-      📸 @selendmiiir Takip Et
-    </a>
+  <div style="text-align:center; padding:80px 24px;">
+    <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:22px; color:var(--text); margin-bottom:10px;">Yakında Burada</div>
+    <p style="color:var(--muted); font-size:14px; max-width:400px; margin:0 auto;">Reels çalışmalarımızı en kısa sürede bu sayfaya ekleyeceğiz.</p>
   </div>
 </div>
 
@@ -528,8 +517,9 @@
 
   function reelleriYukle() {
     const grid = document.getElementById('reelsGrid');
+    if (!grid) return;
     if (REELS_LISTESI.length === 0) {
-      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">Henüz reel eklenmemiş 🌸</div>';
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">Henüz reel eklenmemiş</div>';
       return;
     }
     grid.innerHTML = REELS_LISTESI.map((r, i) => `
