@@ -326,6 +326,60 @@
     .footer-copy { font-size: 12px; color: var(--muted); }
     .footer-heart { color: var(--gold); }
 
+    /* ── YORUM KATEGORİLERİ ── */
+    .yorum-kategori { max-width: 1100px; margin: 0 auto 56px; padding: 0 24px; }
+
+    .yorum-kategori-baslik {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 500;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--gold-soft);
+    }
+
+    .yorum-kategori-baslik::before {
+      content: '— '; color: var(--gold); font-size: 18px;
+    }
+
+    .yorum-kategori-baslik em {
+      font-style: italic; color: var(--gold); font-weight: 400;
+    }
+
+    .yorum-grid-kategori {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+
+    @media (max-width: 900px) { .yorum-grid-kategori { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .yorum-grid-kategori { grid-template-columns: 1fr; } }
+
+    .yorum-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 4px;
+      padding: 20px; display: flex; flex-direction: column; min-height: 180px;
+    }
+
+    .yorum-card .yc-stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; margin-bottom: 12px; }
+
+    .yorum-card .yc-quote {
+      font-size: 13px; color: var(--muted); line-height: 1.7; font-style: italic;
+      flex: 1; margin-bottom: 16px;
+    }
+
+    .yorum-card .yc-kisi { display: flex; align-items: center; gap: 10px; }
+
+    .yc-avatar {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      background: var(--pink-light); display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; color: var(--gold);
+    }
+
+    .yc-isim { font-size: 12px; font-weight: 600; color: var(--text); }
+    .yc-tur { font-size: 11px; color: var(--muted); }
+
+    .yorum-card.yc-empty {
+      align-items: center; justify-content: center;
+      border-style: dashed; border-color: var(--gold-soft);
+      background: var(--soft); color: var(--gold); font-size: 22px; opacity: 0.55;
+    }
   </style>
 </head>
 <body>
@@ -372,62 +426,25 @@
   <div class="reveal" style="text-align:center; margin-bottom:56px;">
     <div class="section-label" style="justify-content:center;">Mutlu Gelinler</div>
     <h2 class="section-h2" id="yorumlar-baslik">Müşteri <em>Yorumları</em></h2>
-    <p class="section-p" id="yorumlar-alt" style="margin:0 auto;">Onların gözünden özel günleri 🌸</p>
+    <p class="section-p" id="yorumlar-alt" style="margin:0 auto;">Onların gözünden özel günleri</p>
   </div>
 
-  <!-- Müşteri yorumları (Supabase'den çekilir) -->
-  <div id="musteri-yorumlari" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:48px;" class="reveal">
-    <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">Yorumlar yükleniyor... 🌸</div>
+  <!-- Hizmet bazlı yorum kategorileri (statik) -->
+  <div class="yorum-kategori reveal">
+    <h3 class="yorum-kategori-baslik">Türban Tasarımı <em>Yorumları</em></h3>
+    <div class="yorum-grid-kategori" id="yorum-turban"></div>
   </div>
-
-  <!-- Yorum yaz formu -->
-  <div style="max-width:600px; margin:0 auto;" class="reveal">
-    <div style="background:white; border-radius:24px; padding:40px; border:1px solid var(--border); box-shadow:0 8px 32px rgba(26,26,26,0.08);">
-      <h3 style="font-family:'Playfair Display',serif; font-size:22px; font-weight:500; margin-bottom:8px; color:var(--text);">Siz de Yorum Yapın <span style="font-size:18px;">🌸</span></h3>
-      <p style="font-size:13px; color:var(--muted); margin-bottom:28px;">Deneyiminizi paylaşarak diğer gelinlere yardımcı olun.</p>
-
-      <div id="yorumFormContent">
-        <div style="margin-bottom:16px;">
-          <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Adınız <span style="color:var(--pink-deep)">*</span></label>
-          <input type="text" id="yorumAd" placeholder="Ad Soyad" style="width:100%; border:1.5px solid var(--border); border-radius:10px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); background:var(--soft); outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--pink-deep)'" onblur="this.style.borderColor='var(--border)'"/>
-        </div>
-        <div style="margin-bottom:16px;">
-          <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Organizasyon Türü</label>
-          <select id="yorumOrg" style="width:100%; border:1.5px solid var(--border); border-radius:10px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); background:var(--soft); outline:none; appearance:none;" onfocus="this.style.borderColor='var(--pink-deep)'" onblur="this.style.borderColor='var(--border)'">
-            <option value="">Seçiniz...</option>
-            <option>Düğün</option>
-            <option>Kına</option>
-            <option>Nişan</option>
-            <option>Söz</option>
-            <option>Davet</option>
-            <option>Diğer</option>
-          </select>
-        </div>
-        <div style="margin-bottom:16px;">
-          <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">Puanınız <span style="color:var(--pink-deep)">*</span></label>
-          <div id="yildizlar" style="display:flex; gap:6px;">
-            <span class="yildiz" data-val="1" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
-            <span class="yildiz" data-val="2" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
-            <span class="yildiz" data-val="3" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
-            <span class="yildiz" data-val="4" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
-            <span class="yildiz" data-val="5" style="font-size:28px; cursor:pointer; opacity:0.3; transition:opacity 0.15s;">⭐</span>
-          </div>
-          <input type="hidden" id="yorumPuan" value="0"/>
-        </div>
-        <div style="margin-bottom:24px;">
-          <label style="display:block; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Yorumunuz <span style="color:var(--pink-deep)">*</span></label>
-          <textarea id="yorumMetin" placeholder="Deneyiminizi paylaşın..." style="width:100%; border:1.5px solid var(--border); border-radius:10px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); background:var(--soft); outline:none; min-height:100px; resize:vertical; line-height:1.6;" onfocus="this.style.borderColor='var(--pink-deep)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-        </div>
-        <button onclick="yorumGonder()" style="width:100%; padding:15px; background:linear-gradient(135deg,var(--pink-deep),var(--pink-dark)); color:white; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; box-shadow:0 8px 24px rgba(26,26,26,0.3); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-          Yorum Gönder 🌸
-        </button>
-      </div>
-      <div id="yorumBasari" style="display:none; text-align:center; padding:32px 0;">
-        <div style="font-size:48px; margin-bottom:12px;">🌸</div>
-        <h3 style="font-family:'Playfair Display',serif; font-size:22px; font-weight:500; margin-bottom:8px;">Teşekkürler!</h3>
-        <p style="font-size:14px; color:var(--muted);">Yorumunuz alındı ve sayfaya eklendi 🤍</p>
-      </div>
-    </div>
+  <div class="yorum-kategori reveal">
+    <h3 class="yorum-kategori-baslik">Makyaj <em>Yorumları</em></h3>
+    <div class="yorum-grid-kategori" id="yorum-makyaj"></div>
+  </div>
+  <div class="yorum-kategori reveal">
+    <h3 class="yorum-kategori-baslik">Saç Tasarımı <em>Yorumları</em></h3>
+    <div class="yorum-grid-kategori" id="yorum-sac"></div>
+  </div>
+  <div class="yorum-kategori reveal">
+    <h3 class="yorum-kategori-baslik">Freelance Hizmet <em>Yorumları</em></h3>
+    <div class="yorum-grid-kategori" id="yorum-freelance"></div>
   </div>
 </section>
 
@@ -466,7 +483,7 @@
     if (!puan) { alert('Lütfen puan verin.'); return; }
 
     const yildizMetin = '⭐'.repeat(puan);
-    let mesaj = 'Merhaba, bir yorum bırakmak istiyorum 🌸\n\n';
+    let mesaj = 'Merhaba, bir yorum bırakmak istiyorum\n\n';
     mesaj += 'Ad: ' + ad + '\n';
     if (org) mesaj += 'Organizasyon: ' + org + '\n';
     mesaj += 'Puan: ' + yildizMetin + '\n';
@@ -478,36 +495,53 @@
     document.getElementById('yorumBasari').style.display = 'block';
   }
 
-  // STATİK YORUMLAR — yeni yorum eklemek için Claude'a metni gönder,
-  // bu diziye otomatik olarak eklenecek.
-  const YORUMLAR_LISTESI = [
-    // örnek: { ad: 'Ayşe Y.', org: 'Düğün', puan: 5, metin: 'Harika bir deneyimdi...', tarih: 'Ocak 2026' },
-  ];
+  // STATİK YORUMLAR — kategoriye göre ayrılmış. Yeni yorum eklemek için
+  // Claude'a metni ve hangi hizmet olduğunu söyle, ilgili diziye eklenecek.
+  // Her kategori en fazla 4 yorum gösterir.
+  const YORUMLAR = {
+    turban: [
+      // örnek: { ad: 'Ayşe T.', tur: 'Türban Tasarımı · Nişan', puan: 5, metin: 'Yüzüme bu kadar yakışan bir türban tasarımı görmemiştim...' },
+    ],
+    makyaj: [
+      // örnek: { ad: 'Selin K.', tur: 'Gelin Makyajı · Düğün', puan: 5, metin: 'Gün boyu hiç bozulmadı...' },
+    ],
+    sac: [
+      // örnek: { ad: 'Merve A.', tur: 'Saç Tasarımı · Davet', puan: 5, metin: '...' },
+    ],
+    freelance: [
+      // örnek: { ad: 'Beyza N.', tur: 'Freelance Hizmet · Düğün', puan: 5, metin: '...' },
+    ],
+  };
+
+  function yorumKartHtml(y) {
+    if (!y) return '<div class="yorum-card yc-empty">✦</div>';
+    const yildiz = '★'.repeat(y.puan) + '☆'.repeat(5 - y.puan);
+    const harf = y.ad ? y.ad.charAt(0).toUpperCase() : '?';
+    return `<div class="yorum-card">
+      <div class="yc-stars">${yildiz}</div>
+      <p class="yc-quote">"${y.metin}"</p>
+      <div class="yc-kisi">
+        <div class="yc-avatar">${harf}</div>
+        <div>
+          <div class="yc-isim">${y.ad}</div>
+          <div class="yc-tur">${y.tur || ''}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function kategoriRenderEt(elId, liste) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    const slots = [0, 1, 2, 3].map(i => yorumKartHtml(liste[i]));
+    el.innerHTML = slots.join('');
+  }
 
   function yorumlariYukle() {
-    const grid = document.getElementById('musteri-yorumlari');
-    if (!grid) return;
-    grid.innerHTML = '';
-    if (YORUMLAR_LISTESI.length === 0) {
-      grid.innerHTML = '<p style="text-align:center; color:var(--muted); padding:40px;">Henüz yorum yok 🌸</p>';
-      return;
-    }
-    YORUMLAR_LISTESI.forEach(y => {
-      const yildiz = '⭐'.repeat(y.puan);
-      grid.innerHTML += `
-        <div style="background:white; border-radius:20px; padding:32px; border:1px solid var(--border); position:relative; animation:fadeUp 0.5s ease both;">
-          <div style="position:absolute; top:20px; right:20px; font-size:12px;">${yildiz}</div>
-          <div style="font-size:32px; color:var(--pink); margin-bottom:16px;">❝</div>
-          <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:20px; font-style:italic;">"${y.metin}"</p>
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div style="width:40px; height:40px; border-radius:50%; background:var(--pink-light); display:flex; align-items:center; justify-content:center; font-size:16px;">👰</div>
-            <div>
-              <div style="font-size:13px; font-weight:500;">${y.ad}</div>
-              <div style="font-size:11px; color:var(--muted);">${y.org ? y.org + ' — ' : ''}${y.tarih}</div>
-            </div>
-          </div>
-        </div>`;
-    });
+    kategoriRenderEt('yorum-turban', YORUMLAR.turban);
+    kategoriRenderEt('yorum-makyaj', YORUMLAR.makyaj);
+    kategoriRenderEt('yorum-sac', YORUMLAR.sac);
+    kategoriRenderEt('yorum-freelance', YORUMLAR.freelance);
   }
 
   yorumlariYukle();

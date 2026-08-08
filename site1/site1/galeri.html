@@ -515,54 +515,43 @@
     /* ── GALERİ ── */
     #galeri { background: var(--soft); }
 
-    .galeri-header { margin-bottom: 48px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-
-    .galeri-link {
-      font-size: 13px; font-weight: 500; color: var(--pink-deep);
-      text-decoration: none; letter-spacing: 0.5px;
-    }
-
-    .galeri-link:hover { text-decoration: underline; }
+    .galeri-header { margin-bottom: 48px; }
 
     .galeri-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto auto;
-      gap: 12px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
     }
 
-    @media (max-width: 768px) { .galeri-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) { .galeri-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .galeri-grid { grid-template-columns: repeat(2, 1fr); } }
 
     .galeri-item {
-      border-radius: 16px; overflow: hidden;
-      background: linear-gradient(135deg, var(--pink-light), #f0ece0);
-      aspect-ratio: 1;
-      position: relative; cursor: pointer;
-      transition: transform 0.3s;
+      background: var(--white);
+      padding: 10px 10px 14px;
+      border: 1px solid var(--gold-soft);
+      border-radius: 4px;
+      box-shadow: 0 8px 20px rgba(26,26,26,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
     }
 
-    .galeri-item:nth-child(1) { grid-row: span 2; aspect-ratio: auto; }
-    .galeri-item:nth-child(5) { grid-column: span 2; aspect-ratio: 2/1; }
+    .galeri-item:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(26,26,26,0.1); }
 
-    .galeri-item:hover { transform: scale(1.02); }
+    .g-frame {
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      background: var(--pink-light);
+    }
 
-    .galeri-inner {
-      width: 100%; height: 100%; min-height: 180px;
+    .g-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+    .galeri-item:hover .g-frame img { transform: scale(1.05); }
+
+    .g-frame.g-empty {
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 48px; font-style: italic; color: rgba(26,26,26,0.25);
+      background: linear-gradient(135deg, var(--pink-light), var(--white));
+      color: var(--gold); opacity: 0.5; font-size: 22px;
     }
-
-    .galeri-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
-      opacity: 0; transition: opacity 0.3s;
-      display: flex; align-items: flex-end; padding: 20px;
-    }
-
-    .galeri-item:hover .galeri-overlay { opacity: 1; }
-
-    .galeri-overlay-text { color: white; font-size: 13px; font-weight: 500; }
 
     /* ── FİYATLAR ── */
     #fiyatlar {}
@@ -1038,16 +1027,10 @@
       <div class="section-label">Çalışmalarım</div>
       <h2 class="section-h2">Galeri</h2>
     </div>
-    <a href="https://instagram.com/selendmiiir" target="_blank" class="galeri-link">Instagram'da Daha Fazlası →</a>
   </div>
   <!-- STATİK GALERİ: Yeni fotoğraf eklemek için Claude'a fotoğrafı gönder,
-       otomatik olarak buraya yeni bir .galeri-item bloğu eklenecek. -->
-  <div class="galeri-grid reveal" id="galeriGrid">
-    <div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);">
-      <div style="font-size:32px; margin-bottom:12px;">🌸</div>
-      <div>Yakında fotoğraflar eklenecek</div>
-    </div>
-  </div>
+       otomatik olarak buraya eklenecek. En fazla 10 fotoğraf gösterilir. -->
+  <div class="galeri-grid reveal" id="galeriGrid"></div>
 </section>
 
 
@@ -1105,22 +1088,22 @@
 <script>
   // STATİK GALERİ VERİSİ — yeni fotoğraf eklemek için bu diziye
   // { url: 'galeri/fotoN.jpg' } şeklinde yeni bir satır eklemek yeterli.
+  // En fazla 10 fotoğraf gösterilir, boş kalan kutular çerçeve olarak durur.
   const GALERI_FOTOLAR = [
     // örnek: { url: 'galeri/foto1.jpg' },
   ];
 
+  function galeriKutuHtml(f, i) {
+    if (!f) return '<div class="galeri-item"><div class="g-frame g-empty">✦</div></div>';
+    return `<div class="galeri-item" onclick="openLightboxImg('${f.url}', 'Selen Demir Studio')">
+      <div class="g-frame"><img src="${f.url}" alt="Selen Demir Studio" loading="lazy"/></div>
+    </div>`;
+  }
+
   function galeriYukle() {
     const grid = document.getElementById('galeriGrid');
-    if (GALERI_FOTOLAR.length === 0) {
-      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--muted);"><div style="font-size:32px; margin-bottom:12px;">🌸</div><div>Yakında fotoğraflar eklenecek</div></div>';
-      return;
-    }
-    grid.innerHTML = GALERI_FOTOLAR.map(f => {
-      return `<div class="galeri-item" onclick="openLightboxImg('${f.url}', 'Selen Demir Studio')">
-        <img src="${f.url}" alt="Selen Demir Studio" style="width:100%;height:100%;object-fit:cover;"/>
-        <div class="galeri-overlay"><span class="galeri-overlay-text">Selen Demir Studio</span></div>
-      </div>`;
-    }).join('');
+    const slots = Array.from({length: 10}, (_, i) => GALERI_FOTOLAR[i]);
+    grid.innerHTML = slots.map((f, i) => galeriKutuHtml(f, i)).join('');
   }
 
   function openLightboxImg(src, caption) {
