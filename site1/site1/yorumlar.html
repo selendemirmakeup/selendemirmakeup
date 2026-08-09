@@ -360,6 +360,14 @@
     .yorum-card {
       background: #fff; border: 1px solid var(--border); border-radius: 4px;
       padding: 24px; display: flex; flex-direction: column; min-height: 200px;
+      text-decoration: none; color: inherit; cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+
+    a.yorum-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(26,26,26,0.08);
+      border-color: var(--gold-soft);
     }
 
     .yc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
@@ -455,7 +463,7 @@
     if (!y) return '<div class="yorum-card yc-empty">✦</div>';
     const yildiz = '★'.repeat(y.puan) + '☆'.repeat(5 - y.puan);
     const harf = y.ad ? y.ad.charAt(0).toUpperCase() : '?';
-    return `<div class="yorum-card">
+    return `<a href="https://g.page/r/Cb1KRpqWidFFEBM/review" target="_blank" class="yorum-card">
       <div class="yc-top">
         <div class="yc-stars">${yildiz}</div>
         <div class="yc-google">GOOGLE</div>
@@ -468,7 +476,7 @@
           <div class="yc-tur">${y.tur || ''}</div>
         </div>
       </div>
-    </div>`;
+    </a>`;
   }
 
   function yorumlariYukle() {
