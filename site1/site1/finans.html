@@ -153,17 +153,19 @@
   #fn-root .rank-bar-fill { height: 100%; background: var(--wine); border-radius: 4px; }
   #fn-root .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
   #fn-root .cal-headcell { font-size: 10.5px; font-weight: 700; text-transform: uppercase; opacity: 0.5; text-align: center; padding: 4px 0 8px; }
-  #fn-root .cal-cell { min-height: 76px; border: 1px solid var(--line); border-radius: 4px; padding: 5px 6px; cursor: pointer; background: #fff; }
+  #fn-root .cal-cell { min-height: 92px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 7px; cursor: pointer; background: #fff; }
   #fn-root .cal-cell:hover { background: var(--paper); }
   #fn-root .cal-cell.empty { border: none; background: transparent; cursor: default; }
-  #fn-root .cal-cell.today { border-color: var(--gold); background: var(--gold-soft); }
-  #fn-root .cal-daynum { font-size: 12px; font-weight: 700; opacity: 0.6; margin-bottom: 3px; }
-  #fn-root .cal-item { font-size: 10.5px; background: var(--wine); color: #fff; border-radius: 3px; padding: 2px 5px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  #fn-root .cal-more { font-size: 10px; opacity: 0.55; }
+  #fn-root .cal-cell.today { border-color: var(--gold); border-width: 2px; background: var(--gold-soft); }
+  #fn-root .cal-cell.has-items { border-color: #D8CBB0; }
+  #fn-root .cal-daynum { font-size: 13px; font-weight: 700; opacity: 0.7; margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
+  #fn-root .cal-count { background: var(--wine-deep); color: #fff; font-size: 10px; font-weight: 700; border-radius: 20px; min-width: 17px; height: 17px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+  #fn-root .cal-item { font-size: 10.5px; color: #fff; border-radius: 3px; padding: 3px 6px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+  #fn-root .cal-more { font-size: 10px; opacity: 0.6; font-weight: 600; padding-left: 2px; }
   #fn-root .cal-cell:not(.empty) { transition: box-shadow .12s; }
   #fn-root .cal-cell:not(.empty):hover { box-shadow: 0 0 0 2px var(--gold) inset; }
-  #fn-root .cal-day-card { background: var(--paper); border-radius: 4px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: background .12s; }
-  #fn-root .cal-day-card:hover { background: var(--gold-soft); }
+  #fn-root .cal-day-card { background: var(--paper); border-radius: 6px; padding: 13px 15px; margin-bottom: 9px; cursor: pointer; transition: background .12s, transform .12s; }
+  #fn-root .cal-day-card:hover { background: var(--gold-soft); transform: translateX(2px); }
   #fn-root .parse-box { background: var(--paper-dim); border-radius: 4px; padding: 12px; margin-bottom: 16px; }
   #fn-root .parse-box textarea { width: 100%; min-height: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; }
   #fn-root .takip-line { display: flex; gap: 16px; margin-top: 6px; }
@@ -284,7 +286,7 @@
   const DEFAULT_GIDER_KAT = ["Makyaj Malzemesi","Kozmetik","Fırça","Sarf Malzemesi","Kira","Elektrik","Su","İnternet","Telefon","Reklam - Instagram","Reklam - Google Ads","Ulaşım","Yakıt","Yemek","Personel","Vergi","Muhasebe","Yazılım","Abonelikler","Ekipman","Ofis/Stüdyo","Diğer"];
   const DEFAULT_ODEME_YONTEM = ["Nakit","Havale/EFT","Kredi Kartı","Diğer"];
   const STOK_KATEGORILERI = ["Makyaj Malzemesi","Kozmetik","Fırça","Sarf Malzemesi","Ekipman"];
-  const ORG_RENK = { 'Düğün': '#B5573A', 'Nişan': '#3B6B9C', 'Kına': '#7C8F6E', 'Söz': '#8A5B7A', 'Davet': '#C9A15A', 'Diğer': '#8A8A8A' };
+  const ORG_RENK = { 'Düğün': '#A84A32', 'Nişan': '#2F5A82', 'Kına': '#5F7350', 'Söz': '#6B4359', 'Davet': '#8A6A35', 'Diğer': '#6B6B6B' };
   function orgRenk(org) { return ORG_RENK[org] || ORG_RENK['Diğer']; }
 
   const root = document.getElementById('fn-root');
@@ -731,8 +733,8 @@
       const items = (byDay[d] || []).slice().sort((a,b) => (a.randevuSaati||'').localeCompare(b.randevuSaati||''));
       const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       const isToday = dateStr === todayStr;
-      return `<div class="cal-cell${isToday?' today':''}" data-day="${d}">
-        <div class="cal-daynum">${d}</div>
+      return `<div class="cal-cell${isToday?' today':''}${items.length?' has-items':''}" data-day="${d}">
+        <div class="cal-daynum">${d}${items.length ? `<span class="cal-count">${items.length}</span>` : ''}</div>
         ${items.slice(0,3).map(g => `<div class="cal-item" style="background:${orgRenk(g.organizasyon||g.kategori)};" title="${esc(g.musteri)} — ${esc(g.hizmet||g.kategori)}">${esc(g.randevuSaati?g.randevuSaati+' ':'')}${esc(g.musteri)}</div>`).join('')}
         ${items.length>3 ? `<div class="cal-more">+${items.length-3} daha</div>` : ''}
       </div>`;
@@ -1156,10 +1158,12 @@
   function modalTakvimGun(d) {
     const { dateLabel, items } = d;
     const sorted = items.slice().sort((a,b) => (a.randevuSaati||'').localeCompare(b.randevuSaati||''));
-    return `<div class="overlay" id="fn-overlay"><div class="modal" style="max-width:600px;">
-      <h2 class="display">${esc(dateLabel)}</h2>
-      <div class="modal-sub">${sorted.length} randevu</div>
-      <div style="max-height:56vh;overflow-y:auto;margin-top:12px;">
+    return `<div class="overlay" id="fn-overlay"><div class="modal" style="max-width:620px;">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <h2 class="display" style="margin:0;">${esc(dateLabel)}</h2>
+        <span style="background:var(--wine-deep);color:#fff;font-size:13px;font-weight:700;padding:5px 13px;border-radius:20px;white-space:nowrap;">${sorted.length} randevu</span>
+      </div>
+      <div style="max-height:56vh;overflow-y:auto;margin-top:16px;">
         ${sorted.length===0 ? `<div class="empty-state">Bu gün için randevu yok.</div>` : sorted.map(g => {
           const org = g.organizasyon || g.kategori || 'Diğer';
           const renk = orgRenk(org);
@@ -1532,29 +1536,41 @@
       }
     };
     const calPrev = document.getElementById('cal-prev');
-    if (calPrev) calPrev.onclick = () => { let {y,m}=S.calMonth; m--; if(m<0){m=11;y--;} S.calMonth={y,m}; renderMain(); };
+    if (calPrev) calPrev.onclick = () => {
+      try { let {y,m}=S.calMonth; m--; if(m<0){m=11;y--;} S.calMonth={y,m}; renderMain(); }
+      catch(err) { console.error('cal-prev hata:', err); }
+    };
     const calNext = document.getElementById('cal-next');
-    if (calNext) calNext.onclick = () => { let {y,m}=S.calMonth; m++; if(m>11){m=0;y++;} S.calMonth={y,m}; renderMain(); };
+    if (calNext) calNext.onclick = () => {
+      try { let {y,m}=S.calMonth; m++; if(m>11){m=0;y++;} S.calMonth={y,m}; renderMain(); }
+      catch(err) { console.error('cal-next hata:', err); }
+    };
     root.querySelectorAll('.cal-cell[data-day]').forEach(c => c.onclick = () => {
-      const day = Number(c.getAttribute('data-day'));
-      const { y, m } = S.calMonth;
-      const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-      const items = S.gelirler.filter(g => (g.randevuTarihi || g.tarih) === dateStr);
-      const dateLabel = new Date(y, m, day).toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric', weekday:'long' });
-      S.modal = { type: 'takvimGun', data: { dateStr, dateLabel, items } };
-      renderMain();
+      try {
+        const day = Number(c.getAttribute('data-day'));
+        const { y, m } = S.calMonth;
+        const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+        const items = S.gelirler.filter(g => (g.randevuTarihi || g.tarih) === dateStr);
+        const dateLabel = new Date(y, m, day).toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric', weekday:'long' });
+        S.modal = { type: 'takvimGun', data: { dateStr, dateLabel, items } };
+        renderMain();
+      } catch(err) { console.error('cal-cell tıklama hatası:', err); }
     });
     root.querySelectorAll('[data-goto-gelir]').forEach(c => c.onclick = () => {
-      const id = c.getAttribute('data-goto-gelir');
-      const item = S.gelirler.find(g => g.id === id);
-      if (item) { S.modal = { type: 'gelir', data: {...item} }; renderMain(); }
+      try {
+        const id = c.getAttribute('data-goto-gelir');
+        const item = S.gelirler.find(g => g.id === id);
+        if (item) { S.modal = { type: 'gelir', data: {...item} }; renderMain(); }
+      } catch(err) { console.error('gelir açma hatası:', err); }
     });
     const takvimYeniBtn = document.getElementById('fn-takvim-yeni');
     if (takvimYeniBtn) takvimYeniBtn.onclick = () => {
-      const dateStr = S.modal.data.dateStr;
-      const base = { tarih: dateStr, randevuTarihi: dateStr, kategori: S.ayarlar.gelirKategorileri[0], odemeYontemi: S.ayarlar.odemeYontemleri[0], hizmetBedeli: '', tahsilEdilen: '2000', randevuDurumu: 'Onaylandı' };
-      S.modal = { type: 'gelir', data: base };
-      renderMain();
+      try {
+        const dateStr = S.modal.data.dateStr;
+        const base = { tarih: dateStr, randevuTarihi: dateStr, kategori: S.ayarlar.gelirKategorileri[0], odemeYontemi: S.ayarlar.odemeYontemleri[0], hizmetBedeli: '', tahsilEdilen: '2000', randevuDurumu: 'Onaylandı' };
+        S.modal = { type: 'gelir', data: base };
+        renderMain();
+      } catch(err) { console.error('yeni randevu açma hatası:', err); }
     };
     const eKategori = document.getElementById('e-kategori');
     if (eKategori) eKategori.onchange = () => {
