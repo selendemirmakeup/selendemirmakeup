@@ -108,6 +108,7 @@
   #fn-root .badge.paid { background: var(--sage-soft); color: #4B5A3F; }
   #fn-root .badge.partial { background: var(--gold-soft); color: #7A5C1E; }
   #fn-root .badge.unpaid { background: var(--rust-soft); color: #8C3A24; }
+  #fn-root .badge.nofiyat { background: #E8E0D0; color: #6B5B3A; }
   #fn-root .empty-state { padding: 50px 20px; text-align: center; opacity: 0.5; font-size: 13px; }
   #fn-root .empty-state .display { font-size: 20px; opacity: 1; color: var(--wine); margin-bottom: 6px; }
   #fn-root .loading { padding: 50px; text-align: center; opacity: 0.5; font-size: 13px; }
@@ -358,17 +359,10 @@
 
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyu2OSxhx8Q8aW9GBu9MWTAaIJMx7wBDQHJwIb8E19VgqMzO_DuQzpaR6JOkqMEcoZg/exec';
 
-  function isoToLocalDateStr(iso) {
-    if (!iso) return '';
-    const d = new Date(iso);
-    if (isNaN(d)) return '';
-    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  }
-  function isoToLocalTimeStr(iso) {
-    if (!iso) return '';
-    const d = new Date(iso);
-    if (isNaN(d)) return '';
-    return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  function normalizeTel(t) { return String(t||'').replace(/[^\d]/g,''); }
+  function parseParaStr(s) {
+    if (s === null || s === undefined || s === '') return '';
+    return String(s).replace(/\./g,'').replace(',','.');
   }
   function sheetRowSourceId(row) {
     const raw = (row['Gönderim Zamanı']||'') + '|' + (row['Telefon']||'') + '|' + (row['Randevu Tarihi']||'');
@@ -377,33 +371,63 @@
     return 'sheet-' + Math.abs(h);
   }
 
+  async function fetchTakvimFiyatlari() {
+    const res = await fetch(APPS_SCRIPT_URL + '?sheet=Takvim');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
   async function sheetSync() {
     const res = await fetch(APPS_SCRIPT_URL);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const rows = await res.json();
-    let eklenen = 0;
+    let takvimFiyatlar = [];
+    try { takvimFiyatlar = await fetchTakvimFiyatlari(); } catch (e) { /* Takvim fiyatları okunamazsa fiyat boş bırakılır, senkronizasyon devam eder */ }
+
+    function fiyatBul(telefon, tarih) {
+      const telNorm = normalizeTel(telefon);
+      if (!telNorm) return null;
+      return takvimFiyatlar.find(f => normalizeTel(f.telefon) === telNorm && f.tarih === tarih && f.hizmetBedeli) || null;
+    }
+
+    let eklenen = 0, guncellenen = 0;
+
     for (const row of rows) {
       if (!row['Gönderim Zamanı']) continue;
       const sourceId = sheetRowSourceId(row);
       if (S.gelirler.find(g => g.sourceId === sourceId)) continue;
-      const randevuTarihi = isoToLocalDateStr(row['Randevu Tarihi']);
-      const randevuSaati = isoToLocalTimeStr(row['Randevu Saati']);
+      const randevuTarihi = row['Randevu Tarihi'] || '';
+      const randevuSaati = row['Randevu Saati'] || '';
       const hizmetRaw = row['Hizmet'] || '';
       const kategori = S.ayarlar.gelirKategorileri.includes(hizmetRaw) ? hizmetRaw : S.ayarlar.gelirKategorileri[0];
+      const fm = fiyatBul(row['Telefon'], randevuTarihi);
       const rec = {
         musteri: row['Ad Soyad'] || '', telefon: row['Telefon'] || '', email: row['E-posta'] || '',
         instagram: row['Instagram'] || '', adres: row['Adres'] || '', organizasyon: row['Organizasyon'] || '',
         paylasim: row['Paylaşım İzni'] || '', not: row['Notlar'] || '',
         randevuTarihi, randevuSaati, tarih: randevuTarihi || todayISO(),
-        kategori, hizmetBedeli: '', tahsilEdilen: '2000', odemeYontemi: S.ayarlar.odemeYontemleri[0],
+        kategori,
+        hizmetBedeli: fm ? parseParaStr(fm.hizmetBedeli) : '',
+        tahsilEdilen: fm && fm.alinanOnOdeme ? parseParaStr(fm.alinanOnOdeme) : '2000',
+        odemeYontemi: S.ayarlar.odemeYontemleri[0],
         randevuDurumu: 'Onaylandı', sourceId,
       };
-      const fiyat = hesaplaFiyat(kategori, randevuTarihi);
-      if (fiyat != null) rec.hizmetBedeli = fiyat;
       await saveRecord('gelir:', uid('e'), rec);
       eklenen++;
     }
-    return eklenen;
+
+    // Daha önce fiyatsız aktarılmış kayıtlara, Takvim'e sonradan elle girilmiş fiyatı işler
+    for (const g of S.gelirler) {
+      if (g.sourceId && (g.hizmetBedeli === '' || g.hizmetBedeli === null || g.hizmetBedeli === undefined)) {
+        const fm = fiyatBul(g.telefon, g.randevuTarihi);
+        if (fm) {
+          await saveRecord('gelir:', g.id, { ...g, hizmetBedeli: parseParaStr(fm.hizmetBedeli), tahsilEdilen: fm.alinanOnOdeme ? parseParaStr(fm.alinanOnOdeme) : g.tahsilEdilen });
+          guncellenen++;
+        }
+      }
+    }
+
+    return { eklenen, guncellenen };
   }
 
   function isWeekend(dateStr) {
@@ -427,12 +451,13 @@
     return d < bugun;
   }
   function gelirDurum(g) {
+    if (g.hizmetBedeli === '' || g.hizmetBedeli === null || g.hizmetBedeli === undefined) return 'nofiyat';
     const t = Number(g.hizmetBedeli)||0, k = Number(g.tahsilEdilen)||0;
     if (t > 0 && k >= t) return 'paid';
     if (k > 0) return 'partial';
     return 'unpaid';
   }
-  function gelirDurumLabel(s) { return s === 'paid' ? 'Ödendi' : s === 'partial' ? 'Kısmi Ödendi' : 'Bekliyor'; }
+  function gelirDurumLabel(s) { return s === 'nofiyat' ? 'Fiyat Girilmedi' : s === 'paid' ? 'Ödendi' : s === 'partial' ? 'Kısmi Ödendi' : 'Bekliyor'; }
 
   // ---------- storage ----------
   async function fetchGiderlerFromSheet() {
@@ -739,6 +764,7 @@
     const range = dateRange(S.dateFilter);
     const list = S.gelirler.filter(g => inRange(g.tarih, range))
       .sort((a,b) => (b.tarih||'').localeCompare(a.tarih||''));
+    const fiyatsizSayisi = list.filter(g => gelirDurum(g) === 'nofiyat' && g.randevuDurumu !== 'İptal').length;
     return `
       <div class="page-head">
         <div><h1 class="pg-title">Gelirler</h1><div class="pg-sub">Hizmet bedeli ile tahsil edilen tutar ayrı takip edilir</div></div>
@@ -748,6 +774,7 @@
           <button class="btn btn-primary" data-open-modal="gelir-new">+ Gelir Ekle</button>
         </div>
       </div>
+      ${fiyatsizSayisi > 0 ? `<div class="note-box" style="background:#E8E0D0;color:#6B5B3A;">⚠️ ${fiyatsizSayisi} randevuda henüz fiyat girilmemiş — Google Takvim'deki ilgili etkinliğin açıklamasına "Toplam Hizmet Bedeli" yazıp tekrar senkronize edin.</div>` : ''}
       <div id="fn-sync-status"></div>
       ${filterBarHtml()}
       <div class="ledger">${renderGelirTable(list)}</div>
@@ -1076,7 +1103,7 @@
     return `
       <div class="panel">
         <h3 class="display">Hizmet Fiyat Listesi</h3>
-        <div class="pg-sub" style="margin-bottom:12px;">Randevu eklerken hizmet ve tarih seçildiğinde sistem buradaki fiyatı otomatik önerir (hafta içi / hafta sonu farkını kendisi belirler).</div>
+        <div class="pg-sub" style="margin-bottom:12px;">Bu liste artık otomatik içe aktarmada kullanılmıyor — gerçek fiyat, Google Takvim'deki randevu açıklamasına elle yazdığınız "Toplam Hizmet Bedeli" satırından otomatik okunuyor (indirim vb. durumlarda daha doğru sonuç verir). Bu tablo sadece "+ Gelir Ekle" ile elle yeni kayıt girerken isterseniz hızlı fiyat önerisi almak için, isteğe bağlı bir yardımcı.</div>
         <table><thead><tr><th>Hizmet</th><th>Hafta İçi (₺)</th><th>Hafta Sonu (₺)</th></tr></thead><tbody>
           ${kats.map(k => {
             const r = S.fiyatlar[k] || { haftaIci: 0, haftaSonu: 0 };
@@ -1367,10 +1394,10 @@
       syncBtn.disabled = true; syncBtn.textContent = 'Senkronize ediliyor…';
       if (statusEl) statusEl.innerHTML = '';
       try {
-        const eklenen = await sheetSync();
+        const { eklenen, guncellenen } = await sheetSync();
         await loadAll();
         const st = document.getElementById('fn-sync-status');
-        if (st) st.innerHTML = `<div class="note-box">✅ Senkronizasyon tamamlandı — ${eklenen} yeni randevu eklendi.</div>`;
+        if (st) st.innerHTML = `<div class="note-box">✅ Senkronizasyon tamamlandı — ${eklenen} yeni randevu eklendi${guncellenen>0 ? ', ' + guncellenen + ' kayıtta Takvimden fiyat işlendi' : ''}.</div>`;
       } catch (err) {
         renderMain();
         const st = document.getElementById('fn-sync-status');
@@ -1388,7 +1415,8 @@
         for (const g of otomatikGelenler) {
           await deleteRecord('gelir:', g.id);
         }
-        const eklenen = await sheetSync();
+        S.gelirler = S.gelirler.filter(g => !g.sourceId);
+        const { eklenen } = await sheetSync();
         await loadAll();
         const st = document.getElementById('fn-sync-status');
         if (st) st.innerHTML = `<div class="note-box">✅ ${otomatikGelenler.length} eski kayıt temizlendi, ${eklenen} randevu doğru tarihleriyle yeniden getirildi.</div>`;
@@ -1649,8 +1677,8 @@
 
   async function autoSync() {
     try {
-      const eklenen = await sheetSync();
-      if (eklenen > 0) await loadAll();
+      const { eklenen, guncellenen } = await sheetSync();
+      if (eklenen > 0 || guncellenen > 0) await loadAll();
     } catch (err) {
       // arka plan senkronizasyonu sessizce başarısız olabilir (örn. Claude önizlemesi), kullanıcıyı rahatsız etmiyoruz
     }
