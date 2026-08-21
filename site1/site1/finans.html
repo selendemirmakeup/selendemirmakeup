@@ -146,6 +146,10 @@
   #fn-root .cal-daynum { font-size: 12px; font-weight: 700; opacity: 0.6; margin-bottom: 3px; }
   #fn-root .cal-item { font-size: 10.5px; background: var(--wine); color: #fff; border-radius: 3px; padding: 2px 5px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   #fn-root .cal-more { font-size: 10px; opacity: 0.55; }
+  #fn-root .cal-cell:not(.empty) { transition: box-shadow .12s; }
+  #fn-root .cal-cell:not(.empty):hover { box-shadow: 0 0 0 2px var(--gold) inset; }
+  #fn-root .cal-day-card { background: var(--paper); border-radius: 4px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: background .12s; }
+  #fn-root .cal-day-card:hover { background: var(--gold-soft); }
   #fn-root .parse-box { background: var(--paper-dim); border-radius: 4px; padding: 12px; margin-bottom: 16px; }
   #fn-root .parse-box textarea { width: 100%; min-height: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; }
   #fn-root .takip-line { display: flex; gap: 16px; margin-top: 6px; }
@@ -226,6 +230,8 @@
   const DEFAULT_GIDER_KAT = ["Makyaj Malzemesi","Kozmetik","Fırça","Sarf Malzemesi","Kira","Elektrik","Su","İnternet","Telefon","Reklam - Instagram","Reklam - Google Ads","Ulaşım","Yakıt","Yemek","Personel","Vergi","Muhasebe","Yazılım","Abonelikler","Ekipman","Ofis/Stüdyo","Diğer"];
   const DEFAULT_ODEME_YONTEM = ["Nakit","Havale/EFT","Kredi Kartı","Diğer"];
   const STOK_KATEGORILERI = ["Makyaj Malzemesi","Kozmetik","Fırça","Sarf Malzemesi","Ekipman"];
+  const ORG_RENK = { 'Düğün': '#B5573A', 'Nişan': '#3B6B9C', 'Kına': '#7C8F6E', 'Söz': '#8A5B7A', 'Davet': '#C9A15A', 'Diğer': '#8A8A8A' };
+  function orgRenk(org) { return ORG_RENK[org] || ORG_RENK['Diğer']; }
 
   const root = document.getElementById('fn-root');
 
@@ -637,40 +643,34 @@
     const todayStr = todayISO();
     const gridHtml = cells.map(d => {
       if (!d) return `<div class="cal-cell empty"></div>`;
-      const items = byDay[d] || [];
+      const items = (byDay[d] || []).slice().sort((a,b) => (a.randevuSaati||'').localeCompare(b.randevuSaati||''));
       const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       const isToday = dateStr === todayStr;
       return `<div class="cal-cell${isToday?' today':''}" data-day="${d}">
         <div class="cal-daynum">${d}</div>
-        ${items.slice(0,3).map(g => `<div class="cal-item" title="${esc(g.musteri)} — ${esc(g.hizmet||g.kategori)}">${esc(g.musteri)}</div>`).join('')}
+        ${items.slice(0,3).map(g => `<div class="cal-item" style="background:${orgRenk(g.organizasyon||g.kategori)};" title="${esc(g.musteri)} — ${esc(g.hizmet||g.kategori)}">${esc(g.randevuSaati?g.randevuSaati+' ':'')}${esc(g.musteri)}</div>`).join('')}
         ${items.length>3 ? `<div class="cal-more">+${items.length-3} daha</div>` : ''}
       </div>`;
     }).join('');
-    const selectedDay = S.calSelectedDay;
-    const selList = selectedDay ? (byDay[selectedDay] || []) : [];
     return `
       <div class="page-head">
-        <div><h1 class="pg-title">Takvim</h1><div class="pg-sub">Gelinlerin randevu tarihlerine göre görünüm</div></div>
+        <div><h1 class="pg-title">Takvim</h1><div class="pg-sub">Bir güne tıklayın, o günün tüm randevuları açılsın</div></div>
         <button class="btn btn-primary" data-open-modal="gelir-new">+ Randevu Ekle</button>
       </div>
       <div class="panel">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-          <button class="btn btn-ghost btn-sm" id="cal-prev">‹ Önceki</button>
+          <button class="btn btn-ghost btn-sm" id="cal-prev">‹ Önceki Ay</button>
           <h3 class="display" style="margin:0;text-transform:capitalize;">${esc(monthLabel)}</h3>
-          <button class="btn btn-ghost btn-sm" id="cal-next">Sonraki ›</button>
+          <button class="btn btn-ghost btn-sm" id="cal-next">Sonraki Ay ›</button>
         </div>
         <div class="cal-grid cal-head">
           ${['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].map(d=>`<div class="cal-headcell">${d}</div>`).join('')}
         </div>
         <div class="cal-grid">${gridHtml}</div>
-      </div>
-      ${selectedDay ? `
-        <div class="panel">
-          <h3 class="display">${selectedDay} ${esc(monthLabel)} Randevuları</h3>
-          ${selList.length===0 ? `<div class="empty-state">Bu gün için randevu yok.</div>` : `
-          <div class="ledger">${renderGelirTable(selList)}</div>`}
+        <div class="legend" style="margin-top:14px;flex-wrap:wrap;">
+          ${Object.keys(ORG_RENK).filter(k=>k!=='Diğer').map(k => `<span><i style="background:${ORG_RENK[k]};"></i> ${esc(k)}</span>`).join('')}
         </div>
-      ` : ''}
+      </div>
     `;
   }
 
@@ -1061,7 +1061,47 @@
     if (type === 'urun') return modalUrun(data);
     if (type === 'odenecek') return modalOdenecek(data);
     if (type === 'sabit') return modalSabit(data);
+    if (type === 'takvimGun') return modalTakvimGun(data);
     return '';
+  }
+
+  function modalTakvimGun(d) {
+    const { dateLabel, items } = d;
+    const sorted = items.slice().sort((a,b) => (a.randevuSaati||'').localeCompare(b.randevuSaati||''));
+    return `<div class="overlay" id="fn-overlay"><div class="modal" style="max-width:600px;">
+      <h2 class="display">${esc(dateLabel)}</h2>
+      <div class="modal-sub">${sorted.length} randevu</div>
+      <div style="max-height:56vh;overflow-y:auto;margin-top:12px;">
+        ${sorted.length===0 ? `<div class="empty-state">Bu gün için randevu yok.</div>` : sorted.map(g => {
+          const org = g.organizasyon || g.kategori || 'Diğer';
+          const renk = orgRenk(org);
+          const status = gelirDurum(g);
+          return `<div class="cal-day-card" data-goto-gelir="${esc(g.id)}" style="border-left:4px solid ${renk};">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+              <div>
+                <div class="name-cell" style="font-size:15px;">${esc(g.randevuSaati||'')} ${esc(g.musteri)}</div>
+                <div class="sub-cell">${esc(g.hizmet||g.kategori||'')} · ${esc(org)}</div>
+              </div>
+              <span class="badge ${status}">${gelirDurumLabel(status)}</span>
+            </div>
+            <div style="font-size:12.5px;margin-top:8px;opacity:.8;line-height:1.6;">
+              ${g.telefon ? `📞 ${esc(g.telefon)}<br/>` : ''}
+              ${g.instagram ? `📷 @${esc(g.instagram.replace('@',''))}<br/>` : ''}
+              ${g.adres ? `📍 ${esc(g.adres)}<br/>` : ''}
+              ${g.not ? `📝 ${esc(g.not)}` : ''}
+            </div>
+            <div class="money" style="margin-top:8px;">${fmtTL(g.hizmetBedeli)} <span style="opacity:.5;font-weight:400;">(kalan: ${fmtTL(gelirKalan(g))})</span></div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="modal-actions" style="margin-top:16px;">
+        <div></div>
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="btn btn-ghost" data-close-modal>Kapat</button>
+          <button type="button" class="btn btn-primary" id="fn-takvim-yeni">+ Bu Güne Randevu Ekle</button>
+        </div>
+      </div>
+    </div></div>`;
   }
 
   function opts(list, selected) { return list.map(o => `<option value="${esc(o)}"${o===selected?' selected':''}>${esc(o)}</option>`).join(''); }
@@ -1382,12 +1422,30 @@
       }
     };
     const calPrev = document.getElementById('cal-prev');
-    if (calPrev) calPrev.onclick = () => { let {y,m}=S.calMonth; m--; if(m<0){m=11;y--;} S.calMonth={y,m}; S.calSelectedDay=null; renderMain(); };
+    if (calPrev) calPrev.onclick = () => { let {y,m}=S.calMonth; m--; if(m<0){m=11;y--;} S.calMonth={y,m}; renderMain(); };
     const calNext = document.getElementById('cal-next');
-    if (calNext) calNext.onclick = () => { let {y,m}=S.calMonth; m++; if(m>11){m=0;y++;} S.calMonth={y,m}; S.calSelectedDay=null; renderMain(); };
+    if (calNext) calNext.onclick = () => { let {y,m}=S.calMonth; m++; if(m>11){m=0;y++;} S.calMonth={y,m}; renderMain(); };
     root.querySelectorAll('.cal-cell[data-day]').forEach(c => c.onclick = () => {
-      S.calSelectedDay = Number(c.getAttribute('data-day')); renderMain();
+      const day = Number(c.getAttribute('data-day'));
+      const { y, m } = S.calMonth;
+      const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      const items = S.gelirler.filter(g => (g.randevuTarihi || g.tarih) === dateStr);
+      const dateLabel = new Date(y, m, day).toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric', weekday:'long' });
+      S.modal = { type: 'takvimGun', data: { dateStr, dateLabel, items } };
+      renderMain();
     });
+    root.querySelectorAll('[data-goto-gelir]').forEach(c => c.onclick = () => {
+      const id = c.getAttribute('data-goto-gelir');
+      const item = S.gelirler.find(g => g.id === id);
+      if (item) { S.modal = { type: 'gelir', data: {...item} }; renderMain(); }
+    });
+    const takvimYeniBtn = document.getElementById('fn-takvim-yeni');
+    if (takvimYeniBtn) takvimYeniBtn.onclick = () => {
+      const dateStr = S.modal.data.dateStr;
+      const base = { tarih: dateStr, randevuTarihi: dateStr, kategori: S.ayarlar.gelirKategorileri[0], odemeYontemi: S.ayarlar.odemeYontemleri[0], hizmetBedeli: '', tahsilEdilen: '2000', randevuDurumu: 'Onaylandı' };
+      S.modal = { type: 'gelir', data: base };
+      renderMain();
+    };
     const eKategori = document.getElementById('e-kategori');
     if (eKategori) eKategori.onchange = () => {
       const box = document.getElementById('e-stok-secim');
