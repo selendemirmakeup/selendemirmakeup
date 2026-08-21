@@ -1,0 +1,1480 @@
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<div id="fn-root"></div>
+<style>
+  #fn-root {
+    --ink: #2A1B22;
+    --wine: #5C2740;
+    --wine-deep: #3D1A2B;
+    --gold: #C9A15A;
+    --gold-soft: #E4CFA0;
+    --paper: #F8F3EC;
+    --paper-dim: #EFE6D8;
+    --sage: #7C8F6E;
+    --sage-soft: #E4EAD9;
+    --rust: #B5573A;
+    --rust-soft: #F2DCD2;
+    --line: rgba(42,27,34,0.12);
+    font-family: 'Manrope', -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  #fn-root *{ box-sizing: border-box; }
+  #fn-root .display { font-family: 'Cormorant Garamond', 'Playfair Display', serif; }
+  #fn-root .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  #fn-root .app-shell { display: flex; min-height: 100vh; }
+
+  /* sidebar */
+  #fn-root .sidebar { width: 230px; flex-shrink: 0; background: var(--wine-deep); color: var(--paper); padding: 22px 14px; }
+  #fn-root .side-brand { display: flex; align-items: baseline; gap: 8px; padding: 0 8px 18px; border-bottom: 1px solid rgba(248,243,236,0.15); margin-bottom: 14px; }
+  #fn-root .side-brand .glyph { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--gold); }
+  #fn-root .side-brand .txt { font-size: 12.5px; font-weight: 700; line-height: 1.25; }
+  #fn-root .nav-group { margin-bottom: 4px; }
+  #fn-root .nav-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; padding: 12px 10px 5px; }
+  #fn-root .nav-item {
+    display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 4px; cursor: pointer;
+    font-size: 13px; font-weight: 600; opacity: 0.78; margin-bottom: 1px; transition: background .12s;
+  }
+  #fn-root .nav-item:hover { background: rgba(248,243,236,0.08); opacity: 1; }
+  #fn-root .nav-item.active { background: var(--gold); color: var(--wine-deep); opacity: 1; }
+
+  #fn-root .main { flex: 1; padding: 26px 30px 60px; max-width: 1320px; }
+  #fn-root .page-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+  #fn-root h1.pg-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--wine-deep); margin: 0; }
+  #fn-root .pg-sub { font-size: 12.5px; opacity: 0.55; margin-top: 2px; }
+
+  #fn-root .btn { padding: 9px 16px; border-radius: 3px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; }
+  #fn-root .btn-primary { background: var(--wine); color: #fff; }
+  #fn-root .btn-primary:hover { background: var(--wine-deep); }
+  #fn-root .btn-ghost { background: transparent; color: var(--ink); opacity: 0.6; border: 1px solid var(--line); }
+  #fn-root .btn-ghost:hover { opacity: 1; }
+  #fn-root .btn-danger { background: var(--rust-soft); color: #8C3A24; }
+  #fn-root .btn-sm { padding: 6px 11px; font-size: 12px; }
+
+  /* filter bar */
+  #fn-root .filter-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 18px; flex-wrap: wrap; }
+  #fn-root select, #fn-root input, #fn-root textarea {
+    padding: 8px 11px; border: 1px solid var(--line); border-radius: 3px; font-size: 13px;
+    font-family: inherit; background: #fff; color: var(--ink);
+  }
+  #fn-root select:focus, #fn-root input:focus, #fn-root textarea:focus { outline: none; border-color: var(--wine); }
+  #fn-root .search-input { min-width: 210px; }
+
+  /* stat cards */
+  #fn-root .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  @media (max-width: 1000px) { #fn-root .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  #fn-root .stat-card { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; position: relative; overflow: hidden; }
+  #fn-root .stat-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold); }
+  #fn-root .stat-card.sage::before { background: var(--sage); }
+  #fn-root .stat-card.rust::before { background: var(--rust); }
+  #fn-root .stat-card.wine::before { background: var(--wine); }
+  #fn-root .stat-label { font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; margin-bottom: 5px; }
+  #fn-root .stat-value { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 700; color: var(--wine-deep); }
+  #fn-root .stat-delta { font-size: 11px; margin-top: 4px; font-weight: 700; }
+  #fn-root .stat-delta.up { color: var(--sage); }
+  #fn-root .stat-delta.down { color: var(--rust); }
+
+  /* cards / panels */
+  #fn-root .panel { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 18px 20px; margin-bottom: 18px; }
+  #fn-root .panel h3.display { font-size: 19px; color: var(--wine-deep); margin: 0 0 12px; }
+  #fn-root .two-col { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+  @media (max-width: 1000px) { #fn-root .two-col { grid-template-columns: 1fr; } }
+
+  /* table */
+  #fn-root .ledger { background: #fff; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  #fn-root table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  #fn-root thead th { text-align: left; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; padding: 10px 12px; border-bottom: 1px solid var(--line); font-weight: 700; white-space: nowrap; }
+  #fn-root tbody td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  #fn-root tbody tr:last-child td { border-bottom: none; }
+  #fn-root tbody tr:hover { background: var(--paper); cursor: pointer; }
+  #fn-root .name-cell { font-weight: 700; color: var(--wine-deep); }
+  #fn-root .sub-cell { font-size: 11px; opacity: 0.55; margin-top: 2px; }
+  #fn-root .money { font-family: 'IBM Plex Mono', monospace; font-weight: 600; white-space: nowrap; }
+  #fn-root .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 700; white-space: nowrap; }
+  #fn-root .badge.paid { background: var(--sage-soft); color: #4B5A3F; }
+  #fn-root .badge.partial { background: var(--gold-soft); color: #7A5C1E; }
+  #fn-root .badge.unpaid { background: var(--rust-soft); color: #8C3A24; }
+  #fn-root .empty-state { padding: 50px 20px; text-align: center; opacity: 0.5; font-size: 13px; }
+  #fn-root .empty-state .display { font-size: 20px; opacity: 1; color: var(--wine); margin-bottom: 6px; }
+  #fn-root .loading { padding: 50px; text-align: center; opacity: 0.5; font-size: 13px; }
+
+  /* tabs (secondary) */
+  #fn-root .subtabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  #fn-root .subtab { padding: 9px 15px; font-size: 12.5px; font-weight: 700; cursor: pointer; opacity: 0.55; border-bottom: 2px solid transparent; }
+  #fn-root .subtab.active { opacity: 1; color: var(--wine); border-bottom-color: var(--wine); }
+
+  /* modal */
+  #fn-root .overlay { position: fixed; inset: 0; background: rgba(42,27,34,0.45); display: flex; align-items: flex-start; justify-content: center; padding: 30px 16px; overflow-y: auto; z-index: 1000; }
+  #fn-root .modal { background: var(--paper); border-radius: 6px; max-width: 640px; width: 100%; padding: 26px 28px 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+  #fn-root .modal h2.display { color: var(--wine-deep); font-size: 24px; margin: 0 0 4px; }
+  #fn-root .modal .modal-sub { font-size: 11.5px; opacity: 0.55; margin-bottom: 18px; }
+  #fn-root .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px 13px; }
+  #fn-root .form-grid .span2 { grid-column: 1 / -1; }
+  #fn-root label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6; display: block; margin-bottom: 4px; }
+  #fn-root .field-wrap { margin-bottom: 2px; }
+  #fn-root .field-wrap input, #fn-root .field-wrap select, #fn-root .field-wrap textarea { width: 100%; }
+  #fn-root textarea { resize: vertical; min-height: 50px; }
+  #fn-root .modal-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px; }
+  #fn-root .balance-note { font-size: 12px; margin-top: 10px; padding: 9px 11px; border-radius: 3px; background: var(--paper-dim); }
+  #fn-root .note-box { font-size: 12px; padding: 10px 12px; border-radius: 3px; background: var(--gold-soft); color: #7A5C1E; margin-bottom: 14px; }
+  #fn-root .checkline { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  #fn-root .checkline input { width: auto; }
+  #fn-root .chip-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  #fn-root .chip { background: var(--paper-dim); border-radius: 20px; padding: 5px 11px 5px 13px; font-size: 12px; display: flex; align-items: center; gap: 7px; }
+  #fn-root .chip button { background: none; border: none; cursor: pointer; opacity: 0.5; font-size: 13px; line-height: 1; padding: 0; }
+  #fn-root .chip button:hover { opacity: 1; color: var(--rust); }
+  #fn-root .bars { display: flex; align-items: flex-end; gap: 10px; height: 150px; padding-top: 10px; }
+  #fn-root .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  #fn-root .bar-pair { display: flex; gap: 3px; align-items: flex-end; height: 120px; width: 100%; justify-content: center; }
+  #fn-root .bar { width: 14px; border-radius: 2px 2px 0 0; }
+  #fn-root .bar-lbl { font-size: 10.5px; opacity: 0.6; margin-top: 6px; }
+  #fn-root .legend { display: flex; gap: 16px; font-size: 11px; margin-top: 10px; opacity: 0.7; }
+  #fn-root .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  #fn-root .legend i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+  #fn-root .rank-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  #fn-root .rank-row:last-child { border: none; }
+  #fn-root .rank-medal { font-size: 15px; width: 20px; }
+  #fn-root .rank-bar-bg { flex: 1; height: 7px; background: var(--paper-dim); border-radius: 4px; overflow: hidden; }
+  #fn-root .rank-bar-fill { height: 100%; background: var(--wine); border-radius: 4px; }
+  #fn-root .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  #fn-root .cal-headcell { font-size: 10.5px; font-weight: 700; text-transform: uppercase; opacity: 0.5; text-align: center; padding: 4px 0 8px; }
+  #fn-root .cal-cell { min-height: 76px; border: 1px solid var(--line); border-radius: 4px; padding: 5px 6px; cursor: pointer; background: #fff; }
+  #fn-root .cal-cell:hover { background: var(--paper); }
+  #fn-root .cal-cell.empty { border: none; background: transparent; cursor: default; }
+  #fn-root .cal-cell.today { border-color: var(--gold); background: var(--gold-soft); }
+  #fn-root .cal-daynum { font-size: 12px; font-weight: 700; opacity: 0.6; margin-bottom: 3px; }
+  #fn-root .cal-item { font-size: 10.5px; background: var(--wine); color: #fff; border-radius: 3px; padding: 2px 5px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #fn-root .cal-more { font-size: 10px; opacity: 0.55; }
+  #fn-root .parse-box { background: var(--paper-dim); border-radius: 4px; padding: 12px; margin-bottom: 16px; }
+  #fn-root .parse-box textarea { width: 100%; min-height: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; }
+  #fn-root .takip-line { display: flex; gap: 16px; margin-top: 6px; }
+  #fn-root .takip-line label { text-transform: none; font-weight: 600; opacity: 1; font-size: 12.5px; }
+</style>
+
+<script>
+(function () {
+  // Bu sayfa Claude önizlemesi DIŞINDA (kendi sitenizde) açıldığında window.storage
+  // gerçek bir API değildir — burada onun yerine localStorage tabanlı bir eşdeğerini kuruyoruz.
+  // Claude önizlemesindeyken (window.storage zaten mevcutken) hiçbir şeye dokunmuyoruz.
+  const REAL_HOSTING = !window.storage;
+  if (REAL_HOSTING) {
+    window.storage = {
+      async get(key) {
+        const raw = localStorage.getItem('fn_' + key);
+        if (raw === null) throw new Error('not found: ' + key);
+        return { key, value: raw };
+      },
+      async set(key, value) {
+        localStorage.setItem('fn_' + key, value);
+        return { key, value };
+      },
+      async delete(key) {
+        localStorage.removeItem('fn_' + key);
+        return { key, deleted: true };
+      },
+      async list(prefix) {
+        const keys = [];
+        const p = 'fn_' + (prefix || '');
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k.indexOf(p) === 0) keys.push(k.slice(3));
+        }
+        return { keys, prefix };
+      }
+    };
+  }
+
+  // ── ŞİFRE EKRANI ──
+  // Bu SADECE gerçek sitede aktif olur (Claude önizlemesinde şifre istenmez).
+  // ÖNEMLİ: Aşağıdaki şifreyi kendi belirleyeceğiniz bir şeyle değiştirin.
+  const FINANS_SIFRE = 'selen2026';
+
+  function showLoginGate(onSuccess) {
+    const root = document.getElementById('fn-root');
+    root.innerHTML = `
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'Manrope',sans-serif;background:#F8F3EC;">
+        <div style="background:#fff;border:1px solid rgba(42,27,34,0.12);border-radius:6px;padding:36px 34px;max-width:340px;width:100%;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#5C2740;margin-bottom:4px;">S</div>
+          <div style="font-size:13px;opacity:.6;margin-bottom:20px;">Finans paneline erişmek için şifre girin</div>
+          <input type="password" id="fn-login-pw" placeholder="Şifre" style="width:100%;padding:10px 12px;border:1px solid rgba(42,27,34,0.12);border-radius:3px;font-size:14px;margin-bottom:10px;box-sizing:border-box;" />
+          <div id="fn-login-err" style="color:#8C3A24;font-size:12px;margin-bottom:10px;min-height:16px;"></div>
+          <button id="fn-login-btn" style="width:100%;background:#5C2740;color:#fff;border:none;padding:11px;border-radius:3px;font-size:14px;font-weight:700;cursor:pointer;">Giriş Yap</button>
+        </div>
+      </div>
+    `;
+    const tryLogin = () => {
+      const val = document.getElementById('fn-login-pw').value;
+      if (val === FINANS_SIFRE) {
+        try { sessionStorage.setItem('fn_authed', '1'); } catch(e) {}
+        onSuccess();
+      } else {
+        document.getElementById('fn-login-err').textContent = 'Şifre yanlış, tekrar deneyin.';
+      }
+    };
+    document.getElementById('fn-login-btn').onclick = tryLogin;
+    document.getElementById('fn-login-pw').onkeydown = (e) => { if (e.key === 'Enter') tryLogin(); };
+    document.getElementById('fn-login-pw').focus();
+  }
+
+  function isAuthed() {
+    if (!REAL_HOSTING) return true; // Claude önizlemesinde şifre gerekmiyor
+    try { return sessionStorage.getItem('fn_authed') === '1'; } catch(e) { return false; }
+  }
+
+  const DEFAULT_GELIR_KAT = ["Makyaj + Türban Tasarımı", "Sadece Makyaj", "Makyaj + Saç Tasarımı", "Saç Tasarımı", "Diğer"];
+  const DEFAULT_GIDER_KAT = ["Makyaj Malzemesi","Kozmetik","Fırça","Sarf Malzemesi","Kira","Elektrik","Su","İnternet","Telefon","Reklam - Instagram","Reklam - Google Ads","Ulaşım","Yakıt","Yemek","Personel","Vergi","Muhasebe","Yazılım","Abonelikler","Ekipman","Ofis/Stüdyo","Diğer"];
+  const DEFAULT_ODEME_YONTEM = ["Nakit","Havale/EFT","Kredi Kartı","Diğer"];
+  const STOK_KATEGORILERI = ["Makyaj Malzemesi","Kozmetik","Fırça","Sarf Malzemesi","Ekipman"];
+
+  const root = document.getElementById('fn-root');
+
+  let S = {
+    view: 'dashboard',
+    calMonth: (() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; })(),
+    subtab: {},
+    loading: true,
+    error: null,
+    gelirler: [], giderler: [], urunler: [], sabitler: [], odenecekler: [],
+    kasa: { nakit: 0, banka: 0, krediKarti: 0, diger: 0 },
+    fiyatlar: {},
+    ayarlar: { gelirKategorileri: DEFAULT_GELIR_KAT, giderKategorileri: DEFAULT_GIDER_KAT, odemeYontemleri: DEFAULT_ODEME_YONTEM },
+    dateFilter: { type: 'bu_ay', start: null, end: null },
+    modal: null, // { type, data }
+    saving: false,
+  };
+
+  // ---------- utils ----------
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function fmtTL(n) { const v = Number(n) || 0; return v.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " ₺"; }
+  function uid(prefix) { return prefix + Date.now().toString(36) + Math.floor(Math.random()*1000); }
+  function todayISO() { return new Date().toISOString().slice(0,10); }
+  function parseDate(d) { return d ? new Date(d + 'T00:00:00') : null; }
+
+  function dateRange(filter) {
+    const now = new Date();
+    const y = now.getFullYear(), m = now.getMonth();
+    let start, end;
+    if (filter.type === 'bugun') { start = new Date(y,m,now.getDate()); end = new Date(y,m,now.getDate(),23,59,59); }
+    else if (filter.type === 'bu_hafta') { const dow = (now.getDay()+6)%7; start = new Date(y,m,now.getDate()-dow); end = new Date(y,m,now.getDate()-dow+6,23,59,59); }
+    else if (filter.type === 'bu_ay') { start = new Date(y,m,1); end = new Date(y,m+1,0,23,59,59); }
+    else if (filter.type === 'gecen_ay') { start = new Date(y,m-1,1); end = new Date(y,m,0,23,59,59); }
+    else if (filter.type === 'bu_yil') { start = new Date(y,0,1); end = new Date(y,11,31,23,59,59); }
+    else if (filter.type === 'ozel') { start = filter.start ? parseDate(filter.start) : new Date(2000,0,1); end = filter.end ? parseDate(filter.end) : now; end.setHours(23,59,59); }
+    else { start = new Date(2000,0,1); end = now; }
+    return { start, end };
+  }
+  function inRange(dateStr, range) {
+    if (!dateStr) return false;
+    const d = parseDate(dateStr);
+    return d >= range.start && d <= range.end;
+  }
+  function prevPeriod(filter) {
+    // returns comparable previous-period range for delta calc (only meaningful for month-based filters)
+    const now = new Date();
+    const y = now.getFullYear(), m = now.getMonth();
+    if (filter.type === 'gecen_ay') return { start: new Date(y,m-2,1), end: new Date(y,m-1,0,23,59,59) };
+    return { start: new Date(y,m-1,1), end: new Date(y,m,0,23,59,59) };
+  }
+
+  function parseRandevuMesaji(text) {
+    const grab = (re) => { const m = text.match(re); return m ? m[1].trim() : ''; };
+    const musteri = grab(/Müşteri:\s*(.+)/i);
+    const telefon = grab(/Telefon:\s*([\d\s()+-]+)/i);
+    const email = grab(/E-posta:\s*\[?([\w.+-]+@[\w.-]+)/i);
+    const instagram = grab(/Instagram:\s*@?([\w._]+)/i);
+    const hizmet = grab(/Hizmet:\s*(.+)/i);
+    const organizasyon = grab(/Organizasyon:\s*(.+)/i);
+    const paylasim = grab(/Payla[şs][ıi]m [İi]zni:\s*(.+)/i);
+    let notlar = grab(/Notlar:\s*(.+)/i);
+    if (notlar === '-') notlar = '';
+    // adres: "ADRES" başlığından sonraki satır, harita linkinden önce
+    let adres = '';
+    const adresMatch = text.match(/ADRES\s*\n(.+?)(?:\n🗺️|\nhttps?:\/\/|\n\n|$)/is);
+    if (adresMatch) adres = adresMatch[1].trim();
+    const toplam = grab(/Toplam Hizmet Bedeli:\s*([\d.,]+)/i);
+    const onOdeme = grab(/Al[ıi]nan Ön Ödeme:\s*([\d.,]+)/i);
+    return { musteri, telefon, email, instagram, hizmet, organizasyon, paylasim, notlar, adres, toplam, onOdeme };
+  }
+
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyu2OSxhx8Q8aW9GBu9MWTAaIJMx7wBDQHJwIb8E19VgqMzO_DuQzpaR6JOkqMEcoZg/exec';
+
+  function isoToLocalDateStr(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function isoToLocalTimeStr(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+  function sheetRowSourceId(row) {
+    const raw = (row['Gönderim Zamanı']||'') + '|' + (row['Telefon']||'') + '|' + (row['Randevu Tarihi']||'');
+    let h = 0;
+    for (let i=0;i<raw.length;i++) { h = ((h<<5)-h) + raw.charCodeAt(i); h |= 0; }
+    return 'sheet-' + Math.abs(h);
+  }
+
+  async function sheetSync() {
+    const res = await fetch(APPS_SCRIPT_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const rows = await res.json();
+    let eklenen = 0;
+    for (const row of rows) {
+      if (!row['Gönderim Zamanı']) continue;
+      const sourceId = sheetRowSourceId(row);
+      if (S.gelirler.find(g => g.sourceId === sourceId)) continue;
+      const randevuTarihi = isoToLocalDateStr(row['Randevu Tarihi']);
+      const randevuSaati = isoToLocalTimeStr(row['Randevu Saati']);
+      const hizmetRaw = row['Hizmet'] || '';
+      const kategori = S.ayarlar.gelirKategorileri.includes(hizmetRaw) ? hizmetRaw : S.ayarlar.gelirKategorileri[0];
+      const rec = {
+        musteri: row['Ad Soyad'] || '', telefon: row['Telefon'] || '', email: row['E-posta'] || '',
+        instagram: row['Instagram'] || '', adres: row['Adres'] || '', organizasyon: row['Organizasyon'] || '',
+        paylasim: row['Paylaşım İzni'] || '', not: row['Notlar'] || '',
+        randevuTarihi, randevuSaati, tarih: randevuTarihi || todayISO(),
+        kategori, hizmetBedeli: '', tahsilEdilen: '2000', odemeYontemi: S.ayarlar.odemeYontemleri[0],
+        randevuDurumu: 'Onaylandı', sourceId,
+      };
+      const fiyat = hesaplaFiyat(kategori, randevuTarihi);
+      if (fiyat != null) rec.hizmetBedeli = fiyat;
+      await saveRecord('gelir:', uid('e'), rec);
+      eklenen++;
+    }
+    return eklenen;
+  }
+
+  function isWeekend(dateStr) {
+    if (!dateStr) return false;
+    const dow = parseDate(dateStr).getDay();
+    return dow === 0 || dow === 6;
+  }
+  function hesaplaFiyat(hizmet, tarih) {
+    const rule = S.fiyatlar[hizmet];
+    if (!rule) return null;
+    const val = isWeekend(tarih) ? rule.haftaSonu : rule.haftaIci;
+    return (val !== undefined && val !== null && val !== '') ? val : null;
+  }
+
+  function gelirKalan(g) { return Math.max((Number(g.hizmetBedeli)||0) - (Number(g.tahsilEdilen)||0), 0); }
+  function gelirDurum(g) {
+    const t = Number(g.hizmetBedeli)||0, k = Number(g.tahsilEdilen)||0;
+    if (t > 0 && k >= t) return 'paid';
+    if (k > 0) return 'partial';
+    return 'unpaid';
+  }
+  function gelirDurumLabel(s) { return s === 'paid' ? 'Ödendi' : s === 'partial' ? 'Kısmi Ödendi' : 'Bekliyor'; }
+
+  // ---------- storage ----------
+  async function loadCollection(prefix) {
+    const list = await window.storage.list(prefix, true);
+    if (!list || !list.keys || list.keys.length === 0) return [];
+    const results = await Promise.all(list.keys.map(async k => {
+      try { const r = await window.storage.get(k, true); return r ? JSON.parse(r.value) : null; }
+      catch (e) { return null; }
+    }));
+    return results.filter(Boolean).sort((a,b) => (b.olusturmaZamani||0) - (a.olusturmaZamani||0));
+  }
+
+  async function loadAll() {
+    S.loading = true; S.error = null; render();
+    try {
+      const [gelirler, giderler, urunler, sabitler, odenecekler, kasaRes, ayarRes, fiyatRes] = await Promise.all([
+        loadCollection('gelir:'), loadCollection('gider:'), loadCollection('urun:'),
+        loadCollection('sabit:'), loadCollection('odenecek:'),
+        window.storage.get('kasa:genel', true).catch(()=>null),
+        window.storage.get('ayarlar:genel', true).catch(()=>null),
+        window.storage.get('fiyatlar:genel', true).catch(()=>null),
+      ]);
+      S.gelirler = gelirler; S.giderler = giderler; S.urunler = urunler; S.sabitler = sabitler; S.odenecekler = odenecekler;
+      if (kasaRes) S.kasa = JSON.parse(kasaRes.value);
+      if (ayarRes) S.ayarlar = JSON.parse(ayarRes.value);
+      if (fiyatRes) S.fiyatlar = JSON.parse(fiyatRes.value);
+      // fiyat listesini güncel kategorilerle senkron tut
+      S.ayarlar.gelirKategorileri.forEach(k => { if (!S.fiyatlar[k]) S.fiyatlar[k] = { haftaIci: k === 'Makyaj + Türban Tasarımı' ? 10000 : 0, haftaSonu: k === 'Makyaj + Türban Tasarımı' ? 12000 : 0 }; });
+    } catch (e) {
+      S.error = "Veriler yüklenirken bir sorun oluştu. Sayfayı yenilemeyi deneyin.";
+    }
+    S.loading = false; render();
+  }
+
+  async function saveRecord(prefix, id, data) {
+    const key = prefix + id;
+    const record = { ...data, id, olusturmaZamani: data.olusturmaZamani || Date.now() };
+    const res = await window.storage.set(key, JSON.stringify(record), true);
+    if (!res) throw new Error('save failed');
+    return record;
+  }
+  async function deleteRecord(prefix, id) {
+    await window.storage.delete(prefix + id, true);
+  }
+  async function saveSingleton(key, data) {
+    const res = await window.storage.set(key, JSON.stringify(data), true);
+    if (!res) throw new Error('save failed');
+  }
+
+  // ---------- nav ----------
+  const NAV = [
+    { group: null, items: [{ id: 'dashboard', label: '📊 Dashboard' }, { id: 'takvim', label: '🗓️ Takvim' }] },
+    { group: 'Gelirler', items: [{ id: 'gelirler', label: '💰 Gelir Ekle / Geçmiş' }] },
+    { group: 'Giderler', items: [{ id: 'giderler', label: '💸 Gider Ekle / Geçmiş' }] },
+    { group: null, items: [
+      { id: 'fisler', label: '🧾 Fiş & Faturalar' },
+      { id: 'urunler', label: '📦 Ürünler / Stok' },
+      { id: 'kasa', label: '🏦 Kasa & Bankalar' },
+      { id: 'odemeler', label: '📅 Ödemeler' },
+      { id: 'raporlar', label: '📈 Raporlar' },
+      { id: 'ayarlar', label: '⚙️ Ayarlar' },
+    ]},
+  ];
+
+  function setView(v) { S.view = v; render(); }
+
+  // ---------- render shell ----------
+  function render() {
+    root.innerHTML = `
+      <div class="app-shell">
+        <div class="sidebar">
+          <div class="side-brand"><span class="glyph">S</span><span class="txt">Selen Demir Studio<br/>Finans Merkezi</span></div>
+          ${NAV.map(g => `
+            ${g.group ? `<div class="nav-label">${esc(g.group)}</div>` : ''}
+            <div class="nav-group">
+              ${g.items.map(it => `<div class="nav-item${S.view===it.id?' active':''}" data-nav="${it.id}">${it.label}</div>`).join('')}
+            </div>
+          `).join('')}
+        </div>
+        <div class="main" id="fn-main"></div>
+      </div>
+    `;
+    root.querySelectorAll('[data-nav]').forEach(el => el.onclick = () => setView(el.getAttribute('data-nav')));
+    renderMain();
+  }
+
+  function renderMain() {
+    const main = document.getElementById('fn-main');
+    if (!main) return;
+    if (S.loading) { main.innerHTML = `<div class="loading">Veriler yükleniyor…</div>`; return; }
+    let html = S.error ? `<div class="note-box" style="background:#F2DCD2;color:#8C3A24;">${esc(S.error)}</div>` : '';
+    if (S.view === 'dashboard') html += renderDashboard();
+    else if (S.view === 'takvim') html += renderTakvim();
+    else if (S.view === 'gelirler') html += renderGelirler();
+    else if (S.view === 'giderler') html += renderGiderler();
+    else if (S.view === 'fisler') html += renderFisler();
+    else if (S.view === 'urunler') html += renderUrunler();
+    else if (S.view === 'kasa') html += renderKasa();
+    else if (S.view === 'odemeler') html += renderOdemeler();
+    else if (S.view === 'raporlar') html += renderRaporlar();
+    else if (S.view === 'ayarlar') html += renderAyarlar();
+    main.innerHTML = html + renderModal();
+    attachCommonEvents();
+    attachViewEvents();
+  }
+
+  function filterBarHtml() {
+    const f = S.dateFilter;
+    return `
+      <div class="filter-bar">
+        <select id="fn-datefilter">
+          ${[['bugun','Bugün'],['bu_hafta','Bu Hafta'],['bu_ay','Bu Ay'],['gecen_ay','Geçen Ay'],['bu_yil','Bu Yıl'],['ozel','Özel Aralık']]
+            .map(([v,l]) => `<option value="${v}"${f.type===v?' selected':''}>${l}</option>`).join('')}
+        </select>
+        ${f.type === 'ozel' ? `
+          <input type="date" id="fn-date-start" value="${esc(f.start||'')}" />
+          <span style="opacity:.5;font-size:12px;">—</span>
+          <input type="date" id="fn-date-end" value="${esc(f.end||'')}" />
+        ` : ''}
+      </div>
+    `;
+  }
+
+  // ---------- DASHBOARD ----------
+  function renderDashboard() {
+    const range = dateRange(S.dateFilter);
+    const prevRange = prevPeriod(S.dateFilter);
+    const gelirlerP = S.gelirler.filter(g => inRange(g.tarih, range) && g.randevuDurumu !== 'İptal');
+    const giderlerP = S.giderler.filter(g => inRange(g.tarih, range));
+    const gelirlerPrev = S.gelirler.filter(g => inRange(g.tarih, prevRange) && g.randevuDurumu !== 'İptal');
+    const giderlerPrev = S.giderler.filter(g => inRange(g.tarih, prevRange));
+
+    const toplamGelir = gelirlerP.reduce((s,g) => s + (Number(g.hizmetBedeli)||0), 0);
+    const toplamGider = giderlerP.reduce((s,g) => s + (Number(g.toplamTutar)||0), 0);
+    const netKar = toplamGelir - toplamGider;
+    const tahsilEdilen = gelirlerP.reduce((s,g) => s + (Number(g.tahsilEdilen)||0), 0);
+    const bekleyenTahsilat = gelirlerP.reduce((s,g) => s + gelirKalan(g), 0);
+    const odenmesiGereken = S.odenecekler.filter(o => o.durum === 'Bekliyor').reduce((s,o) => s + (Number(o.tutar)||0), 0);
+    const toplamAlisveris = giderlerP.filter(g => STOK_KATEGORILERI.includes(g.kategori)).reduce((s,g) => s + (Number(g.toplamTutar)||0), 0);
+    const karMarji = toplamGelir > 0 ? (netKar/toplamGelir*100) : 0;
+
+    const gelirPrevTotal = gelirlerPrev.reduce((s,g) => s + (Number(g.hizmetBedeli)||0), 0);
+    const giderPrevTotal = giderlerPrev.reduce((s,g) => s + (Number(g.toplamTutar)||0), 0);
+    const gelirDelta = gelirPrevTotal > 0 ? ((toplamGelir-gelirPrevTotal)/gelirPrevTotal*100) : (toplamGelir>0?100:0);
+    const giderDelta = giderPrevTotal > 0 ? ((toplamGider-giderPrevTotal)/giderPrevTotal*100) : (toplamGider>0?100:0);
+
+    // last 6 months chart
+    const months = [];
+    const now = new Date();
+    for (let i=5;i>=0;i--) {
+      const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+      const start = new Date(d.getFullYear(), d.getMonth(), 1);
+      const end = new Date(d.getFullYear(), d.getMonth()+1, 0, 23,59,59);
+      const gg = S.gelirler.filter(g => inRange(g.tarih, {start,end}) && g.randevuDurumu !== 'İptal').reduce((s,g)=>s+(Number(g.hizmetBedeli)||0),0);
+      const gd = S.giderler.filter(g => inRange(g.tarih, {start,end})).reduce((s,g)=>s+(Number(g.toplamTutar)||0),0);
+      months.push({ label: d.toLocaleDateString('tr-TR', {month:'short'}), gelir: gg, gider: gd });
+    }
+    const maxVal = Math.max(1, ...months.map(m => Math.max(m.gelir, m.gider)));
+
+    return `
+      <div class="page-head">
+        <div><h1 class="pg-title">Dashboard</h1><div class="pg-sub">Genel finansal durum özeti</div></div>
+      </div>
+      ${filterBarHtml()}
+      <div class="stat-grid">
+        <div class="stat-card wine">
+          <div class="stat-label">Toplam Gelir (Sözleşilen)</div>
+          <div class="stat-value">${fmtTL(toplamGelir)}</div>
+          <div class="stat-delta ${gelirDelta>=0?'up':'down'}">${gelirDelta>=0?'▲':'▼'} %${Math.abs(gelirDelta).toFixed(1)} geçen döneme göre</div>
+        </div>
+        <div class="stat-card rust">
+          <div class="stat-label">Toplam Gider</div>
+          <div class="stat-value">${fmtTL(toplamGider)}</div>
+          <div class="stat-delta ${giderDelta<=0?'up':'down'}">${giderDelta>=0?'▲':'▼'} %${Math.abs(giderDelta).toFixed(1)} geçen döneme göre</div>
+        </div>
+        <div class="stat-card sage">
+          <div class="stat-label">Net Kâr</div>
+          <div class="stat-value">${fmtTL(netKar)}</div>
+          <div class="stat-delta ${netKar>=0?'up':'down'}">Kâr marjı: %${karMarji.toFixed(1)}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Tahsil Edilen</div>
+          <div class="stat-value">${fmtTL(tahsilEdilen)}</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-label">Bekleyen Tahsilatlar</div>
+          <div class="stat-value">${fmtTL(bekleyenTahsilat)}</div>
+        </div>
+        <div class="stat-card rust">
+          <div class="stat-label">Ödenmesi Gerekenler</div>
+          <div class="stat-value">${fmtTL(odenmesiGereken)}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Bu Dönem Alışveriş (Malzeme)</div>
+          <div class="stat-value">${fmtTL(toplamAlisveris)}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Kayıt Sayısı</div>
+          <div class="stat-value">${gelirlerP.length + giderlerP.length} <small style="font-size:12px;opacity:.6;">işlem</small></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 class="display">Son 6 Ay — Gelir / Gider</h3>
+        <div class="bars">
+          ${months.map(m => `
+            <div class="bar-col">
+              <div class="bar-pair">
+                <div class="bar" style="height:${Math.max(3,m.gelir/maxVal*120)}px;background:var(--wine);" title="Gelir: ${fmtTL(m.gelir)}"></div>
+                <div class="bar" style="height:${Math.max(3,m.gider/maxVal*120)}px;background:var(--rust);" title="Gider: ${fmtTL(m.gider)}"></div>
+              </div>
+              <div class="bar-lbl">${esc(m.label)}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="legend">
+          <span><i style="background:var(--wine)"></i> Gelir</span>
+          <span><i style="background:var(--rust)"></i> Gider</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // ---------- TAKVİM ----------
+  function renderTakvim() {
+    const { y, m } = S.calMonth;
+    const first = new Date(y, m, 1);
+    const startDow = (first.getDay() + 6) % 7; // Pazartesi=0
+    const daysInMonth = new Date(y, m+1, 0).getDate();
+    const monthLabel = first.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
+    const byDay = {};
+    S.gelirler.forEach(g => {
+      const rt = g.randevuTarihi || g.tarih;
+      if (!rt) return;
+      const d = parseDate(rt);
+      if (d.getFullYear() === y && d.getMonth() === m) {
+        const day = d.getDate();
+        (byDay[day] = byDay[day] || []).push(g);
+      }
+    });
+    const cells = [];
+    for (let i=0;i<startDow;i++) cells.push('');
+    for (let d=1; d<=daysInMonth; d++) cells.push(d);
+    const todayStr = todayISO();
+    const gridHtml = cells.map(d => {
+      if (!d) return `<div class="cal-cell empty"></div>`;
+      const items = byDay[d] || [];
+      const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const isToday = dateStr === todayStr;
+      return `<div class="cal-cell${isToday?' today':''}" data-day="${d}">
+        <div class="cal-daynum">${d}</div>
+        ${items.slice(0,3).map(g => `<div class="cal-item" title="${esc(g.musteri)} — ${esc(g.hizmet||g.kategori)}">${esc(g.musteri)}</div>`).join('')}
+        ${items.length>3 ? `<div class="cal-more">+${items.length-3} daha</div>` : ''}
+      </div>`;
+    }).join('');
+    const selectedDay = S.calSelectedDay;
+    const selList = selectedDay ? (byDay[selectedDay] || []) : [];
+    return `
+      <div class="page-head">
+        <div><h1 class="pg-title">Takvim</h1><div class="pg-sub">Gelinlerin randevu tarihlerine göre görünüm</div></div>
+        <button class="btn btn-primary" data-open-modal="gelir-new">+ Randevu Ekle</button>
+      </div>
+      <div class="panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <button class="btn btn-ghost btn-sm" id="cal-prev">‹ Önceki</button>
+          <h3 class="display" style="margin:0;text-transform:capitalize;">${esc(monthLabel)}</h3>
+          <button class="btn btn-ghost btn-sm" id="cal-next">Sonraki ›</button>
+        </div>
+        <div class="cal-grid cal-head">
+          ${['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].map(d=>`<div class="cal-headcell">${d}</div>`).join('')}
+        </div>
+        <div class="cal-grid">${gridHtml}</div>
+      </div>
+      ${selectedDay ? `
+        <div class="panel">
+          <h3 class="display">${selectedDay} ${esc(monthLabel)} Randevuları</h3>
+          ${selList.length===0 ? `<div class="empty-state">Bu gün için randevu yok.</div>` : `
+          <div class="ledger">${renderGelirTable(selList)}</div>`}
+        </div>
+      ` : ''}
+    `;
+  }
+
+  // ---------- GELİRLER ----------
+  function renderGelirler() {
+    const range = dateRange(S.dateFilter);
+    const list = S.gelirler.filter(g => inRange(g.tarih, range))
+      .sort((a,b) => (b.tarih||'').localeCompare(a.tarih||''));
+    return `
+      <div class="page-head">
+        <div><h1 class="pg-title">Gelirler</h1><div class="pg-sub">Hizmet bedeli ile tahsil edilen tutar ayrı takip edilir</div></div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost" id="fn-sync-btn">🔄 Sheets'ten Senkronize Et</button>
+          <button class="btn btn-primary" data-open-modal="gelir-new">+ Gelir Ekle</button>
+        </div>
+      </div>
+      <div id="fn-sync-status"></div>
+      ${filterBarHtml()}
+      <div class="ledger">${renderGelirTable(list)}</div>
+    `;
+  }
+  function renderGelirTable(list) {
+    if (list.length === 0) return `<div class="empty-state"><div class="display">Kayıt yok</div>Bu aralıkta gelir kaydı bulunamadı.</div>`;
+    const rows = list.map(g => {
+      const status = gelirDurum(g);
+      const iptal = g.randevuDurumu === 'İptal';
+      return `<tr data-edit="gelir" data-id="${esc(g.id)}" style="${iptal?'opacity:.5;':''}">
+        <td><div class="name-cell">${esc(g.musteri)}</div><div class="sub-cell">${esc(g.telefon||'')}${g.instagram?' · @'+esc(g.instagram.replace('@','')):''}</div></td>
+        <td><div>${esc(g.randevuTarihi||g.tarih||'—')}</div><div class="sub-cell">${esc(g.randevuSaati||'')} · ${esc(g.organizasyon||g.kategori||'')}</div></td>
+        <td class="money">${fmtTL(g.hizmetBedeli)}</td>
+        <td class="money">${fmtTL(g.tahsilEdilen)}</td>
+        <td class="money">${fmtTL(gelirKalan(g))}</td>
+        <td>${iptal ? `<span class="badge unpaid">İptal</span>` : `<span class="badge ${status}">${gelirDurumLabel(status)}</span>`}</td>
+      </tr>`;
+    }).join('');
+    return `<table><thead><tr><th>Müşteri</th><th>Randevu</th><th>Hizmet Bedeli</th><th>Tahsil Edilen</th><th>Kalan</th><th>Durum</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  // ---------- GİDERLER ----------
+  function renderGiderler() {
+    const range = dateRange(S.dateFilter);
+    const list = S.giderler.filter(g => inRange(g.tarih, range)).sort((a,b) => (b.tarih||'').localeCompare(a.tarih||''));
+    return `
+      <div class="page-head">
+        <div><h1 class="pg-title">Giderler</h1><div class="pg-sub">Tüm harcamalarınızı kategori bazında kaydedin</div></div>
+        <button class="btn btn-primary" data-open-modal="gider-new">+ Gider Ekle</button>
+      </div>
+      ${filterBarHtml()}
+      <div class="ledger">${renderGiderTable(list)}</div>
+    `;
+  }
+  function renderGiderTable(list) {
+    if (list.length === 0) return `<div class="empty-state"><div class="display">Kayıt yok</div>Bu aralıkta gider kaydı bulunamadı.</div>`;
+    const rows = list.map(g => `
+      <tr data-edit="gider" data-id="${esc(g.id)}">
+        <td><div class="name-cell">${esc(g.firma||'—')}</div><div class="sub-cell">${esc(g.tarih)} · ${esc(g.urun||'')}</div></td>
+        <td>${esc(g.kategori)}</td>
+        <td class="money">${fmtTL(g.toplamTutar)}</td>
+        <td>${esc(g.odemeYontemi||'—')}</td>
+        <td><span class="badge ${g.odemeDurumu==='Ödendi'?'paid':g.odemeDurumu==='Kısmi Ödendi'?'partial':'unpaid'}">${esc(g.odemeDurumu||'Bekliyor')}</span></td>
+      </tr>
+    `).join('');
+    return `<table><thead><tr><th>Firma / Ürün</th><th>Kategori</th><th>Toplam</th><th>Ödeme Yöntemi</th><th>Durum</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  // ---------- FİŞ & FATURA ARŞİVİ ----------
+  function renderFisler() {
+    const list = [...S.giderler].filter(g => g.faturaNo || g.belge).sort((a,b) => (b.tarih||'').localeCompare(a.tarih||''));
+    const list2 = list.length ? list : [...S.giderler].sort((a,b) => (b.tarih||'').localeCompare(a.tarih||''));
+    return `
+      <div class="page-head">
+        <div><h1 class="pg-title">Fiş &amp; Fatura Arşivi</h1><div class="pg-sub">Gider kayıtlarınızın belge referansları</div></div>
+        <button class="btn btn-primary" data-open-modal="gider-new">+ Yeni Fiş / Fatura</button>
+      </div>
+      <div class="note-box">Bu ortamda dosya/fotoğraf yükleme desteklenmiyor — fiş/fatura fotoğrafını kendi telefon veya bilgisayarınızda saklayıp buraya sadece <strong>fatura no, tarih ve tutarı not olarak</strong> girmenizi öneririm. OCR ile otomatik okuma bu sürümde yok; ileride ayrı bir görüntü işleme aracı bağlanarak eklenebilir.</div>
+      <div class="ledger">${renderGiderTable(list2)}</div>
+    `;
+  }
+
+  // ---------- ÜRÜN / STOK ----------
+  function renderUrunler() {
+    const list = [...S.urunler].sort((a,b) => a.ad.localeCompare(b.ad,'tr'));
+    const rows = list.map(u => {
+      const dusuk = Number(u.stok) <= Number(u.kritikStok ?? 1);
+      return `<tr data-edit="urun" data-id="${esc(u.id)}">
+        <td class="name-cell">${esc(u.ad)}</td>
+        <td class="money">${fmtTL(u.alisFiyati)}</td>
+        <td class="money">${u.stok}</td>
+        <td>${dusuk ? `<span class="badge unpaid">Stok Azalıyor</span>` : `<span class="badge paid">Yeterli</span>`}</td>
+      </tr>`;
+    }).join('');
+    return `
+      <div class="page-head">
+        <div><h1 class="pg-title">Ürünler / Stok</h1><div class="pg-sub">Malzeme stoklarınızı takip edin. Gider eklerken "stok ürünü" işaretlerseniz stok otomatik artar.</div></div>
+        <button class="btn btn-primary" data-open-modal="urun-new">+ Ürün Ekle</button>
+      </div>
+      <div class="ledger">${list.length ? `<table><thead><tr><th>Ürün</th><th>Alış Fiyatı</th><th>Stok</th><th>Durum</th></tr></thead><tbody>${rows}</tbody></table>` : `<div class="empty-state"><div class="display">Ürün yok</div>Henüz ürün eklenmemiş.</div>`}</div>
+    `;
+  }
+
+  // ---------- KASA & BANKALAR ----------
+  function renderKasa() {
+    const range = { start: new Date(2000,0,1), end: new Date(2100,0,1) };
+    const bekleyenTahsilat = S.gelirler.filter(g => g.randevuDurumu !== 'İptal').reduce((s,g) => s + gelirKalan(g), 0);
+    const odenecek = S.odenecekler.filter(o => o.durum === 'Bekliyor').reduce((s,o) => s + (Number(o.tutar)||0), 0);
+    const toplamVarlik = (Number(S.kasa.nakit)||0) + (Number(S.kasa.banka)||0) + (Number(S.kasa.krediKarti)||0) + (Number(S.kasa.diger)||0);
+    const gercekDurum = toplamVarlik + bekleyenTahsilat - odenecek;
+    return `
+      <div class="page-head">
+        <div><h1 class="pg-title">Kasa &amp; Bankalar</h1><div class="pg-sub">Elinizdeki gerçek nakit durumu</div></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <h3 class="display">Hesap Bakiyeleri</h3>
+          <form id="fn-kasa-form">
+            <div class="form-grid">
+              <div class="field-wrap"><label>Nakit Kasa (₺)</label><input type="number" id="k-nakit" value="${esc(S.kasa.nakit)}" /></div>
+              <div class="field-wrap"><label>Banka (₺)</label><input type="number" id="k-banka" value="${esc(S.kasa.banka)}" /></div>
+              <div class="field-wrap"><label>Kredi Kartı Borcu (₺)</label><input type="number" id="k-krediKarti" value="${esc(S.kasa.krediKarti)}" /></div>
+              <div class="field-wrap"><label>Diğer Hesaplar (₺)</label><input type="number" id="k-diger" value="${esc(S.kasa.diger)}" /></div>
+            </div>
+            <div style="margin-top:14px;"><button type="submit" class="btn btn-primary">Kaydet</button></div>
+          </form>
+        </div>
+        <div class="panel">
+          <h3 class="display">Gerçek Durum</h3>
+          <div class="stat-card" style="margin-bottom:10px;"><div class="stat-label">Kasa + Banka Toplamı</div><div class="stat-value">${fmtTL(toplamVarlik)}</div></div>
+          <div class="stat-card sage" style="margin-bottom:10px;"><div class="stat-label">+ Bekleyen Tahsilat</div><div class="stat-value">${fmtTL(bekleyenTahsilat)}</div></div>
+          <div class="stat-card rust" style="margin-bottom:10px;"><div class="stat-label">− Ödenecekler</div><div class="stat-value">${fmtTL(odenecek)}</div></div>
+          <div class="stat-card wine"><div class="stat-label">Şu An Gerçek Durum</div><div class="stat-value">${fmtTL(gercekDurum)}</div></div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ---------- ÖDEMELER ----------
+  function renderOdemeler() {
+    const sub = S.subtab.odemeler || 'odenecek';
+    return `
+      <div class="page-head">
+        <div><h1 class="pg-title">Ödemeler</h1><div class="pg-sub">Yaklaşan ödemeler ve bekleyen tahsilatlar</div></div>
+        ${sub==='odenecek' ? `<button class="btn btn-primary" data-open-modal="odenecek-new">+ Ödeme Planla</button>` : ''}
+      </div>
+      <div class="subtabs">
+        <div class="subtab ${sub==='odenecek'?'active':''}" data-subtab="odemeler:odenecek">Ödenecekler</div>
+        <div class="subtab ${sub==='tahsilat'?'active':''}" data-subtab="odemeler:tahsilat">Bekleyen Tahsilatlar</div>
+      </div>
+      ${sub === 'odenecek' ? renderOdenecekler() : renderBekleyenTahsilat()}
+    `;
+  }
+  function renderOdenecekler() {
+    const list = [...S.odenecekler].sort((a,b) => (a.sonOdeme||'').localeCompare(b.sonOdeme||''));
+    const bekleyenler = list.filter(o => o.durum==='Bekliyor');
+    const bugunToplam = bekleyenler.reduce((s,o)=>s+(Number(o.tutar)||0),0);
+    if (list.length === 0) return `<div class="ledger"><div class="empty-state"><div class="display">Planlanan ödeme yok</div>Yeni bir ödeme eklemek için üstteki butonu kullanın.</div></div>`;
+    const rows = list.map(o => `
+      <tr data-edit="odenecek" data-id="${esc(o.id)}">
+        <td class="name-cell">${esc(o.firma)}</td>
+        <td class="money">${fmtTL(o.tutar)}</td>
+        <td>${esc(o.sonOdeme||'—')}</td>
+        <td><span class="badge ${o.durum==='Ödendi'?'paid':'unpaid'}">${esc(o.durum)}</span></td>
+      </tr>
+    `).join('');
+    return `
+      <div class="note-box">Bekleyen toplam ödeme: <strong>${fmtTL(bugunToplam)}</strong></div>
+      <div class="ledger"><table><thead><tr><th>Firma</th><th>Tutar</th><th>Son Ödeme</th><th>Durum</th></tr></thead><tbody>${rows}</tbody></table></div>
+    `;
+  }
+  function renderBekleyenTahsilat() {
+    const list = S.gelirler.filter(g => gelirKalan(g) > 0 && g.randevuDurumu !== 'İptal').sort((a,b) => (a.tarih||'').localeCompare(b.tarih||''));
+    const toplam = list.reduce((s,g)=>s+gelirKalan(g),0);
+    if (list.length === 0) return `<div class="ledger"><div class="empty-state"><div class="display">Bekleyen tahsilat yok</div>Tüm gelirler tahsil edilmiş görünüyor.</div></div>`;
+    const rows = list.map(g => `
+      <tr data-edit="gelir" data-id="${esc(g.id)}">
+        <td class="name-cell">${esc(g.musteri)}</td>
+        <td class="money">${fmtTL(g.hizmetBedeli)}</td>
+        <td class="money">${fmtTL(g.tahsilEdilen)}</td>
+        <td class="money">${fmtTL(gelirKalan(g))}</td>
+        <td>${esc(g.tarih)}</td>
+      </tr>
+    `).join('');
+    return `
+      <div class="note-box">Toplam bekleyen tahsilat: <strong>${fmtTL(toplam)}</strong></div>
+      <div class="ledger"><table><thead><tr><th>Müşteri</th><th>Hizmet Bedeli</th><th>Tahsil Edilen</th><th>Kalan</th><th>Tarih</th></tr></thead><tbody>${rows}</tbody></table></div>
+    `;
+  }
+
+  // ---------- RAPORLAR ----------
+  function renderRaporlar() {
+    const sub = S.subtab.raporlar || 'gelir';
+    return `
+      <div class="page-head"><div><h1 class="pg-title">Raporlar</h1><div class="pg-sub">Dönemsel finansal analiz</div></div></div>
+      <div class="subtabs">
+        <div class="subtab ${sub==='gelir'?'active':''}" data-subtab="raporlar:gelir">Gelir Raporu</div>
+        <div class="subtab ${sub==='gider'?'active':''}" data-subtab="raporlar:gider">Gider Raporu</div>
+        <div class="subtab ${sub==='kar'?'active':''}" data-subtab="raporlar:kar">Kâr Analizi</div>
+        <div class="subtab ${sub==='karsilastirma'?'active':''}" data-subtab="raporlar:karsilastirma">Aylık Karşılaştırma</div>
+      </div>
+      ${filterBarHtml()}
+      ${sub==='gelir' ? renderRaporGelir() : sub==='gider' ? renderRaporGider() : sub==='kar' ? renderRaporKar() : renderRaporKarsilastirma()}
+    `;
+  }
+  function groupBy(list, key, valKey) {
+    const map = {};
+    list.forEach(x => { const k = x[key]||'Diğer'; map[k] = (map[k]||0) + (Number(x[valKey])||0); });
+    return Object.entries(map).sort((a,b) => b[1]-a[1]);
+  }
+  function renderRaporGelir() {
+    const range = dateRange(S.dateFilter);
+    const list = S.gelirler.filter(g => inRange(g.tarih, range) && g.randevuDurumu !== 'İptal');
+    const byKat = groupBy(list, 'kategori', 'hizmetBedeli');
+    const toplam = list.reduce((s,g)=>s+(Number(g.hizmetBedeli)||0),0);
+    return `
+      <div class="panel">
+        <h3 class="display">Gelir Dağılımı — Kategoriye Göre</h3>
+        ${byKat.length===0 ? `<div class="empty-state">Bu aralıkta gelir kaydı yok.</div>` : byKat.map(([k,v],i) => `
+          <div class="rank-row">
+            <span class="rank-medal">${['🥇','🥈','🥉'][i]||'•'}</span>
+            <div style="width:170px;font-size:13px;">${esc(k)}</div>
+            <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:${toplam?v/toplam*100:0}%;"></div></div>
+            <div class="money" style="width:110px;text-align:right;">${fmtTL(v)}</div>
+          </div>
+        `).join('')}
+        <div class="balance-note">Toplam gelir: <strong class="mono">${fmtTL(toplam)}</strong></div>
+      </div>
+    `;
+  }
+  function renderRaporGider() {
+    const range = dateRange(S.dateFilter);
+    const list = S.giderler.filter(g => inRange(g.tarih, range));
+    const byKat = groupBy(list, 'kategori', 'toplamTutar');
+    const toplam = list.reduce((s,g)=>s+(Number(g.toplamTutar)||0),0);
+    return `
+      <div class="panel">
+        <h3 class="display">Gider Analizi — Paran Nereye Gitti?</h3>
+        ${byKat.length===0 ? `<div class="empty-state">Bu aralıkta gider kaydı yok.</div>` : byKat.map(([k,v],i) => `
+          <div class="rank-row">
+            <span class="rank-medal">${['🥇','🥈','🥉'][i]||'•'}</span>
+            <div style="width:170px;font-size:13px;">${esc(k)}</div>
+            <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:${toplam?v/toplam*100:0}%;background:var(--rust);"></div></div>
+            <div class="money" style="width:110px;text-align:right;">${fmtTL(v)} <span style="opacity:.5;font-size:11px;">(%${toplam?(v/toplam*100).toFixed(0):0})</span></div>
+          </div>
+        `).join('')}
+        <div class="balance-note">Toplam gider: <strong class="mono">${fmtTL(toplam)}</strong></div>
+      </div>
+    `;
+  }
+  function renderRaporKar() {
+    const range = dateRange(S.dateFilter);
+    const gelirler = S.gelirler.filter(g => inRange(g.tarih, range) && g.randevuDurumu !== 'İptal');
+    const giderler = S.giderler.filter(g => inRange(g.tarih, range));
+    const ciro = gelirler.reduce((s,g)=>s+(Number(g.hizmetBedeli)||0),0);
+    const sabitKategoriler = ["Kira","Elektrik","Su","İnternet","Telefon","Abonelikler","Personel"];
+    const reklamKategoriler = ["Reklam - Instagram","Reklam - Google Ads"];
+    const sabit = giderler.filter(g => sabitKategoriler.includes(g.kategori)).reduce((s,g)=>s+(Number(g.toplamTutar)||0),0);
+    const reklam = giderler.filter(g => reklamKategoriler.includes(g.kategori)).reduce((s,g)=>s+(Number(g.toplamTutar)||0),0);
+    const degisken = giderler.filter(g => !sabitKategoriler.includes(g.kategori) && !reklamKategoriler.includes(g.kategori)).reduce((s,g)=>s+(Number(g.toplamTutar)||0),0);
+    const toplamGider = sabit + reklam + degisken;
+    const netKar = ciro - toplamGider;
+    const marj = ciro>0 ? netKar/ciro*100 : 0;
+    const rowsHtml = [
+      ['Ciro', ciro], ['Değişken Gider', -degisken], ['Sabit Gider', -sabit], ['Reklam', -reklam]
+    ].map(([l,v]) => `<div class="rank-row"><div style="width:180px;font-size:13px;">${l}</div><div class="money" style="text-align:right;flex:1;">${v<0?'− ':''}${fmtTL(Math.abs(v))}</div></div>`).join('');
+    return `
+      <div class="panel">
+        <h3 class="display">Kâr Hesabı</h3>
+        ${rowsHtml}
+        <div class="balance-note" style="font-size:14px;">Net İşletme Kârı: <strong class="mono">${fmtTL(netKar)}</strong> &nbsp;·&nbsp; Kâr Marjı: <strong>%${marj.toFixed(1)}</strong></div>
+      </div>
+    `;
+  }
+  function renderRaporKarsilastirma() {
+    const months = [];
+    const now = new Date();
+    for (let i=11;i>=0;i--) {
+      const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+      const start = new Date(d.getFullYear(), d.getMonth(), 1);
+      const end = new Date(d.getFullYear(), d.getMonth()+1, 0, 23,59,59);
+      const gg = S.gelirler.filter(g => inRange(g.tarih, {start,end}) && g.randevuDurumu !== 'İptal').reduce((s,g)=>s+(Number(g.hizmetBedeli)||0),0);
+      const gd = S.giderler.filter(g => inRange(g.tarih, {start,end})).reduce((s,g)=>s+(Number(g.toplamTutar)||0),0);
+      months.push({ label: d.toLocaleDateString('tr-TR', {month:'short', year:'2-digit'}), gelir: gg, gider: gd, net: gg-gd });
+    }
+    const rows = months.map(m => `
+      <tr><td class="name-cell">${esc(m.label)}</td><td class="money">${fmtTL(m.gelir)}</td><td class="money">${fmtTL(m.gider)}</td><td class="money" style="color:${m.net>=0?'#4B5A3F':'#8C3A24'};">${fmtTL(m.net)}</td></tr>
+    `).join('');
+    return `<div class="ledger"><table><thead><tr><th>Ay</th><th>Gelir</th><th>Gider</th><th>Net</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+
+  // ---------- AYARLAR ----------
+  function renderAyarlar() {
+    const sub = S.subtab.ayarlar || 'kategoriler';
+    return `
+      <div class="page-head"><div><h1 class="pg-title">Ayarlar</h1><div class="pg-sub">Kategoriler, ödeme yöntemleri ve sabit giderler</div></div></div>
+      <div class="subtabs">
+        <div class="subtab ${sub==='kategoriler'?'active':''}" data-subtab="ayarlar:kategoriler">Kategoriler</div>
+        <div class="subtab ${sub==='fiyat'?'active':''}" data-subtab="ayarlar:fiyat">Fiyat Listesi</div>
+        <div class="subtab ${sub==='odeme'?'active':''}" data-subtab="ayarlar:odeme">Ödeme Yöntemleri</div>
+        <div class="subtab ${sub==='sabit'?'active':''}" data-subtab="ayarlar:sabit">Sabit Giderler</div>
+      </div>
+      ${sub==='kategoriler' ? renderAyarKategoriler() : sub==='fiyat' ? renderAyarFiyat() : sub==='odeme' ? renderAyarOdeme() : renderAyarSabit()}
+    `;
+  }
+  function chipList(items, kind) {
+    return `<div class="chip-list">${items.map((it,i) => `<span class="chip">${esc(it)}<button data-remove-chip="${kind}:${i}">✕</button></span>`).join('')}</div>`;
+  }
+  function renderAyarKategoriler() {
+    return `
+      <div class="two-col">
+        <div class="panel">
+          <h3 class="display">Gelir Kategorileri</h3>
+          ${chipList(S.ayarlar.gelirKategorileri, 'gelirKat')}
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <input id="fn-new-gelirkat" placeholder="Yeni kategori adı" style="flex:1;" />
+            <button class="btn btn-primary btn-sm" data-add-chip="gelirKat">Ekle</button>
+          </div>
+        </div>
+        <div class="panel">
+          <h3 class="display">Gider Kategorileri</h3>
+          ${chipList(S.ayarlar.giderKategorileri, 'giderKat')}
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <input id="fn-new-giderkat" placeholder="Yeni kategori adı" style="flex:1;" />
+            <button class="btn btn-primary btn-sm" data-add-chip="giderKat">Ekle</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  function renderAyarOdeme() {
+    return `
+      <div class="panel">
+        <h3 class="display">Ödeme Yöntemleri</h3>
+        ${chipList(S.ayarlar.odemeYontemleri, 'odeme')}
+        <div style="display:flex;gap:8px;margin-top:12px;max-width:340px;">
+          <input id="fn-new-odeme" placeholder="Yeni yöntem" style="flex:1;" />
+          <button class="btn btn-primary btn-sm" data-add-chip="odeme">Ekle</button>
+        </div>
+      </div>
+    `;
+  }
+  function renderAyarFiyat() {
+    const kats = S.ayarlar.gelirKategorileri;
+    return `
+      <div class="panel">
+        <h3 class="display">Hizmet Fiyat Listesi</h3>
+        <div class="pg-sub" style="margin-bottom:12px;">Randevu eklerken hizmet ve tarih seçildiğinde sistem buradaki fiyatı otomatik önerir (hafta içi / hafta sonu farkını kendisi belirler).</div>
+        <table><thead><tr><th>Hizmet</th><th>Hafta İçi (₺)</th><th>Hafta Sonu (₺)</th></tr></thead><tbody>
+          ${kats.map(k => {
+            const r = S.fiyatlar[k] || { haftaIci: 0, haftaSonu: 0 };
+            return `<tr>
+              <td class="name-cell">${esc(k)}</td>
+              <td><input type="number" min="0" class="fn-fiyat-input" data-hizmet="${esc(k)}" data-tip="haftaIci" value="${esc(r.haftaIci)}" style="width:120px;" /></td>
+              <td><input type="number" min="0" class="fn-fiyat-input" data-hizmet="${esc(k)}" data-tip="haftaSonu" value="${esc(r.haftaSonu)}" style="width:120px;" /></td>
+            </tr>`;
+          }).join('')}
+        </tbody></table>
+        <div style="margin-top:14px;"><button class="btn btn-primary" id="fn-fiyat-kaydet">Fiyat Listesini Kaydet</button></div>
+      </div>
+    `;
+  }
+
+  function renderAyarSabit() {
+    const list = S.sabitler;
+    const toplam = list.reduce((s,x)=>s+(Number(x.tutar)||0),0);
+    return `
+      <div class="page-head" style="margin-bottom:14px;">
+        <div class="note-box" style="margin:0;flex:1;">Sabit giderler burada sadece <strong>planlama</strong> amaçlıdır — her ay otomatik gerçek gider kaydı oluşturmaz (tarayıcı ortamında zamanlanmış görev çalıştıramıyoruz). Ay sonunda gerçekleşen ödemeyi "Gider Ekle" ile ayrıca kaydetmeniz gerekir.</div>
+      </div>
+      <div class="page-head">
+        <div></div>
+        <button class="btn btn-primary" data-open-modal="sabit-new">+ Sabit Gider Ekle</button>
+      </div>
+      <div class="ledger">
+        ${list.length===0 ? `<div class="empty-state"><div class="display">Sabit gider yok</div></div>` : `
+        <table><thead><tr><th>Ad</th><th>Kategori</th><th>Aylık Tutar</th><th></th></tr></thead><tbody>
+        ${list.map(x => `<tr><td class="name-cell">${esc(x.ad)}</td><td>${esc(x.kategori)}</td><td class="money">${fmtTL(x.tutar)}</td><td><button class="btn btn-ghost btn-sm" data-del-sabit="${esc(x.id)}">Sil</button></td></tr>`).join('')}
+        </tbody></table>`}
+      </div>
+      <div class="balance-note">Bu ay beklenen toplam sabit gider: <strong class="mono">${fmtTL(toplam)}</strong></div>
+    `;
+  }
+
+  // ---------- MODALS ----------
+  function renderModal() {
+    if (!S.modal) return '';
+    const { type, data } = S.modal;
+    if (type === 'gelir') return modalGelir(data);
+    if (type === 'gider') return modalGider(data);
+    if (type === 'urun') return modalUrun(data);
+    if (type === 'odenecek') return modalOdenecek(data);
+    if (type === 'sabit') return modalSabit(data);
+    return '';
+  }
+
+  function opts(list, selected) { return list.map(o => `<option value="${esc(o)}"${o===selected?' selected':''}>${esc(o)}</option>`).join(''); }
+
+  function modalGelir(d) {
+    d = d || { tarih: todayISO(), randevuTarihi: todayISO(), kategori: S.ayarlar.gelirKategorileri[0], odemeYontemi: S.ayarlar.odemeYontemleri[0], hizmetBedeli: '', tahsilEdilen: '2000', randevuDurumu: 'Onaylandı' };
+    const kalan = (Number(d.hizmetBedeli)||0) - (Number(d.tahsilEdilen)||0);
+    return `<div class="overlay" id="fn-overlay"><div class="modal">
+      <h2 class="display">${d.id ? 'Geliri Düzenle' : 'Yeni Randevu / Gelir'}</h2>
+      <div class="modal-sub">Hizmet bedeli ile tahsil edilen tutarı ayrı girin — kalan otomatik hesaplanır.</div>
+      ${!d.id ? `
+      <div class="parse-box">
+        <label style="margin-bottom:6px;">Randevu mesajını buraya yapıştır</label>
+        <textarea id="g-paste" placeholder="👤 Müşteri: ...&#10;📞 Telefon: ...&#10;✉️ E-posta: ...&#10;..."></textarea>
+        <div style="margin-top:8px;"><button type="button" class="btn btn-primary btn-sm" id="g-parse-btn">Ayrıştır ve Doldur</button></div>
+      </div>` : ''}
+      <form id="fn-form">
+        <div class="form-grid">
+          <div class="field-wrap span2"><label>Müşteri</label><input id="g-musteri" required value="${esc(d.musteri||'')}" /></div>
+          <div class="field-wrap"><label>Telefon</label><input id="g-telefon" value="${esc(d.telefon||'')}" /></div>
+          <div class="field-wrap"><label>E-posta</label><input id="g-email" value="${esc(d.email||'')}" /></div>
+          <div class="field-wrap"><label>Instagram</label><input id="g-instagram" value="${esc(d.instagram||'')}" placeholder="kullaniciadi" /></div>
+          <div class="field-wrap"><label>Organizasyon</label><input id="g-organizasyon" value="${esc(d.organizasyon||'')}" placeholder="Düğün / Kına / Nişan / Davet" /></div>
+          <div class="field-wrap span2"><label>Adres</label><input id="g-adres" value="${esc(d.adres||'')}" /></div>
+          <div class="field-wrap"><label>Randevu Tarihi</label><input type="date" id="g-randevuTarihi" value="${esc(d.randevuTarihi||d.tarih)}" /></div>
+          <div class="field-wrap"><label>Randevu Saati</label><input type="time" id="g-randevuSaati" value="${esc(d.randevuSaati||'')}" /></div>
+          <div class="field-wrap"><label>Kayıt Tarihi (muhasebe)</label><input type="date" id="g-tarih" value="${esc(d.tarih)}" /></div>
+          <div class="field-wrap"><label>Gelir Kategorisi / Hizmet</label><select id="g-kategori">${opts(S.ayarlar.gelirKategorileri, d.kategori)}</select></div>
+          <div class="field-wrap"><label>Randevu Durumu</label><select id="g-durum">${opts(['Onaylandı','Bekliyor','İptal'], d.randevuDurumu||'Onaylandı')}</select></div>
+          <div class="field-wrap"><label>Paylaşım İzni</label><input id="g-paylasim" value="${esc(d.paylasim||'')}" placeholder="Paylaşım yapılabilir / Sadece story / İstemiyorum" /></div>
+          <div class="field-wrap">
+            <label>Hizmet Bedeli (₺) <span id="g-fiyat-oneri" style="text-transform:none;font-weight:400;opacity:.6;"></span></label>
+            <div style="display:flex;gap:6px;">
+              <input type="number" min="0" id="g-hizmetBedeli" value="${esc(d.hizmetBedeli)}" style="flex:1;" />
+              <button type="button" class="btn btn-ghost btn-sm" id="g-fiyat-btn" title="Fiyat listesinden hesapla">↻ Hesapla</button>
+            </div>
+          </div>
+          <div class="field-wrap"><label>Alınan Ön Ödeme / Kapora (₺)</label><input type="number" min="0" id="g-tahsilEdilen" value="${esc(d.tahsilEdilen)}" /></div>
+          <div class="field-wrap"><label>Ödeme Yöntemi</label><select id="g-odemeYontemi">${opts(S.ayarlar.odemeYontemleri, d.odemeYontemi)}</select></div>
+          <div class="field-wrap"><label>Fatura / Belge No</label><input id="g-belge" value="${esc(d.belge||'')}" /></div>
+          <div class="field-wrap span2"><label>Not</label><textarea id="g-not">${esc(d.not||'')}</textarea></div>
+          <div class="field-wrap span2">
+            <label>Takip</label>
+            <div class="takip-line">
+              <label class="checkline"><input type="checkbox" id="g-modelKonusuldu" ${d.modelKonusulduMu?'checked':''}/> Model konuşuldu mu?</label>
+              <label class="checkline"><input type="checkbox" id="g-bilgiAtildi" ${d.bilgilendirmeAtildiMi?'checked':''}/> Bilgilendirme metni atıldı mı?</label>
+            </div>
+          </div>
+        </div>
+        <div class="balance-note">Kalan bakiye: <strong class="mono">${fmtTL(Math.max(kalan,0))}</strong>${kalan<=0 && Number(d.hizmetBedeli)>0 ? ' — ödeme tamamlandı':''}</div>
+        <div class="modal-actions">
+          <div>${d.id ? `<button type="button" class="btn btn-danger" data-del="gelir:${esc(d.id)}">Kaydı Sil</button>`:''}</div>
+          <div style="display:flex;gap:8px;"><button type="button" class="btn btn-ghost" data-close-modal>Vazgeç</button><button type="submit" class="btn btn-primary">${S.saving?'Kaydediliyor…':'Kaydet'}</button></div>
+        </div>
+      </form>
+    </div></div>`;
+  }
+
+  function modalGider(d) {
+    d = d || { tarih: todayISO(), kategori: S.ayarlar.giderKategorileri[0], odemeYontemi: S.ayarlar.odemeYontemleri[0], odemeDurumu: 'Ödendi', adet: 1, birimFiyat: '', kdv: 0 };
+    const isStokKat = STOK_KATEGORILERI.includes(d.kategori);
+    return `<div class="overlay" id="fn-overlay"><div class="modal">
+      <h2 class="display">${d.id ? 'Gideri Düzenle' : 'Yeni Gider'}</h2>
+      <div class="modal-sub">Firma, ürün ve tutar bilgilerini girin.</div>
+      <form id="fn-form">
+        <div class="form-grid">
+          <div class="field-wrap"><label>Firma</label><input id="e-firma" value="${esc(d.firma||'')}" /></div>
+          <div class="field-wrap"><label>Ürün</label><input id="e-urun" value="${esc(d.urun||'')}" /></div>
+          <div class="field-wrap"><label>Tarih</label><input type="date" id="e-tarih" value="${esc(d.tarih)}" /></div>
+          <div class="field-wrap"><label>Kategori</label><select id="e-kategori">${opts(S.ayarlar.giderKategorileri, d.kategori)}</select></div>
+          <div class="field-wrap"><label>Adet</label><input type="number" min="0" id="e-adet" value="${esc(d.adet ?? 1)}" /></div>
+          <div class="field-wrap"><label>Birim Fiyat (₺)</label><input type="number" min="0" id="e-birimFiyat" value="${esc(d.birimFiyat||'')}" /></div>
+          <div class="field-wrap"><label>KDV (%)</label><input type="number" min="0" id="e-kdv" value="${esc(d.kdv ?? 0)}" /></div>
+          <div class="field-wrap"><label>Ödeme Yöntemi</label><select id="e-odemeYontemi">${opts(S.ayarlar.odemeYontemleri, d.odemeYontemi)}</select></div>
+          <div class="field-wrap"><label>Fatura No</label><input id="e-faturaNo" value="${esc(d.faturaNo||'')}" /></div>
+          <div class="field-wrap"><label>Fatura Tarihi</label><input type="date" id="e-faturaTarihi" value="${esc(d.faturaTarihi||'')}" /></div>
+          <div class="field-wrap"><label>Son Ödeme Tarihi</label><input type="date" id="e-sonOdemeTarihi" value="${esc(d.sonOdemeTarihi||'')}" /></div>
+          <div class="field-wrap"><label>Ödeme Durumu</label><select id="e-odemeDurumu">${opts(['Ödendi','Kısmi Ödendi','Bekliyor'], d.odemeDurumu)}</select></div>
+          <div class="field-wrap span2"><label>Not</label><textarea id="e-not">${esc(d.not||'')}</textarea></div>
+          <div class="field-wrap span2 checkline">
+            <input type="checkbox" id="e-stokMu" ${isStokKat ? 'checked' : ''} />
+            <label style="margin:0;">Bu bir stok ürünü — kaydedince ürün stoğuna eklensin</label>
+          </div>
+          <div class="field-wrap span2" id="e-stok-secim" style="${isStokKat?'':'display:none;'}">
+            <label>Stok Ürünü (mevcut seçin veya yeni ad yazın)</label>
+            <input id="e-stokUrunAdi" list="fn-urun-list" placeholder="Ör: Fondöten" value="${esc(d.stokUrunAdi||d.urun||'')}" />
+            <datalist id="fn-urun-list">${S.urunler.map(u=>`<option value="${esc(u.ad)}">`).join('')}</datalist>
+          </div>
+        </div>
+        <div class="balance-note" id="e-toplam-note">Toplam tutar: <strong class="mono" id="e-toplam-val">${fmtTL(giderToplamHesapla(d))}</strong></div>
+        <div class="modal-actions">
+          <div>${d.id ? `<button type="button" class="btn btn-danger" data-del="gider:${esc(d.id)}">Kaydı Sil</button>`:''}</div>
+          <div style="display:flex;gap:8px;"><button type="button" class="btn btn-ghost" data-close-modal>Vazgeç</button><button type="submit" class="btn btn-primary">${S.saving?'Kaydediliyor…':'Kaydet'}</button></div>
+        </div>
+      </form>
+    </div></div>`;
+  }
+  function giderToplamHesapla(d) {
+    const adet = Number(d.adet)||0, birim = Number(d.birimFiyat)||0, kdv = Number(d.kdv)||0;
+    return adet*birim*(1+kdv/100);
+  }
+
+  function modalUrun(d) {
+    d = d || { alisFiyati: '', stok: 0, kritikStok: 1 };
+    return `<div class="overlay" id="fn-overlay"><div class="modal">
+      <h2 class="display">${d.id?'Ürünü Düzenle':'Yeni Ürün'}</h2>
+      <form id="fn-form">
+        <div class="form-grid">
+          <div class="field-wrap span2"><label>Ürün Adı</label><input id="u-ad" required value="${esc(d.ad||'')}" /></div>
+          <div class="field-wrap"><label>Alış Fiyatı (₺)</label><input type="number" min="0" id="u-alisFiyati" value="${esc(d.alisFiyati)}" /></div>
+          <div class="field-wrap"><label>Stok Adedi</label><input type="number" id="u-stok" value="${esc(d.stok)}" /></div>
+          <div class="field-wrap"><label>Kritik Stok Eşiği</label><input type="number" id="u-kritikStok" value="${esc(d.kritikStok ?? 1)}" /></div>
+        </div>
+        <div class="modal-actions">
+          <div>${d.id ? `<button type="button" class="btn btn-danger" data-del="urun:${esc(d.id)}">Sil</button>`:''}</div>
+          <div style="display:flex;gap:8px;"><button type="button" class="btn btn-ghost" data-close-modal>Vazgeç</button><button type="submit" class="btn btn-primary">Kaydet</button></div>
+        </div>
+      </form>
+    </div></div>`;
+  }
+
+  function modalOdenecek(d) {
+    d = d || { durum: 'Bekliyor', sonOdeme: todayISO() };
+    return `<div class="overlay" id="fn-overlay"><div class="modal">
+      <h2 class="display">${d.id?'Ödemeyi Düzenle':'Ödeme Planla'}</h2>
+      <form id="fn-form">
+        <div class="form-grid">
+          <div class="field-wrap span2"><label>Firma</label><input id="o-firma" required value="${esc(d.firma||'')}" /></div>
+          <div class="field-wrap"><label>Tutar (₺)</label><input type="number" min="0" id="o-tutar" value="${esc(d.tutar||'')}" /></div>
+          <div class="field-wrap"><label>Son Ödeme Tarihi</label><input type="date" id="o-sonOdeme" value="${esc(d.sonOdeme)}" /></div>
+          <div class="field-wrap"><label>Durum</label><select id="o-durum">${opts(['Bekliyor','Ödendi'], d.durum)}</select></div>
+          <div class="field-wrap span2"><label>Not</label><textarea id="o-not">${esc(d.not||'')}</textarea></div>
+        </div>
+        <div class="modal-actions">
+          <div>${d.id ? `<button type="button" class="btn btn-danger" data-del="odenecek:${esc(d.id)}">Sil</button>`:''}</div>
+          <div style="display:flex;gap:8px;"><button type="button" class="btn btn-ghost" data-close-modal>Vazgeç</button><button type="submit" class="btn btn-primary">Kaydet</button></div>
+        </div>
+      </form>
+    </div></div>`;
+  }
+
+  function modalSabit(d) {
+    d = d || { kategori: S.ayarlar.giderKategorileri[0] };
+    return `<div class="overlay" id="fn-overlay"><div class="modal">
+      <h2 class="display">Sabit Gider Ekle</h2>
+      <form id="fn-form">
+        <div class="form-grid">
+          <div class="field-wrap span2"><label>Ad</label><input id="s-ad" required value="${esc(d.ad||'')}" placeholder="Ör: Kira" /></div>
+          <div class="field-wrap"><label>Aylık Tutar (₺)</label><input type="number" min="0" id="s-tutar" value="${esc(d.tutar||'')}" /></div>
+          <div class="field-wrap"><label>Kategori</label><select id="s-kategori">${opts(S.ayarlar.giderKategorileri, d.kategori)}</select></div>
+        </div>
+        <div class="modal-actions">
+          <div></div>
+          <div style="display:flex;gap:8px;"><button type="button" class="btn btn-ghost" data-close-modal>Vazgeç</button><button type="submit" class="btn btn-primary">Kaydet</button></div>
+        </div>
+      </form>
+    </div></div>`;
+  }
+
+  // ---------- events ----------
+  function attachCommonEvents() {
+    const overlay = document.getElementById('fn-overlay');
+    if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) { S.modal = null; renderMain(); } });
+    root.querySelectorAll('[data-close-modal]').forEach(b => b.onclick = () => { S.modal = null; renderMain(); });
+    root.querySelectorAll('[data-open-modal]').forEach(b => b.onclick = () => {
+      const t = b.getAttribute('data-open-modal').split('-')[0];
+      S.modal = { type: t, data: null }; renderMain();
+    });
+    root.querySelectorAll('[data-edit]').forEach(tr => tr.onclick = (e) => {
+      if (e.target.closest('[data-del-sabit]')) return;
+      const type = tr.getAttribute('data-edit'), id = tr.getAttribute('data-id');
+      const coll = { gelir: S.gelirler, gider: S.giderler, urun: S.urunler, odenecek: S.odenecekler }[type];
+      const item = coll.find(x => x.id === id);
+      if (item) { S.modal = { type, data: {...item} }; renderMain(); }
+    });
+    root.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
+      if (!window.confirm('Bu kaydı silmek istediğinize emin misiniz?')) return;
+      const [type,id] = b.getAttribute('data-del').split(':');
+      const prefix = { gelir:'gelir:', gider:'gider:', urun:'urun:', odenecek:'odenecek:' }[type];
+      try { await deleteRecord(prefix, id); S.modal = null; await loadAll(); } catch(e){ S.error='Silinemedi, tekrar deneyin.'; renderMain(); }
+    });
+    root.querySelectorAll('[data-del-sabit]').forEach(b => b.onclick = async (e) => {
+      e.stopPropagation();
+      if (!window.confirm('Silinsin mi?')) return;
+      await deleteRecord('sabit:', b.getAttribute('data-del-sabit'));
+      await loadAll();
+    });
+    root.querySelectorAll('[data-subtab]').forEach(el => el.onclick = () => {
+      const [group,val] = el.getAttribute('data-subtab').split(':');
+      S.subtab[group] = val; renderMain();
+    });
+    const syncBtn = document.getElementById('fn-sync-btn');
+    if (syncBtn) syncBtn.onclick = async () => {
+      const statusEl = document.getElementById('fn-sync-status');
+      syncBtn.disabled = true; syncBtn.textContent = 'Senkronize ediliyor…';
+      if (statusEl) statusEl.innerHTML = '';
+      try {
+        const eklenen = await sheetSync();
+        await loadAll();
+        const st = document.getElementById('fn-sync-status');
+        if (st) st.innerHTML = `<div class="note-box">✅ Senkronizasyon tamamlandı — ${eklenen} yeni randevu eklendi.</div>`;
+      } catch (err) {
+        renderMain();
+        const st = document.getElementById('fn-sync-status');
+        if (st) st.innerHTML = `<div class="note-box" style="background:#F2DCD2;color:#8C3A24;">Senkronizasyon başarısız: ${esc(err.message || String(err))}. Bu genellikle tarayıcı güvenlik kısıtından kaynaklanır — sayfa kendi web sitenizde barındırıldığında bu sorun kalkar.</div>`;
+      }
+    };
+    const fiyatKaydetBtn = document.getElementById('fn-fiyat-kaydet');
+    if (fiyatKaydetBtn) fiyatKaydetBtn.onclick = async () => {
+      root.querySelectorAll('.fn-fiyat-input').forEach(inp => {
+        const h = inp.getAttribute('data-hizmet'), t = inp.getAttribute('data-tip');
+        if (!S.fiyatlar[h]) S.fiyatlar[h] = { haftaIci: 0, haftaSonu: 0 };
+        S.fiyatlar[h][t] = Number(inp.value) || 0;
+      });
+      await saveSingleton('fiyatlar:genel', S.fiyatlar);
+      renderMain();
+    };
+    if (dfSel) dfSel.onchange = () => { S.dateFilter.type = dfSel.value; renderMain(); };
+    const dfStart = document.getElementById('fn-date-start');
+    const dfEnd = document.getElementById('fn-date-end');
+    if (dfStart) dfStart.onchange = () => { S.dateFilter.start = dfStart.value; renderMain(); };
+    if (dfEnd) dfEnd.onchange = () => { S.dateFilter.end = dfEnd.value; renderMain(); };
+
+    root.querySelectorAll('[data-add-chip]').forEach(b => b.onclick = async () => {
+      const kind = b.getAttribute('data-add-chip');
+      const inputId = { gelirKat:'fn-new-gelirkat', giderKat:'fn-new-giderkat', odeme:'fn-new-odeme' }[kind];
+      const input = document.getElementById(inputId);
+      const val = input.value.trim();
+      if (!val) return;
+      const field = { gelirKat:'gelirKategorileri', giderKat:'giderKategorileri', odeme:'odemeYontemleri' }[kind];
+      if (S.ayarlar[field].includes(val)) return;
+      S.ayarlar[field] = [...S.ayarlar[field], val];
+      await saveSingleton('ayarlar:genel', S.ayarlar);
+      renderMain();
+    });
+    root.querySelectorAll('[data-remove-chip]').forEach(b => b.onclick = async () => {
+      const [kind, idx] = b.getAttribute('data-remove-chip').split(':');
+      const field = { gelirKat:'gelirKategorileri', giderKat:'giderKategorileri', odeme:'odemeYontemleri' }[kind];
+      S.ayarlar[field] = S.ayarlar[field].filter((_,i) => i !== Number(idx));
+      await saveSingleton('ayarlar:genel', S.ayarlar);
+      renderMain();
+    });
+  }
+
+  function attachViewEvents() {
+    // gelir/gider live balance updates
+    ['g-hizmetBedeli','g-tahsilEdilen'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.oninput = () => {
+        const t = Number(document.getElementById('g-hizmetBedeli').value)||0;
+        const k = Number(document.getElementById('g-tahsilEdilen').value)||0;
+        const note = document.querySelector('#fn-form .balance-note');
+        if (note) note.innerHTML = `Kalan bakiye: <strong class="mono">${fmtTL(Math.max(t-k,0))}</strong>${(t-k)<=0 && t>0 ? ' — ödeme tamamlandı':''}`;
+      };
+    });
+    ['e-adet','e-birimFiyat','e-kdv'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.oninput = () => {
+        const adet = Number(document.getElementById('e-adet').value)||0;
+        const birim = Number(document.getElementById('e-birimFiyat').value)||0;
+        const kdv = Number(document.getElementById('e-kdv').value)||0;
+        const val = adet*birim*(1+kdv/100);
+        const elVal = document.getElementById('e-toplam-val');
+        if (elVal) elVal.textContent = fmtTL(val);
+      };
+    });
+    function suggestFiyat(autofill) {
+      const katEl = document.getElementById('g-kategori');
+      const tarihEl = document.getElementById('g-randevuTarihi');
+      const oneriEl = document.getElementById('g-fiyat-oneri');
+      if (!katEl || !tarihEl) return;
+      const fiyat = hesaplaFiyat(katEl.value, tarihEl.value);
+      if (oneriEl) oneriEl.textContent = fiyat != null ? `(önerilen: ${fmtTL(fiyat)}${isWeekend(tarihEl.value)?' · hafta sonu':' · hafta içi'})` : '(bu hizmet için fiyat tanımlı değil — Ayarlar > Fiyat Listesi)';
+      const bedelEl = document.getElementById('g-hizmetBedeli');
+      if (autofill && fiyat != null && bedelEl && !bedelEl.value) {
+        bedelEl.value = fiyat;
+        bedelEl.dispatchEvent(new Event('input'));
+      }
+    }
+    const gKategori = document.getElementById('g-kategori');
+    const gRandevuTarihi = document.getElementById('g-randevuTarihi');
+    if (gKategori) { gKategori.onchange = () => suggestFiyat(true); suggestFiyat(false); }
+    if (gRandevuTarihi) gRandevuTarihi.onchange = () => suggestFiyat(true);
+    const gFiyatBtn = document.getElementById('g-fiyat-btn');
+    if (gFiyatBtn) gFiyatBtn.onclick = () => {
+      const fiyat = hesaplaFiyat(document.getElementById('g-kategori').value, document.getElementById('g-randevuTarihi').value);
+      if (fiyat != null) { document.getElementById('g-hizmetBedeli').value = fiyat; document.getElementById('g-hizmetBedeli').dispatchEvent(new Event('input')); }
+      suggestFiyat(false);
+    };
+    const parseBtn = document.getElementById('g-parse-btn');
+    if (parseBtn) parseBtn.onclick = () => {
+      const raw = document.getElementById('g-paste').value;
+      if (!raw.trim()) return;
+      const p = parseRandevuMesaji(raw);
+      const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+      set('g-musteri', p.musteri); set('g-telefon', p.telefon); set('g-email', p.email);
+      set('g-instagram', p.instagram); set('g-organizasyon', p.organizasyon);
+      set('g-adres', p.adres); set('g-paylasim', p.paylasim); set('g-not', p.notlar);
+      if (p.toplam) set('g-hizmetBedeli', p.toplam.replace(/\./g,'').replace(',','.'));
+      if (p.onOdeme) set('g-tahsilEdilen', p.onOdeme.replace(/\./g,'').replace(',','.'));
+      if (p.hizmet) {
+        const sel = document.getElementById('g-kategori');
+        const match = Array.from(sel.options).find(o => o.value.toLowerCase() === p.hizmet.toLowerCase());
+        if (match) sel.value = match.value;
+      }
+      const note = document.querySelector('#fn-form .balance-note');
+      if (note) {
+        const t = Number(document.getElementById('g-hizmetBedeli').value)||0;
+        const k = Number(document.getElementById('g-tahsilEdilen').value)||0;
+        note.innerHTML = `Kalan bakiye: <strong class="mono">${fmtTL(Math.max(t-k,0))}</strong>${(t-k)<=0 && t>0 ? ' — ödeme tamamlandı':''}`;
+      }
+    };
+    const calPrev = document.getElementById('cal-prev');
+    if (calPrev) calPrev.onclick = () => { let {y,m}=S.calMonth; m--; if(m<0){m=11;y--;} S.calMonth={y,m}; S.calSelectedDay=null; renderMain(); };
+    const calNext = document.getElementById('cal-next');
+    if (calNext) calNext.onclick = () => { let {y,m}=S.calMonth; m++; if(m>11){m=0;y++;} S.calMonth={y,m}; S.calSelectedDay=null; renderMain(); };
+    root.querySelectorAll('.cal-cell[data-day]').forEach(c => c.onclick = () => {
+      S.calSelectedDay = Number(c.getAttribute('data-day')); renderMain();
+    });
+    const eKategori = document.getElementById('e-kategori');
+    if (eKategori) eKategori.onchange = () => {
+      const box = document.getElementById('e-stok-secim');
+      const chk = document.getElementById('e-stokMu');
+      const isStok = STOK_KATEGORILERI.includes(eKategori.value);
+      chk.checked = isStok;
+      box.style.display = isStok ? '' : 'none';
+    };
+    const stokChk = document.getElementById('e-stokMu');
+    if (stokChk) stokChk.onchange = () => {
+      document.getElementById('e-stok-secim').style.display = stokChk.checked ? '' : 'none';
+    };
+
+    // form submits
+    const form = document.getElementById('fn-form');
+    if (!form) return;
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      S.saving = true;
+      try {
+        if (S.modal.type === 'gelir') await submitGelir();
+        else if (S.modal.type === 'gider') await submitGider();
+        else if (S.modal.type === 'urun') await submitUrun();
+        else if (S.modal.type === 'odenecek') await submitOdenecek();
+        else if (S.modal.type === 'sabit') await submitSabit();
+        S.modal = null;
+        await loadAll();
+      } catch (err) {
+        S.error = 'Kaydedilemedi, tekrar deneyin.';
+        S.saving = false;
+        renderMain();
+      }
+    };
+    const kasaForm = document.getElementById('fn-kasa-form');
+    if (kasaForm) kasaForm.onsubmit = async (e) => {
+      e.preventDefault();
+      S.kasa = {
+        nakit: document.getElementById('k-nakit').value,
+        banka: document.getElementById('k-banka').value,
+        krediKarti: document.getElementById('k-krediKarti').value,
+        diger: document.getElementById('k-diger').value,
+      };
+      await saveSingleton('kasa:genel', S.kasa);
+      renderMain();
+    };
+  }
+
+  async function submitGelir() {
+    const existing = S.modal.data;
+    const g = (id) => document.getElementById(id).value;
+    const rec = {
+      musteri: g('g-musteri'), tarih: g('g-tarih'), randevuTarihi: g('g-randevuTarihi'), randevuSaati: g('g-randevuSaati'),
+      telefon: g('g-telefon'), email: g('g-email'), instagram: g('g-instagram'), organizasyon: g('g-organizasyon'),
+      adres: g('g-adres'), paylasim: g('g-paylasim'), randevuDurumu: g('g-durum'),
+      kategori: g('g-kategori'), aciklama: (document.getElementById('g-aciklama')?document.getElementById('g-aciklama').value:''),
+      hizmetBedeli: g('g-hizmetBedeli'), tahsilEdilen: g('g-tahsilEdilen'), odemeYontemi: g('g-odemeYontemi'),
+      belge: g('g-belge'), not: g('g-not'), islemId: (existing && existing.islemId) || uid('G-'),
+      modelKonusulduMu: document.getElementById('g-modelKonusuldu').checked,
+      bilgilendirmeAtildiMi: document.getElementById('g-bilgiAtildi').checked,
+      olusturmaZamani: existing && existing.olusturmaZamani,
+    };
+    const id = (existing && existing.id) || uid('e');
+    await saveRecord('gelir:', id, rec);
+  }
+  async function submitGider() {
+    const existing = S.modal.data;
+    const g = (id) => document.getElementById(id).value;
+    const adet = Number(g('e-adet'))||0, birim = Number(g('e-birimFiyat'))||0, kdv = Number(g('e-kdv'))||0;
+    const toplamTutar = adet*birim*(1+kdv/100);
+    const rec = {
+      firma: g('e-firma'), urun: g('e-urun'), tarih: g('e-tarih'), kategori: g('e-kategori'),
+      adet, birimFiyat: birim, kdv, toplamTutar,
+      odemeYontemi: g('e-odemeYontemi'), faturaNo: g('e-faturaNo'), faturaTarihi: g('e-faturaTarihi'),
+      sonOdemeTarihi: g('e-sonOdemeTarihi'), odemeDurumu: g('e-odemeDurumu'), not: g('e-not'),
+      olusturmaZamani: existing && existing.olusturmaZamani,
+    };
+    const id = (existing && existing.id) || uid('e');
+    await saveRecord('gider:', id, rec);
+
+    // stok güncelle (sadece yeni kayıtta)
+    const stokChk = document.getElementById('e-stokMu');
+    if (!existing && stokChk && stokChk.checked) {
+      const stokAdi = document.getElementById('e-stokUrunAdi').value.trim();
+      if (stokAdi) {
+        let urun = S.urunler.find(u => u.ad.toLowerCase() === stokAdi.toLowerCase());
+        if (urun) {
+          urun = { ...urun, stok: (Number(urun.stok)||0) + adet, alisFiyati: birim || urun.alisFiyati };
+          await saveRecord('urun:', urun.id, urun);
+        } else {
+          const uidNew = uid('u');
+          await saveRecord('urun:', uidNew, { ad: stokAdi, alisFiyati: birim, stok: adet, kritikStok: 1 });
+        }
+      }
+    }
+  }
+  async function submitUrun() {
+    const existing = S.modal.data;
+    const g = (id) => document.getElementById(id).value;
+    const rec = { ad: g('u-ad'), alisFiyati: g('u-alisFiyati'), stok: g('u-stok'), kritikStok: g('u-kritikStok'), olusturmaZamani: existing && existing.olusturmaZamani };
+    const id = (existing && existing.id) || uid('u');
+    await saveRecord('urun:', id, rec);
+  }
+  async function submitOdenecek() {
+    const existing = S.modal.data;
+    const g = (id) => document.getElementById(id).value;
+    const rec = { firma: g('o-firma'), tutar: g('o-tutar'), sonOdeme: g('o-sonOdeme'), durum: g('o-durum'), not: g('o-not'), olusturmaZamani: existing && existing.olusturmaZamani };
+    const id = (existing && existing.id) || uid('o');
+    await saveRecord('odenecek:', id, rec);
+  }
+  async function submitSabit() {
+    const g = (id) => document.getElementById(id).value;
+    const rec = { ad: g('s-ad'), tutar: g('s-tutar'), kategori: g('s-kategori') };
+    await saveRecord('sabit:', uid('s'), rec);
+  }
+
+  if (isAuthed()) {
+    loadAll();
+  } else {
+    showLoginGate(loadAll);
+  }
+})();
+</script>
