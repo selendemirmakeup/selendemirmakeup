@@ -742,7 +742,8 @@
     return `
       <div class="page-head">
         <div><h1 class="pg-title">Gelirler</h1><div class="pg-sub">Hizmet bedeli ile tahsil edilen tutar ayrı takip edilir</div></div>
-        <div style="display:flex;gap:8px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-ghost" id="fn-resync-btn">🧹 Sheets Verisini Düzelt</button>
           <button class="btn btn-ghost" id="fn-sync-btn">🔄 Sheets'ten Senkronize Et</button>
           <button class="btn btn-primary" data-open-modal="gelir-new">+ Gelir Ekle</button>
         </div>
@@ -1374,6 +1375,27 @@
         renderMain();
         const st = document.getElementById('fn-sync-status');
         if (st) st.innerHTML = `<div class="note-box" style="background:#F2DCD2;color:#8C3A24;">Senkronizasyon başarısız: ${esc(err.message || String(err))}. Bu genellikle tarayıcı güvenlik kısıtından kaynaklanır — sayfa kendi web sitenizde barındırıldığında bu sorun kalkar.</div>`;
+      }
+    };
+    const resyncBtn = document.getElementById('fn-resync-btn');
+    if (resyncBtn) resyncBtn.onclick = async () => {
+      if (!window.confirm('Sheets\'ten daha önce otomatik aktarılmış tüm randevular silinip, doğru tarihleriyle yeniden getirilecek. Elle eklediğiniz kayıtlara dokunulmayacak. Devam edilsin mi?')) return;
+      const statusEl = document.getElementById('fn-sync-status');
+      resyncBtn.disabled = true; resyncBtn.textContent = 'Düzeltiliyor…';
+      if (statusEl) statusEl.innerHTML = '';
+      try {
+        const otomatikGelenler = S.gelirler.filter(g => g.sourceId);
+        for (const g of otomatikGelenler) {
+          await deleteRecord('gelir:', g.id);
+        }
+        const eklenen = await sheetSync();
+        await loadAll();
+        const st = document.getElementById('fn-sync-status');
+        if (st) st.innerHTML = `<div class="note-box">✅ ${otomatikGelenler.length} eski kayıt temizlendi, ${eklenen} randevu doğru tarihleriyle yeniden getirildi.</div>`;
+      } catch (err) {
+        renderMain();
+        const st = document.getElementById('fn-sync-status');
+        if (st) st.innerHTML = `<div class="note-box" style="background:#F2DCD2;color:#8C3A24;">Düzeltme başarısız: ${esc(err.message || String(err))}</div>`;
       }
     };
     const fiyatKaydetBtn = document.getElementById('fn-fiyat-kaydet');
