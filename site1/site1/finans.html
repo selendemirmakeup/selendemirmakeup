@@ -1440,6 +1440,7 @@
       await saveSingleton('fiyatlar:genel', S.fiyatlar);
       renderMain();
     };
+    const dfSel = document.getElementById('fn-datefilter');
     if (dfSel) dfSel.onchange = () => { S.dateFilter.type = dfSel.value; renderMain(); };
     const dfStart = document.getElementById('fn-date-start');
     const dfEnd = document.getElementById('fn-date-end');
