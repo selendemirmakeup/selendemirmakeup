@@ -188,7 +188,7 @@
   // ── ŞİFRE EKRANI ──
   // Bu SADECE gerçek sitede aktif olur (Claude önizlemesinde şifre istenmez).
   // ÖNEMLİ: Aşağıdaki şifreyi kendi belirleyeceğiniz bir şeyle değiştirin.
-  const FINANS_SIFRE = 'PVNRTsdds487';
+  const FINANS_SIFRE = 'selen2026';
 
   function showLoginGate(onSuccess) {
     const root = document.getElementById('fn-root');
@@ -369,6 +369,29 @@
   function gelirDurumLabel(s) { return s === 'paid' ? 'Ödendi' : s === 'partial' ? 'Kısmi Ödendi' : 'Bekliyor'; }
 
   // ---------- storage ----------
+  async function fetchGiderlerFromSheet() {
+    const res = await fetch(APPS_SCRIPT_URL + '?sheet=Giderler');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const rows = await res.json();
+    return rows.filter(r => r['ID']).map(r => ({
+      id: String(r['ID']), tarih: r['Tarih'] || '', firma: r['Firma'] || '', urun: r['Urun'] || '',
+      kategori: r['Kategori'] || '', adet: r['Adet'] || '', birimFiyat: r['BirimFiyat'] || '',
+      kdv: r['KDV'] || 0, toplamTutar: r['ToplamTutar'] || '', odemeYontemi: r['OdemeYontemi'] || '',
+      faturaNo: r['FaturaNo'] || '', faturaTarihi: r['FaturaTarihi'] || '', sonOdemeTarihi: r['SonOdemeTarihi'] || '',
+      odemeDurumu: r['OdemeDurumu'] || 'Bekliyor', not: r['Not'] || '',
+    })).sort((a,b) => (b.tarih||'').localeCompare(a.tarih||''));
+  }
+
+  async function postGiderToSheet(rec, action) {
+    const body = new URLSearchParams();
+    body.set('type', 'gider');
+    if (action) body.set('action', action);
+    Object.keys(rec).forEach(k => body.set(k, rec[k] == null ? '' : String(rec[k])));
+    const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
   async function loadCollection(prefix) {
     const list = await window.storage.list(prefix, true);
     if (!list || !list.keys || list.keys.length === 0) return [];
@@ -383,7 +406,9 @@
     S.loading = true; S.error = null; render();
     try {
       const [gelirler, giderler, urunler, sabitler, odenecekler, kasaRes, ayarRes, fiyatRes] = await Promise.all([
-        loadCollection('gelir:'), loadCollection('gider:'), loadCollection('urun:'),
+        loadCollection('gelir:'),
+        fetchGiderlerFromSheet().catch(() => loadCollection('gider:')),
+        loadCollection('urun:'),
         loadCollection('sabit:'), loadCollection('odenecek:'),
         window.storage.get('kasa:genel', true).catch(()=>null),
         window.storage.get('ayarlar:genel', true).catch(()=>null),
@@ -1215,8 +1240,15 @@
     root.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
       if (!window.confirm('Bu kaydı silmek istediğinize emin misiniz?')) return;
       const [type,id] = b.getAttribute('data-del').split(':');
-      const prefix = { gelir:'gelir:', gider:'gider:', urun:'urun:', odenecek:'odenecek:' }[type];
-      try { await deleteRecord(prefix, id); S.modal = null; await loadAll(); } catch(e){ S.error='Silinemedi, tekrar deneyin.'; renderMain(); }
+      try {
+        if (type === 'gider') {
+          try { await postGiderToSheet({ id }, 'delete'); } catch (e) { await deleteRecord('gider:', id); }
+        } else {
+          const prefix = { gelir:'gelir:', urun:'urun:', odenecek:'odenecek:' }[type];
+          await deleteRecord(prefix, id);
+        }
+        S.modal = null; await loadAll();
+      } catch(e){ S.error='Silinemedi, tekrar deneyin.'; renderMain(); }
     });
     root.querySelectorAll('[data-del-sabit]').forEach(b => b.onclick = async (e) => {
       e.stopPropagation();
@@ -1433,7 +1465,11 @@
       olusturmaZamani: existing && existing.olusturmaZamani,
     };
     const id = (existing && existing.id) || uid('e');
-    await saveRecord('gider:', id, rec);
+    try {
+      await postGiderToSheet({ id, ...rec });
+    } catch (err) {
+      await saveRecord('gider:', id, rec); // Sheets'e ulaşılamazsa yerel yedeğe kaydet
+    }
 
     // stok güncelle (sadece yeni kayıtta)
     const stokChk = document.getElementById('e-stokMu');
