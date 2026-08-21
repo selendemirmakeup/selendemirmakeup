@@ -366,6 +366,13 @@
   }
 
   function gelirKalan(g) { return Math.max((Number(g.hizmetBedeli)||0) - (Number(g.tahsilEdilen)||0), 0); }
+  function randevuGecmisMi(g) {
+    const rt = g.randevuTarihi || g.tarih;
+    if (!rt) return false;
+    const d = parseDate(rt);
+    const bugun = new Date(); bugun.setHours(0,0,0,0);
+    return d < bugun;
+  }
   function gelirDurum(g) {
     const t = Number(g.hizmetBedeli)||0, k = Number(g.tahsilEdilen)||0;
     if (t > 0 && k >= t) return 'paid';
@@ -534,7 +541,7 @@
     const toplamGider = giderlerP.reduce((s,g) => s + (Number(g.toplamTutar)||0), 0);
     const netKar = toplamGelir - toplamGider;
     const tahsilEdilen = gelirlerP.reduce((s,g) => s + (Number(g.tahsilEdilen)||0), 0);
-    const bekleyenTahsilat = gelirlerP.reduce((s,g) => s + gelirKalan(g), 0);
+    const bekleyenTahsilat = gelirlerP.filter(g => !randevuGecmisMi(g)).reduce((s,g) => s + gelirKalan(g), 0);
     const odenmesiGereken = S.odenecekler.filter(o => o.durum === 'Bekliyor').reduce((s,o) => s + (Number(o.tutar)||0), 0);
     const toplamAlisveris = giderlerP.filter(g => STOK_KATEGORILERI.includes(g.kategori)).reduce((s,g) => s + (Number(g.toplamTutar)||0), 0);
     const karMarji = toplamGelir > 0 ? (netKar/toplamGelir*100) : 0;
@@ -774,7 +781,7 @@
   // ---------- KASA & BANKALAR ----------
   function renderKasa() {
     const range = { start: new Date(2000,0,1), end: new Date(2100,0,1) };
-    const bekleyenTahsilat = S.gelirler.filter(g => g.randevuDurumu !== 'İptal').reduce((s,g) => s + gelirKalan(g), 0);
+    const bekleyenTahsilat = S.gelirler.filter(g => g.randevuDurumu !== 'İptal' && !randevuGecmisMi(g)).reduce((s,g) => s + gelirKalan(g), 0);
     const odenecek = S.odenecekler.filter(o => o.durum === 'Bekliyor').reduce((s,o) => s + (Number(o.tutar)||0), 0);
     const toplamVarlik = (Number(S.kasa.nakit)||0) + (Number(S.kasa.banka)||0) + (Number(S.kasa.krediKarti)||0) + (Number(S.kasa.diger)||0);
     const gercekDurum = toplamVarlik + bekleyenTahsilat - odenecek;
@@ -840,7 +847,7 @@
     `;
   }
   function renderBekleyenTahsilat() {
-    const list = S.gelirler.filter(g => gelirKalan(g) > 0 && g.randevuDurumu !== 'İptal').sort((a,b) => (a.tarih||'').localeCompare(b.tarih||''));
+    const list = S.gelirler.filter(g => gelirKalan(g) > 0 && g.randevuDurumu !== 'İptal' && !randevuGecmisMi(g)).sort((a,b) => (a.tarih||'').localeCompare(b.tarih||''));
     const toplam = list.reduce((s,g)=>s+gelirKalan(g),0);
     if (list.length === 0) return `<div class="ledger"><div class="empty-state"><div class="display">Bekleyen tahsilat yok</div>Tüm gelirler tahsil edilmiş görünüyor.</div></div>`;
     const rows = list.map(g => `
@@ -1565,10 +1572,25 @@
     await saveRecord('sabit:', uid('s'), rec);
   }
 
+  async function autoSync() {
+    try {
+      const eklenen = await sheetSync();
+      if (eklenen > 0) await loadAll();
+    } catch (err) {
+      // arka plan senkronizasyonu sessizce başarısız olabilir (örn. Claude önizlemesi), kullanıcıyı rahatsız etmiyoruz
+    }
+  }
+
+  async function startApp() {
+    await loadAll();
+    autoSync(); // sayfa açılır açılmaz bir kere dene
+    setInterval(autoSync, 2 * 60 * 1000); // sonra her 2 dakikada bir arka planda kontrol et
+  }
+
   if (isAuthed()) {
-    loadAll();
+    startApp();
   } else {
-    showLoginGate(loadAll);
+    showLoginGate(startApp);
   }
 })();
 </script>
